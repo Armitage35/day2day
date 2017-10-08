@@ -1,0 +1,35 @@
+* {
+    font-family: 'Raleway', sans-serif;
+}
+
+header{
+    margin:20px;
+}
+
+.top {
+    display: inline
+}
+
+.comment-input {
+    margin-left:15px;
+}
+
+.comments {
+    margin:10px;
+}
+
+.comments p {
+    margin:5px;
+}
+
+.comments p:nth-child(even) {
+    background-color: lavender;
+}
+
+.comments p:nth-child(odd) {
+    background-color: gainsboro;
+}
+
+footer {
+    margin:20px;
+}

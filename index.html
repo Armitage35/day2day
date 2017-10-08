@@ -3,19 +3,25 @@
     <head>
         <title>A simple app</title>
         <link href="style.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
     </head>
     
     <body>
         <header>
-            <h1>Comments</h1>
-            <p>A simple app that allows users to input comments</p>
+                <div class="top">
+                <h1>Comments</h1>
+                <p>A simple app that allows users to input comments</p>
+            </div>
+            <hr/>
         </header>
-        <main>
-            <section class="comment-input">
+        <main class="row">
+            <section class="comment-input col-md-3">
                 <p>Add your comment:</p>
                 <input type="text"><button>+</button>
             </section>
-            <section class="comments">
+            <section class="comments col-md-5">
                 <p>This is the first comment</p>
                 <p>This is the second comment</p>
                 <p>This is the third comment</p>
@@ -25,7 +31,7 @@
         
         <footer>
             <hr />
-            <p>this work is released into the public dommain</p>
+            <p>this work is released into the public domain</p>
         </footer>
         <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="app.js"></script>
