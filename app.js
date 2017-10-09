@@ -1,9 +1,10 @@
 var main = function() {
     "use strict";
     
+    //adding new comments to the comment list
     $(".comment-input button").on("click", function (event){
-        var $new_comment = $("<p>");
-        $new_comment.text("this is a new comment");
+        //a new paragraph is being created AND THEN we add the content "this is a new comment"
+        var $new_comment = $("<p>").text($(".comment-input input").val());
         $(".comments").append($new_comment);
     });
 };
