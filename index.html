@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>A simple app</title>
+        <title>A simple Todo app</title>
         <link href="style.css" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -12,27 +12,27 @@
     <body>
         <header>
                 <div class="top">
-                <h1>Comments</h1>
-                <p>A simple app that allows users to input comments</p>
+                <h1>Taskrr</h1>
+                <p>A simple app that allows you to handle your day to day tasks</p>
             </div>
             <hr/>
         </header>
         <main class="row">
-            <section class="comment-input col-md-3">
-                <p>Add your comment:</p>
+            <section class="task-input col-md-3">
+                <p>Add your task:</p>
                 <input type="text"><button><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
             </section>
-            <section class="comments col-md-5">
-                <p>This is the first comment</p>
-                <p>This is the second comment</p>
-                <p>This is the third comment</p>
-                <p>This is the last comment</p>
+            <section class="tasks-list col-md-5">
+                <p><input type="checkbox" name="task-marker">This is the first taks</p>
+                <p><input type="checkbox" name="task-marker">This is the second task</p>
+                <p><input type="checkbox" name="task-marker">This is the third task</p>
+                <p><input type="checkbox" name="task-marker">This is the last task</p>
             </section>
         </main>
         
         <footer>
             <hr />
-            <p>this work is released into the public domain</p>
+            <p>this app is released into the public domain</p>
         </footer>
         <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="app.js"></script>

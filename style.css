@@ -10,23 +10,23 @@ header{
     display: inline
 }
 
-.comment-input {
+.task-input {
     margin-left:15px;
 }
 
-.comments {
+.tasks-list {
     margin:10px;
 }
 
-.comments p {
+.tasks-list p {
     margin:5px;
 }
 
-.comments p:nth-child(even) {
+.tasks-list p:nth-child(even) {
     background-color: lavender;
 }
 
-.comments p:nth-child(odd) {
+.tasks-list p:nth-child(odd) {
     background-color: gainsboro;
 }
 
