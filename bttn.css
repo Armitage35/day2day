@@ -125,7 +125,7 @@
 }
 .bttn-unite:hover,
 .bttn-unite:focus {
-  box-shadow: 0 1px 8px rgba(58,51,53,0.3);
+  //box-shadow: 0 1px 8px rgba(58,51,53,0.3);
   color: #1d89ff;
   -webkit-transition: all 0.5s cubic-bezier(0.02, 0.01, 0.47, 1);
   transition: all 0.5s cubic-bezier(0.02, 0.01, 0.47, 1);
@@ -157,7 +157,7 @@
 }
 .bttn-unite.bttn-xs:hover,
 .bttn-unite.bttn-xs:focus {
-  box-shadow: 0 1px 4px rgba(58,51,53,0.3);
+  //box-shadow: 0 1px 4px rgba(58,51,53,0.3);
 }
 .bttn-unite.bttn-sm {
   padding: 4px 10px;
@@ -166,7 +166,7 @@
 }
 .bttn-unite.bttn-sm:hover,
 .bttn-unite.bttn-sm:focus {
-  box-shadow: 0 1px 6px rgba(58,51,53,0.3);
+  //box-shadow: 0 1px 6px rgba(58,51,53,0.3);
 }
 .bttn-unite.bttn-md {
   font-size: 20px;
@@ -175,7 +175,7 @@
 }
 .bttn-unite.bttn-md:hover,
 .bttn-unite.bttn-md:focus {
-  box-shadow: 0 1px 8px rgba(58,51,53,0.3);
+  //box-shadow: 0 1px 8px rgba(58,51,53,0.3);
 }
 .bttn-unite.bttn-lg {
   padding: 8px 15px;
@@ -184,7 +184,7 @@
 }
 .bttn-unite.bttn-lg:hover,
 .bttn-unite.bttn-lg:focus {
-  box-shadow: 0 1px 10px rgba(58,51,53,0.3);
+  //box-shadow: 0 1px 10px rgba(58,51,53,0.3);
 }
 .bttn-unite.bttn-default {
   border-color: #1d89ff;

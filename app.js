@@ -1,5 +1,14 @@
 var main = function() {
 
+    //change when task is checked
+    $('input').change(function(){
+        if ($(this).is(':checked')) {
+            console.log("yolo");
+            $(this).parent().fadeOut();
+            }
+    });
+
+
     //adding new tasks-list to the comment list using the PLUS ICON
     $(".task-input button").on("click", function (event){
         var $new_comment;
@@ -7,7 +16,7 @@ var main = function() {
         if ($(".task-input input").val() !== "") {
             //a new paragraph is being created AND THEN we add the content from the input field
                 $new_comment = $(".task-input input").val();
-                $(".tasks-list").append("<p><input type='checkbox'>" + $new_comment);
+                $(".tasks-list").append("<p><input type='checkbox' name='task-marker'>" + $new_comment + "</p>");
                 //empty input field
                 $(".task-input input").val("");
                 //fading the new comment in
@@ -26,7 +35,7 @@ var main = function() {
             if ($(".task-input input").val() !== "") {
                 //a new paragraph is being created AND THEN we add the content from the input field
                 $new_comment = $(".task-input input").val();
-                $(".tasks-list").append("<p><input type='checkbox'>" + $new_comment);
+                $(".tasks-list").append("<p><input type='checkbox' name='task-marker'>" + $new_comment + "</p>");
                 //empty input field
                 $(".task-input input").val("");
                 //fading the new comment in

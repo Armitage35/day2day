@@ -41,6 +41,10 @@ header{
     margin-right: 10px;
 }
 
+.red {
+    border: solid 1px red;
+}
+
 footer {
     margin:20px;
 }
