@@ -14,20 +14,20 @@ header{
     margin-left:15px;
 }
 
-.tasks-list {
+.taskList {
     margin:10px;
 }
 
-.tasks-list p {
+.taskList p {
     margin:5px;
 }
 
-.tasks-list p:nth-child(even) {
+.taskList p:nth-child(even) {
     background-color: #1d89ff;
     color: white;
 }
 
-.tasks-list p:nth-child(odd) {
+.taskList p:nth-child(odd) {
     background-color: #d6e3ff;
 }
 

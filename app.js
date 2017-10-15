@@ -8,20 +8,19 @@ var main = function() {
             }
     });
 
-
-    //adding new tasks-list to the comment list using the PLUS ICON
+    //adding new taskList to the task list using the PLUS ICON
     $(".task-input button").on("click", function (event){
-        var $new_comment;
-        //making sure the box isn't empty (in order to avoid adding empty <p> as tasks-list)
+        var $new_task;
+        //making sure the box isn't empty (in order to avoid adding empty <p> as taskList)
         if ($(".task-input input").val() !== "") {
             //a new paragraph is being created AND THEN we add the content from the input field
-                $new_comment = $(".task-input input").val();
-                $(".tasks-list").append("<p><input type='checkbox' name='task-marker'>" + $new_comment + "</p>");
+                $new_task = $(".task-input input").val();
+                $(".taskList").append("<p class='task list-group-item'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + $new_task + "</p>");
                 //empty input field
                 $(".task-input input").val("");
-                //fading the new comment in
-                $new_comment.hide();
-                $new_comment.fadeIn()
+                //fading the new task in
+                $new_task.hide();
+                $new_task.fadeIn()
         }
         
     });
@@ -30,17 +29,17 @@ var main = function() {
     $(".task-input input").on("keypress", function (event) {
         //making sure the typed key is enter
         if (event.keyCode === 13){
-            var $new_comment;
-            //making sure the box isn't empty (in order to avoid adding empty <p> as tasks-list)
+            var $new_task;
+            //making sure the box isn't empty (in order to avoid adding empty <p> as taskList)
             if ($(".task-input input").val() !== "") {
                 //a new paragraph is being created AND THEN we add the content from the input field
-                $new_comment = $(".task-input input").val();
-                $(".tasks-list").append("<p><input type='checkbox' name='task-marker'>" + $new_comment + "</p>");
+                $new_task = $(".task-input input").val();
+                $(".taskList").append("<p class='task list-group-item'><i class='fa fa-bars' aria-hidden='true'></i><input type='checkbox' name='task-marker'>" + $new_task + "</p>");
                 //empty input field
                 $(".task-input input").val("");
-                //fading the new comment in
-                $new_comment.hide();
-                $new_comment.fadeIn()
+                //fading the new task in
+                $new_task.hide();
+                $new_task.fadeIn()
             }
         }
     });
