@@ -23,11 +23,22 @@ header{
 }
 
 .tasks-list p:nth-child(even) {
-    background-color: lavender;
+    background-color: #1d89ff;
+    color: white;
 }
 
 .tasks-list p:nth-child(odd) {
-    background-color: gainsboro;
+    background-color: #d6e3ff;
+}
+
+.field{
+    height: 34px;
+    border: 1px solid #1d89ff;
+    border-right-width: 0px;
+}
+
+.checkbox{
+    margin-right: 10px;
 }
 
 footer {

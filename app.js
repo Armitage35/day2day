@@ -1,10 +1,8 @@
 var main = function() {
-    "use strict";
-    
+
     //adding new tasks-list to the comment list using the PLUS ICON
     $(".task-input button").on("click", function (event){
         var $new_comment;
-        
         //making sure the box isn't empty (in order to avoid adding empty <p> as tasks-list)
         if ($(".task-input input").val() !== "") {
             //a new paragraph is being created AND THEN we add the content from the input field
@@ -36,7 +34,7 @@ var main = function() {
                 $new_comment.fadeIn()
             }
         }
-    })
+    });
 };
 
 $(document).ready(main);
