@@ -1,4 +1,7 @@
 var main = function() {
+    
+    //make tasks draggable
+    Sortable.create(draggable, { /* options */ });
 
     //change when task is checked
     $('input').change(function(){
