@@ -3,14 +3,21 @@ var main = function() {
     //make tasks draggable
     Sortable.create(draggable, { /* options */ });
 
+    $(".taskList").on('click', "input",function() {
+        $(this).parent().fadeOut();
+        console.log("yolo");
+    }) 
+    
     //change when task is checked
-    $('input').change(function(){
+    /* $('input').change(function(){
         if ($(this).is(':checked')) {
             console.log("yolo");
             $(this).parent().fadeOut();
             }
-    });
-
+    }); */
+    
+    
+    
     //adding new taskList to the task list using the PLUS ICON
     $(".task-input button").on("click", function (event){
         var $new_task;

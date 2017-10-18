@@ -2,8 +2,8 @@
     font-family: 'Raleway', sans-serif;
 }
 
-header{
-    margin:20px;
+header {
+    margin: 20px;
 }
 
 .top {
@@ -11,15 +11,15 @@ header{
 }
 
 .task-input {
-    margin-left:15px;
+    margin-left: 15px;
 }
 
 .taskList {
-    margin:10px;
+    margin: 10px;
 }
 
 .taskList p {
-    margin:5px;
+    margin: 5px;
 }
 
 .taskList p:nth-child(even) {
@@ -31,13 +31,13 @@ header{
     background-color: #d6e3ff;
 }
 
-.field{
+.field {
     height: 34px;
     border: 1px solid #1d89ff;
     border-right-width: 0px;
 }
 
-.checkbox{
+.checkbox {
     margin-right: 10px;
 }
 
@@ -46,5 +46,5 @@ header{
 }
 
 footer {
-    margin:20px;
+    margin: 20px;
 }
