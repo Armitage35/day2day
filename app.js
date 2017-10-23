@@ -7,7 +7,7 @@ var main = function() {
     $(".taskList").on('click', "input",function() {
         $(this).parent().fadeOut();
     });
-    
+
     //adding tasks function
     var addTaskFromInputBox = function () {
         var $new_task;
