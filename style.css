@@ -17,7 +17,7 @@ body{
 header {
     margin: 20px;
     text-align:center;
-    display: inline
+    display: inline;
 }
 
 
@@ -41,19 +41,16 @@ header {
 
 .taskList {
     margin: 10px;
+    z-index: 1;
 }
 
 .taskList p {
     margin: 5px;
 }
 
-.taskList p:nth-child(even) {
+.taskList p {
     background-color: #1d89ff;
     color: white;
-}
-
-.taskList p:nth-child(odd) {
-    background-color: #d6e3ff;
 }
 
 .field {
@@ -73,3 +70,5 @@ header {
 footer {
     margin: 20px;
 }
+
+
