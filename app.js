@@ -14,7 +14,7 @@ var main = function() {
         if ($(".task-input input").val() !== "") {
            //a new paragraph is being created AND THEN we add the content from the input field
                 $new_task = $(".task-input input").val();
-                $(".taskList").append("<p class='task list-group-item'><i class='fa fa-bars' aria-hidden='true' draggable='true' style='cursor:move'></i> <input type='checkbox' name='task-marker'>" + $new_task + "</p>");
+                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + $new_task + "</p>");
                 //empty input field
                 $(".task-input input").val("");
                 //fading the new task in
