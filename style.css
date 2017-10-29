@@ -27,6 +27,13 @@ header {
     display: inline;
 }
 
+fa {
+    color: #1d89ff;
+}
+
+fa:hover {
+    color: white;
+}
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #495057;
@@ -75,7 +82,7 @@ input[type="checkbox"]:checked {
 
 .taskList p {
     margin: 5px;
-    padding-left:0px;
+    padding-left:5px;
 }
 
 .taskList p {
