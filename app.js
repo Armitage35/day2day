@@ -12,6 +12,14 @@ var main = function() {
     $(".taskList").on('click', "input", function() {
         $(this).parent().fadeOut();
     });
+    
+    //using the shift + enter keys to display the add task modal
+    $(document).on("keypress", function(event) {
+        if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey){
+            $("#myInput").click();
+            console.log("yolo")
+        };
+    });
 
     //adding tasks function
     var addTaskFromInputBox = function() {
