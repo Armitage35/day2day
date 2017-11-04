@@ -20,21 +20,41 @@ var main = function() {
         };
     });
 
+    //declaring today as being today
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = mm + '/' + dd + '/' + yyyy;
+    today = dd + '/' + mm + '/' + yyyy;
+
+    //class creator
+    function Task(title, complete, createdOn, dueDate) {
+      this.title = title;
+      this.complete = false;
+      this.createdOn = today;
+      this.dueDate = today;
+    };
+
     //adding tasks function
     var addTaskFromInputBox = function() {
         var $new_task;
         if ($(".task-input input").val() !== "") {
             //a new paragraph is being created AND THEN we add the content from the input field
             $new_task = $(".task-input input").val();
-
-            $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + $new_task + "</p>");
+            var task = new Task($new_task,false, today, today);
+            console.log(task);
+            $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + task.title + "</p>");
             //empty input field
             $(".task-input input").val("");
-            let task = { title: $new_task, date: "does not exists yet" };
-            console.log(task.title);
-            console.log(task.date);
             //fading the new task in
-            $new_task.fadeIn();
+            document.getElementsByClassName(task)
         }
     };
 
@@ -50,29 +70,6 @@ var main = function() {
             addTaskFromInputBox();
         }
     });
-
-    //declaring today as being today
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd
-    }
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-    today = mm + '/' + dd + '/' + yyyy;
-    today = dd + '/' + mm + '/' + yyyy;
-
-    function createNewTask(name) {
-        var obj = {};
-        obj.name = name;
-        obj.createdOn = today;
-        obj.completed = false;
-        obj.dueDate = today;
-        return obj;
-    }
 
 };
 
