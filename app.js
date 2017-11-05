@@ -36,25 +36,47 @@ var main = function() {
 
     //class creator
     function Task(title, complete, createdOn, dueDate) {
-      this.title = title;
-      this.complete = false;
-      this.createdOn = today;
-      this.dueDate = today;
+        this.title = title;
+        this.complete = false;
+        this.createdOn = today;
+        this.dueDate = today;
+    };
+
+    taskCount = 3;
+    var userTask = [];
+
+    function onboarding() {
+        userTask.push({ title: 'Start by adding a task', complete: false, createOn: today, dueDate: today });
+        userTask.push({ title: 'Then complete a task by clicking in the checkbox', complete: false, createOn: today, dueDate: today });
+        userTask.push({ title: 'Reorder task by drag and dropping them', complete: false, createOn: today, dueDate: today });
+    };
+
+    onboarding()
+
+    var background = "<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>";
+
+    //show tasks from object
+    for (var i = 0; i <= taskCount - 1; i++) {
+        console.log(userTask[i].title);
+        $(".taskList").append(background + userTask[i].title + "</p>");
     };
 
     //adding tasks function
     var addTaskFromInputBox = function() {
         var $new_task;
         if ($(".task-input input").val() !== "") {
-            //a new paragraph is being created AND THEN we add the content from the input field
             $new_task = $(".task-input input").val();
-            var task = new Task($new_task,false, today, today);
-            console.log(task);
-            $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + task.title + "</p>");
+            //create a new task object
+            var task = new Task($new_task, false, today, today);
+            userTask.push({ title: $new_task, complete: false, createOn: today, dueDate: today });
+            $(".taskList").append(background + task.title + "</p>");
             //empty input field
             $(".task-input input").val("");
-            //fading the new task in
-            document.getElementsByClassName(task)
+            taskCount = taskCount + 1;
+            console.log(taskCount);
+        }
+        else {
+            alert("Give your task a title");
         }
     };
 
