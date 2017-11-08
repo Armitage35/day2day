@@ -72,7 +72,9 @@ var main = function() {
             //empty input field
             $(".task-input input").val("");
             taskCount = taskCount + 1;
-            console.log(taskCount);
+            var myUserTask = JSON.stringify(userTask);
+            Cookies.remove('myUserTask');
+            Cookies.set('myUserTask', myUserTask);
         }
         else {
             alert("Give your task a title");
