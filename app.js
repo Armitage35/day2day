@@ -57,7 +57,6 @@ var main = function() {
 
     //show tasks from object
     for (var i = 0; i <= taskCount - 1; i++) {
-        console.log(userTask[i].title);
         $(".taskList").append(background + userTask[i].title + "</p>");
     };
 
@@ -90,7 +89,7 @@ var main = function() {
     $(".task-input input").on("keypress", function(event) {
         if (event.keyCode === 13) {
             addTaskFromInputBox();
-        }
+        };
     });
 
 };
