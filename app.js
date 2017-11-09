@@ -61,19 +61,24 @@ var main = function() {
     var myUserTask;
     var cookieContent = Cookies.get('myUserTask');
     
-    console.log(cookieContent);
 
     var background = "<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>";
 
     //show tasks from object
-    for (var i = 0; i <= taskCount - 1; i++) {
-        $(".taskList").append(background + userTask[i].title + "</p>");
+    function displayTask(){
+        for (var i = 0; i <= taskCount - 1; i++) {
+            $(".taskList").append(background + userTask[i].title + "</p>");
+            console.log('displayTask has run')
+        };
     };
+
+    displayTask();
 
     //adding tasks function
     var addTaskFromInputBox = function() {
         var $new_task;
         if ($(".task-input input").val() !== "") {
+            $(".taskList").empty();
             $new_task = $(".task-input input").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
@@ -81,12 +86,14 @@ var main = function() {
             $(".taskList").append(background + task.title + "</p>");
             //empty input field
             $(".task-input input").val("");
-            taskCount = taskCount + 1;
-            console.log(userTask);
+            //run the display function again
+            displayTask();
+            //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
             console.log(myUserTask);
+            taskCount = taskCount +1;
         }
         else {
             alert("Give your task a title");
