@@ -42,7 +42,7 @@ var main = function() {
         this.dueDate = today;
     };
 
-    taskCount = 3;
+    
     var userTask = [];
 
     function onboarding() {
@@ -51,10 +51,13 @@ var main = function() {
         userTask.push({ title: 'Reorder task by drag and dropping them', complete: false, createOn: today, dueDate: today });
     };
 
-    onboarding()
+    onboarding();
+    
+    taskCount = userTask.length -1;
+    console.log(taskCount);
     
     //Create an empty cookie file if no cookie is to be found
-    if (cookieContent == null) {
+    if (cookieContent == "") {
         Cookies.set('myUserTask', "");
     };
     
@@ -66,9 +69,8 @@ var main = function() {
 
     //show tasks from object
     function displayTask(){
-        for (var i = 0; i <= taskCount - 1; i++) {
+        for (var i = 0; i <= taskCount; i++) {
             $(".taskList").append(background + userTask[i].title + "</p>");
-            console.log('displayTask has run')
         };
     };
 
