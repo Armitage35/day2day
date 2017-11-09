@@ -52,6 +52,16 @@ var main = function() {
     };
 
     onboarding()
+    
+    //Create an empty cookie file if no cookie is to be found
+    if (cookieContent == null) {
+        Cookies.set('myUserTask', "");
+    };
+    
+    var myUserTask;
+    var cookieContent = Cookies.get('myUserTask');
+    
+    console.log(cookieContent);
 
     var background = "<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>";
 
@@ -72,9 +82,11 @@ var main = function() {
             //empty input field
             $(".task-input input").val("");
             taskCount = taskCount + 1;
+            console.log(userTask);
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
+            console.log(myUserTask);
         }
         else {
             alert("Give your task a title");
