@@ -44,7 +44,7 @@ var main = function() {
 
     var userTask = [];
     
-    //Create an empty cookie file if no cookie is to be found
+    //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if ( Cookies.get('myUserTask') == undefined) {
         Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"}');
         console.log("cookie vide")
@@ -54,7 +54,7 @@ var main = function() {
     };
     
 
-
+    //populate the board with onboarding tasks
     function onboarding() {
         userTask.push({ title: 'Start by adding a task', complete: false, createOn: today, dueDate: today });
         userTask.push({ title: 'Then complete a task by clicking in the checkbox', complete: false, createOn: today, dueDate: today });
@@ -101,13 +101,13 @@ var main = function() {
         }
     };
 
-    //trigger task hiding on button click
+    //trigger task adding on button click
     $(".task-input button").on("click", function(event) {
         addTaskFromInputBox();
         console.log("button click");
     });
 
-    //trigger task hiding on enter key
+    //trigger task adding on enter key
     $(".task-input input").on("keypress", function(event) {
         if (event.keyCode === 13) {
             addTaskFromInputBox();
