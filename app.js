@@ -42,8 +42,18 @@ var main = function() {
         this.dueDate = today;
     };
 
-    
     var userTask = [];
+    
+    //Create an empty cookie file if no cookie is to be found
+    if ( Cookies.get('myUserTask') == undefined) {
+        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"Then complete a task by clicking in the checkbox","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"Reorder task by drag and dropping them","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"ok","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"}]');
+        console.log("cookie vide")
+    } else {
+        console.log(Cookies.get('myUserTask'));
+        userTask = Cookies.getJSON('myUserTask')
+    };
+    
+
 
     function onboarding() {
         userTask.push({ title: 'Start by adding a task', complete: false, createOn: today, dueDate: today });
@@ -51,23 +61,12 @@ var main = function() {
         userTask.push({ title: 'Reorder task by drag and dropping them', complete: false, createOn: today, dueDate: today });
     };
 
-    onboarding();
-    
-    taskCount = userTask.length -1;
-    console.log(taskCount);
-    
-    //Create an empty cookie file if no cookie is to be found
-    if (cookieContent == "") {
-        Cookies.set('myUserTask', "");
-    };
-    
-    var myUserTask;
-    var cookieContent = Cookies.get('myUserTask');
-    
+   // onboarding();
 
     var background = "<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>";
 
     //show tasks from object
+    taskCount = userTask.length -1;
     function displayTask(){
         for (var i = 0; i <= taskCount; i++) {
             $(".taskList").append(background + userTask[i].title + "</p>");
