@@ -46,7 +46,7 @@ var main = function() {
     
     //Create an empty cookie file if no cookie is to be found
     if ( Cookies.get('myUserTask') == undefined) {
-        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"Then complete a task by clicking in the checkbox","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"Reorder task by drag and dropping them","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"},{"title":"ok","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"}]');
+        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"}');
         console.log("cookie vide")
     } else {
         console.log(Cookies.get('myUserTask'));
