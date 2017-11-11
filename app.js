@@ -8,14 +8,6 @@ var main = function() {
     //make tasks draggable
     Sortable.create(draggable, { /* options */ });
 
-    //mark task as completed when checked
-    $(".taskList").on('click', "input", function() {
-        $(this).parent().fadeOut();
-        var completedTaskID = $(this).parent().attr('id');;
-        console.log(completedTaskID);
-        userTask[completedTaskID].complete = true;
-    });
-
     //using the ctrl + enter keys to display the add task modal
     $(document).on("keypress", function(event) {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
@@ -70,11 +62,28 @@ var main = function() {
     
     function displayTask(){
         for (var i = 0; i <= taskCount; i++) {
-        $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "</p>");
+            if (userTask[i].complete == false){        
+                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "</p>");
+            }
+            else {
+                console.log("non, ca j'affiche pas");
+            }
         };
     };
 
     displayTask();
+    
+    //mark task completed
+    $(".taskList").on('click', "input", function() {
+        $(this).parent().fadeOut();
+        var completedTaskID = $(this).parent().attr('id');;
+        console.log(completedTaskID);
+        userTask[completedTaskID].complete = true;
+        var myUserTask = JSON.stringify(userTask);
+        Cookies.remove('myUserTask');
+        Cookies.set('myUserTask', myUserTask);
+        console.log(myUserTask);
+    });
 
     //adding tasks function
     var addTaskFromInputBox = function() {
