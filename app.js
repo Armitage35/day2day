@@ -93,7 +93,7 @@ var main = function() {
             $new_task = $(".task-input input").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount, complete: false, createOn: today, dueDate: today });
+            userTask.push({ title: $new_task, id: taskCount+1, complete: false, createOn: today, dueDate: today });
             //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file
