@@ -8,10 +8,12 @@ var main = function() {
     //make tasks draggable
     Sortable.create(draggable, { /* options */ });
 
-    //hide tasks when completed
+    //mark task as completed when checked
     $(".taskList").on('click', "input", function() {
         $(this).parent().fadeOut();
-        console.log($(this).parent())
+        var completedTaskID = $(this).parent().attr('id');;
+        console.log(completedTaskID);
+        userTask[completedTaskID].complete = true;
     });
 
     //using the ctrl + enter keys to display the add task modal
