@@ -11,6 +11,7 @@ var main = function() {
     //hide tasks when completed
     $(".taskList").on('click', "input", function() {
         $(this).parent().fadeOut();
+        console.log($(this).parent())
     });
 
     //using the ctrl + enter keys to display the add task modal
@@ -52,7 +53,6 @@ var main = function() {
         console.log(Cookies.get('myUserTask'));
         userTask = Cookies.getJSON('myUserTask')
     };
-    
 
     //populate the board with onboarding tasks
     function onboarding() {
@@ -63,13 +63,12 @@ var main = function() {
 
    // onboarding();
 
-    var background = "<p class='task list-group-item'  draggable='true' style='cursor:move'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>";
-
     //show tasks from object
     taskCount = userTask.length -1;
+    
     function displayTask(){
         for (var i = 0; i <= taskCount; i++) {
-            $(".taskList").append(background + userTask[i].title + "</p>");
+        $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "</p>");
         };
     };
 
@@ -83,18 +82,17 @@ var main = function() {
             $new_task = $(".task-input input").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, complete: false, createOn: today, dueDate: today });
-            $(".taskList").append(background + task.title + "</p>");
+            userTask.push({ title: $new_task, id: taskCount, complete: false, createOn: today, dueDate: today });
             //empty input field
             $(".task-input input").val("");
-            //run the display function again
-            displayTask();
             //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
             console.log(myUserTask);
             taskCount = taskCount +1;
+            //run the display function again
+            displayTask();
         }
         else {
             alert("Give your task a title");
