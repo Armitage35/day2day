@@ -64,10 +64,7 @@ var main = function() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false){        
                 $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "</p>");
-            }
-            else {
-                console.log("non, ca j'affiche pas");
-            }
+            };
         };
     };
 
