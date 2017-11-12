@@ -3,7 +3,10 @@ var main = function() {
     //show & hide modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
-    })
+    });
+    
+
+
 
     //make tasks draggable
     Sortable.create(draggable, { /* options */ });
@@ -26,8 +29,13 @@ var main = function() {
     if (mm < 10) {
         mm = '0' + mm
     }
-    today = mm + '/' + dd + '/' + yyyy;
     today = dd + '/' + mm + '/' + yyyy;
+    var now = yyyy + '-' + mm + '-' + dd;
+
+    //date input
+    $("#calendarButton").on("click", function(event){
+        $(".modal-body").append("<form style='margin-top:5px'>Your due date:<input type='date' class='field' style='border-right-width:1px; margin-left:10px; width::147px' value='"+ now +"' autofocus name='dueDate'></form>");
+    });
 
     //class creator
     function Task(title, complete, createdOn, dueDate) {
@@ -127,7 +135,7 @@ var main = function() {
     };
 
     //trigger task adding on button click
-    $(".task-input button").on("click", function(event) {
+    $(".task-input #plusButton").on("click", function(event) {
         addTaskFromInputBox();
         console.log("button click");
     });
