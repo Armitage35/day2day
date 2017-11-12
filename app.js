@@ -103,7 +103,7 @@ var main = function() {
             displayTask();
         }
         else {
-            alert("Give your task a title");
+            $('#myModal').modal('hide');
         }
     };
 
