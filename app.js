@@ -34,7 +34,8 @@ var main = function() {
 
     //date input
     $("#calendarButton").on("click", function(event){
-        $(".modal-body").append("<form style='margin-top:5px'>Your due date:<input type='date' class='field' style='border-right-width:1px; margin-left:10px; width::147px' value='"+ now +"' autofocus name='dueDate'></form>");
+        $(".datePicker").toggle();
+        $("#dueDate").val(now);
     });
 
     //class creator
