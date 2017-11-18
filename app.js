@@ -62,7 +62,7 @@ var main = function() {
     function displayTask() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-               $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "</p>");
+               $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link' data-toggle='modal' data-target='#commentsModal'><i class='fa fa-comment' aria-hidden='true'></i> </button>" + "</p>");
             };
         };
     };
@@ -73,11 +73,11 @@ var main = function() {
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
-                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, complete: false, createOn: today, dueDate: today });
+                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, complete: false, createOn: today, dueDate: ""});
                 taskCount ++;
-                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, createOn: today, dueDate: today });
+                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
                 taskCount ++;
-                userTask.push({ title: 'Reorder task by drag and dropping them',id: taskCount + 1,  complete: false, createOn: today, dueDate: today });
+                userTask.push({ title: 'Reorder task by drag and dropping them',id: taskCount + 1,  complete: false, createOn: today, dueDate: "" });
                 taskCount ++;
                 var myUserTask = JSON.stringify(userTask);
                 Cookies.remove('myUserTask');
@@ -138,7 +138,6 @@ var main = function() {
     //trigger task adding on button click
     $(".task-input #plusButton").on("click", function(event) {
         addTaskFromInputBox();
-        console.log("button click");
     });
 
     //trigger task adding on enter key

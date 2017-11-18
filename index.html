@@ -52,6 +52,31 @@
             <section class="task-input col-md-2">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="myInput" style="display:none">Add your tasks</button>
+                <div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Comment 1</p>
+                                <p>Comment 2</p>
+                                <hr />
+                                <form>
+                                    <div class="form-group">
+                                        <label for="new-comment-text" class="form-control-label"> Comment</label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary">Send message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -61,8 +86,10 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
-                                <input type="text" autofocus placeholder="Type your task" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="fa  fa-calendar" aria-hidden="true"></i></button><button class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus-circle" id="plusButton" aria-hidden="true"></i></button>
-                                <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
+                                <input type="text" autofocus placeholder="Type your task" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="fa  fa-calendar" aria-hidden="true"></i></button>
+                                <button
+                                    class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus-circle" id="plusButton" aria-hidden="true"></i></button>
+                                    <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">I'm done</button>
@@ -76,7 +103,7 @@
             <hr />
             <a href="https://ca.linkedin.com/in/adrien-dubois-ahlqvist-4179b33b/en" target="_blank">An app by Adrien D. Ahlqvist</a>
         </footer>
-        </div>
+    </div>
 
 </body>
 
