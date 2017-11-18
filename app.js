@@ -30,7 +30,7 @@ var main = function() {
     var now = yyyy + '-' + mm + '-' + dd;
 
     //date input
-    $("#calendarButton").on("click", function(event){
+    $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
         $("#dueDate").val(now);
     });
@@ -40,7 +40,8 @@ var main = function() {
         this.title = title;
         this.complete = false;
         this.createdOn = today;
-        this.dueDate = today;
+        this.dueDate;
+        this.comment;
     };
 
     var userTask = [];
@@ -62,23 +63,38 @@ var main = function() {
     function displayTask() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-               $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link' data-toggle='modal' data-target='#commentsModal'><i class='fa fa-comment' aria-hidden='true'></i> </button>" + "</p>");
+                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id +"'><i class='fa fa-comment' aria-hidden='true'></i> </button>" + "</p>");
             };
         };
     };
+    
+    var selectedTask;
+    
+    //getting the task's ID
+    $(".taskList").on('click', "button", function() {
+        selectedTask = $(this).parent().attr('id');
+    });
 
+    // adding comments
+    $("#addComment").on("click", function(event) {
+        var newComment = $("#message-text").val();
+        console.log(selectedTask);
+        console.log(newComment);
+        $("#message-text").val("");
+    });
 
+    //the onboarding
     function onboarding() {
         if (taskCount == -1) {
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
-                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, complete: false, createOn: today, dueDate: ""});
-                taskCount ++;
+                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
+                taskCount++;
                 userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
-                taskCount ++;
-                userTask.push({ title: 'Reorder task by drag and dropping them',id: taskCount + 1,  complete: false, createOn: today, dueDate: "" });
-                taskCount ++;
+                taskCount++;
+                userTask.push({ title: 'Reorder task by drag and dropping them', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
+                taskCount++;
                 var myUserTask = JSON.stringify(userTask);
                 Cookies.remove('myUserTask');
                 Cookies.set('myUserTask', myUserTask);
@@ -92,13 +108,12 @@ var main = function() {
 
     onboarding();
 
-
     displayTask();
 
     //mark task completed
     $(".taskList").on('click', "input", function() {
         $(this).parent().fadeOut();
-        var completedTaskID = $(this).parent().attr('id');;
+        var completedTaskID = $(this).parent().attr('id');
         console.log(completedTaskID);
         userTask[completedTaskID].complete = true;
         var myUserTask = JSON.stringify(userTask);
@@ -114,10 +129,9 @@ var main = function() {
             $(".taskList").empty();
             $new_task = $(".task-input input").val();
             var dueDate = $("#dueDate").val();
-            console.log(dueDate);
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate });
+            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, });
             //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file
