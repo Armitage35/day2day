@@ -52,12 +52,11 @@ var main = function() {
         console.log("cookie vide")
     }
     else {
-        console.log(Cookies.get('myUserTask'));
         userTask = Cookies.getJSON('myUserTask')
+        console.log(userTask);
     };
 
     taskCount = userTask.length - 1;
-    console.log(taskCount);
 
     //show tasks from object
     function displayTask() {
@@ -131,14 +130,14 @@ var main = function() {
             var dueDate = $("#dueDate").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, });
+            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, comment: [] });
             //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
-            console.log(myUserTask);
+            console.log(userTask);
             taskCount = taskCount + 1;
             $(".datePicker").hide();
             //run the display function again
