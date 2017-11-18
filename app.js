@@ -4,9 +4,6 @@ var main = function() {
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
     });
-    
-
-
 
     //make tasks draggable
     Sortable.create(draggable, { /* options */ });
@@ -61,11 +58,11 @@ var main = function() {
     taskCount = userTask.length - 1;
     console.log(taskCount);
 
-        //show tasks from object
+    //show tasks from object
     function displayTask() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "</p>");
+               $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "</p>");
             };
         };
     };
@@ -116,9 +113,11 @@ var main = function() {
         if ($(".task-input input").val() !== "") {
             $(".taskList").empty();
             $new_task = $(".task-input input").val();
+            var dueDate = $("#dueDate").val();
+            console.log(dueDate);
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: today });
+            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate });
             //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file
@@ -127,6 +126,7 @@ var main = function() {
             Cookies.set('myUserTask', myUserTask);
             console.log(myUserTask);
             taskCount = taskCount + 1;
+            $(".datePicker").hide();
             //run the display function again
             displayTask();
         }
