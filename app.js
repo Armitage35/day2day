@@ -77,9 +77,14 @@ var main = function() {
     // adding comments
     $("#addComment").on("click", function(event) {
         var newComment = $("#message-text").val();
+        if (newComment != ""){
         console.log(selectedTask);
         console.log(newComment);
         $("#message-text").val("");
+        userTask[selectedTask].comment.push(newComment);
+        console.log(userTask);
+        }
+
     });
 
     //the onboarding
