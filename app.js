@@ -62,22 +62,30 @@ var main = function() {
     function displayTask() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id +"'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb +" </button>" + "</p>");
+                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
             };
         };
     };
-    
+
     var selectedTask;
-    
-    //getting the task's ID
+
+    //getting the task's ID and displaying comments in the modal
     $(".taskList").on('click', "button", function() {
         selectedTask = $(this).parent().attr('id');
+        $(".taskComments").empty();
+        if (userTask[selectedTask].commentNb != 0){
+            for(i = 0; i < userTask[selectedTask].commentNb; i++){
+                $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p>");
+            };
+        } else {
+            $(".taskComments").append("<p>No comment has been added yet</p>");
+        };
     });
 
     // adding comments
-    $("#addComment").on("click", function(event) {
+    $("#addComment").on("click", function() {
         var newComment = $("#message-text").val();
-        if (newComment != ""){
+        if (newComment != "") {
             console.log(selectedTask);
             console.log(newComment);
             $("#message-text").val("");
@@ -141,7 +149,7 @@ var main = function() {
             var dueDate = $("#dueDate").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, commentNb: 0 ,comment: [] });
+            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, commentNb: 0, comment: [] });
             //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file

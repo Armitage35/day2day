@@ -117,3 +117,6 @@ footer {
     text-decoration: none;
 }
 
+.btn-link:focus {
+    border-style: none;
+}
