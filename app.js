@@ -68,18 +68,22 @@ var main = function() {
     };
 
     var selectedTask;
-
-    //getting the task's ID and displaying comments in the modal
-    $(".taskList").on('click', "button", function() {
-        selectedTask = $(this).parent().attr('id');
-        $(".taskComments").empty();
+    
+    function displayComments(){
+                $(".taskComments").empty();
         if (userTask[selectedTask].commentNb != 0){
             for(i = 0; i < userTask[selectedTask].commentNb; i++){
-                $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p>");
+                $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p><hr / class='taskSeparator'>");
             };
         } else {
             $(".taskComments").append("<p>No comment has been added yet</p>");
         };
+    };
+
+    //getting the task's ID and displaying comments in the modal
+    $(".taskList").on('click', "button", function() {
+        selectedTask = $(this).parent().attr('id');
+        displayComments();
     });
 
     // adding comments
@@ -97,7 +101,7 @@ var main = function() {
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
-            $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p>");
+            displayComments();
         };
 
     });
@@ -108,11 +112,13 @@ var main = function() {
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
-                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
+                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, commentNb: 0,complete: false, createOn: today, dueDate: "" , comment: [] });
                 taskCount++;
-                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
+                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, commentNb: 0, createOn: today, dueDate: "" , comment: [] });
                 taskCount++;
-                userTask.push({ title: 'Reorder task by drag and dropping them', id: taskCount + 1, complete: false, createOn: today, dueDate: "" });
+                userTask.push({ title: 'Reorder task by drag and dropping them', id: taskCount + 1, commentNb: 0, complete: false, createOn: today, dueDate: "" , comment: [] });
+                taskCount++;
+                userTask.push({ title: 'You can even add comments to your tasks', id: taskCount + 1, commentNb: 0, complete: false, createOn: today, dueDate: "" , comment: [] });
                 taskCount++;
                 var myUserTask = JSON.stringify(userTask);
                 Cookies.remove('myUserTask');
@@ -151,7 +157,6 @@ var main = function() {
             //create a new task object
             var task = new Task($new_task, false, today, today);
             userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, commentNb: 0, comment: [] });
-            //empty input field
             $(".task-input input").val("");
             //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
