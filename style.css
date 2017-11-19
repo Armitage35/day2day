@@ -110,5 +110,10 @@ footer {
 
 .btn-link {
     color: white;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    text-decoration: none;
 }
 
