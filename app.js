@@ -97,6 +97,7 @@ var main = function() {
             var myUserTask = JSON.stringify(userTask);
             Cookies.remove('myUserTask');
             Cookies.set('myUserTask', myUserTask);
+            $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p>");
         };
 
     });
