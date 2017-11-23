@@ -1,5 +1,7 @@
 var main = function() {
 
+    var selectedTask;
+
     //show & hide modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
@@ -34,6 +36,12 @@ var main = function() {
         $(".datePicker").toggle();
         $("#dueDate").val(now);
     });
+    
+    //gif input
+    $("#gifButton").on("click", function(event) {
+        $(".datePicker").toggle();
+        $("#dueDate").val(now);
+    });
 
     //class creator
     function Task(title, complete, createdOn, dueDate) {
@@ -60,14 +68,13 @@ var main = function() {
 
     //show tasks from object
     function displayTask() {
+        $(".taskList").empty();
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
                 $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
             };
         };
     };
-
-    var selectedTask;
     
     function displayComments(){
                 $(".taskComments").empty();
@@ -150,9 +157,9 @@ var main = function() {
     //adding tasks function
     var addTaskFromInputBox = function() {
         var $new_task;
-        if ($(".task-input input").val() !== "") {
-            $(".taskList").empty();
-            $new_task = $(".task-input input").val();
+        if ($("#newTask").val() !== "") {
+            $("#newTask").empty();
+            $new_task = $("#newTask").val();
             var dueDate = $("#dueDate").val();
             //create a new task object
             var task = new Task($new_task, false, today, today);
@@ -169,7 +176,7 @@ var main = function() {
             displayTask();
         }
         else {
-            $('#myModal').modal('hide');
+           $('#myModal').modal('hide');
         }
     };
 
