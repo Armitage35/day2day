@@ -69,12 +69,14 @@
                                 </div>
                                 <form>
                                     <div class="form-group">
-                                        <label for="new-comment-text" class="form-control-label"> New Comment</label>
+                                        <label for="new-comment-text" class="form-control-label">New Comment</label>
                                         <textarea class="form-control" id="message-text" placeholder="Type your comment"></textarea>
-                                        <button class="bttn-sm" id="textButton" style="border:solid; border-width:1px 0px"><i class="fa fa-comments-o" aria-hidden="true"></i></button><button class="bttn-sm" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-superpowers" aria-hidden="true"></i></button>
-                                        <div style="display:none">
-                                                What sort of gif are you looking for?
-                                                <input type="text" id="giphyRequest" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus>
+                                        <div style="display:none" id="giphyInput">
+                                                <input type="text" id="giphyRequest" placeholder="Type anything" style="width:100%" class="field" autofocus>
+                                        </div>
+                                        <button class="bttn-sm" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="fa fa-comments-o" aria-hidden="true"></i></button><button class="bttn-sm" type="button" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-superpowers" aria-hidden="true"></i></button>
+                                        <div style="display:none" id="giphyInput">
+                                                <input type="text" id="giphyRequest" autofocus>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-primary" id="addComment">Add a comment</button>

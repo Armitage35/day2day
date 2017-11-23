@@ -36,12 +36,6 @@ var main = function() {
         $(".datePicker").toggle();
         $("#dueDate").val(now);
     });
-    
-    //gif input
-    $("#gifButton").on("click", function(event) {
-        $(".datePicker").toggle();
-        $("#dueDate").val(now);
-    });
 
     //class creator
     function Task(title, complete, createdOn, dueDate) {
@@ -97,8 +91,6 @@ var main = function() {
     $("#addComment").on("click", function() {
         var newComment = $("#message-text").val();
         if (newComment != "") {
-            console.log(selectedTask);
-            console.log(newComment);
             $("#message-text").val("");
             userTask[selectedTask].comment.push(newComment);
             userTask[selectedTask].commentNb++;
@@ -139,7 +131,6 @@ var main = function() {
     };
 
     onboarding();
-
     displayTask();
 
     //mark task completed
@@ -151,7 +142,6 @@ var main = function() {
         var myUserTask = JSON.stringify(userTask);
         Cookies.remove('myUserTask');
         Cookies.set('myUserTask', myUserTask);
-        console.log(myUserTask);
     });
 
     //adding tasks function
@@ -179,6 +169,18 @@ var main = function() {
            $('#myModal').modal('hide');
         }
     };
+
+    //supporting giphies
+    $("#gifButton").on("click", function(event) {
+        $("#giphyInput").toggle();
+        $("#message-text").toggle();
+    });
+    
+    //toggeling comments to text
+    $("#textButton").on("click", function(event) {
+        $("#giphyInput").toggle();
+        $("#message-text").toggle();
+    });
 
     //trigger task adding on button click
     $(".task-input #plusButton").on("click", function(event) {
