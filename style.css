@@ -129,4 +129,8 @@ footer {
     margin-left: 0px;
 }
 
-
+.gif {
+    display: block;
+    margin-bottom: 5px;
+    max-height: 150px;
+}

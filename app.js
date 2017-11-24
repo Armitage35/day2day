@@ -186,13 +186,23 @@ var main = function() {
     //looking for gif
     $("#testGif").on("click", function(event) {
         var requestedGif = $("#giphyRequest").val();
+        var requestedGif = requestedGif.split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
-            console.log(giphyResponse);
             var gif = giphyResponse.responseJSON.data[0].images.preview_gif.url;
-            var suggestedGif = '<img src="'+ gif +'">'
-            console.log(suggestedGif);
-            $("#giphyInput").append(suggestedGif);
+            var gif = '<img src="' + gif + '" class="gif">';
+            $("#waitingGif").empty();
+            $("#waitingGif").prepend(gif);
+            $("#addComment").on("click", function(event) {
+                userTask[selectedTask].comment.push(gif);
+                userTask[selectedTask].commentNb++;
+                var myUserTask = JSON.stringify(userTask);
+                Cookies.remove('myUserTask');
+                Cookies.set('myUserTask', myUserTask);
+                displayTask();
+                displayComments();
+            });
+
         });
     })
 
