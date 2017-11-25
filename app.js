@@ -1,7 +1,9 @@
 var main = function() {
 
     var selectedTask;
+    var userTask = [];
 
+    
     //show & hide modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
@@ -46,7 +48,6 @@ var main = function() {
         this.comment;
     };
 
-    var userTask = [];
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
@@ -58,7 +59,7 @@ var main = function() {
         console.log(userTask);
     };
 
-    taskCount = userTask.length - 1;
+    var taskCount = userTask.length - 1;
 
     //show tasks from object
     function displayTask() {
@@ -171,7 +172,7 @@ var main = function() {
         }
     };
 
-    //supporting giphies
+    //display giphy input box
     $("#gifButton").on("click", function(event) {
         $("#giphyInput").toggle();
         $("#message-text").toggle();
@@ -194,6 +195,8 @@ var main = function() {
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
             $("#addComment").on("click", function(event) {
+                $("#waitingGif").empty();
+                var requestedGif = $("#giphyRequest").val();
                 userTask[selectedTask].comment.push(gif);
                 userTask[selectedTask].commentNb++;
                 var myUserTask = JSON.stringify(userTask);
@@ -201,6 +204,7 @@ var main = function() {
                 Cookies.set('myUserTask', myUserTask);
                 displayTask();
                 displayComments();
+                $("#giphyRequest").val("");
             });
 
         });
