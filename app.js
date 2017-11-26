@@ -36,14 +36,14 @@ var main = function() {
     //date input
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
-        $("#dueDate").val(now);
+        $("#dueDate").val(new Date());
     });
 
     //class creator
     function Task(title, complete, createdOn, dueDate) {
         this.title = title;
         this.complete = false;
-        this.createdOn = today;
+        this.createdOn = new Date;
         this.dueDate;
         this.comment;
     };
@@ -51,7 +51,7 @@ var main = function() {
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
-        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createOn":"08/11/2017","dueDate":"08/11/2017"}');
+        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createdOn":"08/11/2017","dueDate":"08/11/2017"}');
         console.log("cookie vide")
     }
     else {
@@ -113,19 +113,18 @@ var main = function() {
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
-                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, commentNb: 0, complete: false, createOn: today, dueDate: "", comment: [] });
+                userTask.push({ title: 'Start by adding a task', id: taskCount + 1, commentNb: 0, complete: false, createdOn: new Date, dueDate: "", comment: [] });
                 taskCount++;
-                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, commentNb: 0, createOn: today, dueDate: "", comment: [] });
+                userTask.push({ title: 'Then complete a task by clicking in the checkbox', id: taskCount + 1, complete: false, commentNb: 0, createdOn: new Date, dueDate: "", comment: [] });
                 taskCount++;
-                userTask.push({ title: 'Reorder task by drag and dropping them', id: taskCount + 1, commentNb: 0, complete: false, createOn: today, dueDate: "", comment: [] });
+                userTask.push({ title: 'Reorder task by drag and dropping them', id: taskCount + 1, commentNb: 0, complete: false, createdOn: new Date, dueDate: "", comment: [] });
                 taskCount++;
-                userTask.push({ title: 'You can even add comments to your tasks', id: taskCount + 1, commentNb: 0, complete: false, createOn: today, dueDate: "", comment: [] });
+                userTask.push({ title: 'You can even add comments to your tasks', id: taskCount + 1, commentNb: 0, complete: false, createdOn: new Date, dueDate: "", comment: [] });
                 taskCount++;
                 var myUserTask = JSON.stringify(userTask);
                 Cookies.remove('myUserTask');
                 Cookies.set('myUserTask', myUserTask);
                 displayTask();
-                console.log("populating now");
                 console.log(userTask);
                 $('.onboarding').hide();
             });
@@ -152,10 +151,11 @@ var main = function() {
         if ($("#newTask").val() !== "") {
             $("#newTask").empty();
             $new_task = $("#newTask").val();
-            var dueDate = $("#dueDate").val();
+            var dueDate = new Date($("#dueDate").val());
+            dueDate.setDate(dueDate.getDate() + 1);
             //create a new task object
             var task = new Task($new_task, false, today, today);
-            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createOn: today, dueDate: dueDate, commentNb: 0, comment: [] });
+            userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createdOn: new Date, dueDate: dueDate, commentNb: 0, comment: [] });
             $(".task-input input").val("");
             //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
