@@ -2,7 +2,21 @@ var main = function() {
 
     var selectedTask;
     var userTask = [];
-
+    var selectedView;
+    
+    //selected view
+    $("#viewAll").on("click", function() {
+        selectedView = 0;
+    });
+    $("#viewToday").on("click", function() {
+        selectedView = 1;
+    });
+    $("#viewLate").on("click", function() {
+        selectedView = 2;
+    });
+    $("#viewUpcoming").on("click", function() {
+        selectedView = 3;
+    });
     
     //show & hide modal
     $('#myModal').on('shown.bs.modal', function() {
@@ -67,8 +81,8 @@ var main = function() {
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
                 if (userTask[i].dueDate != null){
-                    var dueDateReadable = new Date(userTask[i].dueDate);
-                    dueDateReadable = dueDateReadable.toDateString();
+                    var dueDateDisplay = new Date(userTask[i].dueDate);
+                    var dueDateReadable = dueDateDisplay.toDateString();
                     $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
                 } else {
                      $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
@@ -160,8 +174,8 @@ var main = function() {
             var dueDate = new Date($("#dueDate").val());
             dueDate.setDate(dueDate.getDate() + 1);
             if (dueDate =="Invalid Date") {
-                    dueDate = null
-                }
+                    dueDate = null;
+            };
             //create a new task object
             var task = new Task($new_task, false, today, today);
             userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createdOn: new Date, dueDate: dueDate, commentNb: 0, comment: [] });
