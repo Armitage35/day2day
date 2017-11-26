@@ -36,7 +36,7 @@ var main = function() {
     //date input
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
-        $("#dueDate").val(new Date());
+        $("#dueDate").val(now);
     });
 
     //class creator
@@ -66,7 +66,9 @@ var main = function() {
         $(".taskList").empty();
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + userTask[i].dueDate + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
+                var dueDateReadable = new Date(userTask[i].dueDate);
+                dueDateReadable = dueDateReadable.toDateString();
+                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
             };
         };
     };
