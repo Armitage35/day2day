@@ -3,21 +3,26 @@ var main = function() {
     var selectedTask;
     var userTask = [];
     var selectedView;
-    
+    var selectedDate;
+
     //selected view
     $("#viewAll").on("click", function() {
         selectedView = 0;
+        displayTask();
     });
     $("#viewToday").on("click", function() {
         selectedView = 1;
+        displayTask();
     });
     $("#viewLate").on("click", function() {
         selectedView = 2;
+        displayTask();
     });
     $("#viewUpcoming").on("click", function() {
         selectedView = 3;
+        displayTask();
     });
-    
+
     //show & hide modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
@@ -75,19 +80,25 @@ var main = function() {
 
     var taskCount = userTask.length - 1;
 
+
+
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
         for (var i = 0; i <= taskCount; i++) {
             if (userTask[i].complete == false) {
-                var dueDateDisplay = new Date(userTask[i].dueDate);
-                var dueDateReadable = dueDateDisplay.toDateString();
-                if (dueDateReadable == "Wed Dec 31 1969") {
-                    dueDateReadable = "";
-                }
-                $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
+                displayTaskDetails(i)
             };
         };
+    };
+
+    function displayTaskDetails(i) {
+        var dueDateDisplay = new Date(userTask[i].dueDate);
+        var dueDateReadable = dueDateDisplay.toDateString();
+        if (dueDateReadable == "Wed Dec 31 1969") {
+            dueDateReadable = "";
+        };
+        $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
     };
 
     function displayComments() {
@@ -172,8 +183,8 @@ var main = function() {
             $new_task = $("#newTask").val();
             var dueDate = new Date($("#dueDate").val());
             dueDate.setDate(dueDate.getDate() + 1);
-            if (dueDate =="Invalid Date") {
-                    dueDate = null;
+            if (dueDate == "Invalid Date") {
+                dueDate = null;
             };
             //create a new task object
             var task = new Task($new_task, false, today, today);
