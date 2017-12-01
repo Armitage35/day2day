@@ -8,13 +8,13 @@ var main = function() {
     //selected view
     $("#viewAll").on("click", function() {
         selectedView = 0;
-        this.addClass("active");
+        $("#viewAll").addClass("active");
         $("#viewToday, #viewLate, #viewUpcoming").removeClass("active");
         displayTask();
     });
     $("#viewToday").on("click", function() {
         selectedView = 1;
-        $("#viewToday").toggleClass("active");
+        $("#viewToday").addClass("active");
         $("#viewAll, #viewLate, #viewUpcoming").removeClass("active");
         displayTask();
     });
