@@ -85,21 +85,23 @@ var main = function() {
         $(".taskList").empty();
         date1 = new Date();
         date1 = date1.getTime();
-        
+        var beginingOfDay = new Date();
+        beginingOfDay.setHours(0, 0, 0);
+        beginingOfDay = beginingOfDay.getTime();
+        var endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59);
+        endOfDay = endOfDay.getTime();
         for (var i = 0; i <= taskCount; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
-            console.log(date1);
-            console.log(j);
-            console.log(j < date1)
             if (selectedView == 0) {
                 displayTaskDetails(i);
             } else if (selectedView == 1) {
-                if (new Date(userTask[i].dueDate) == date1){
+                if (j > beginingOfDay && j < endOfDay){
                     displayTaskDetails(i);
                 };
             } else if (selectedView == 2) {
-                if (j < date1){
+                if (j < date1 && j < beginingOfDay){
                     displayTaskDetails(i);
                 };
             } else if (selectedView == 3) {
