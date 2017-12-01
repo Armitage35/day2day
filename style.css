@@ -35,22 +35,18 @@ fa:hover {
     color: white;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #495057;
-    background-color: #fff;
-    border-color: #fff #fff #ddd;
-    border-bottom-width: 5px;
-}
-
-.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-    border-color: #fff #fff #ddd;
-    border-bottom-width: 2px;
-}
 
 .top { }
 
 .task-input {
     margin-left: 15px;
+}
+
+.outer {
+    margin-top: 10px;
+    border: solid grey;
+    border-width: 1px 0px;
+    padding: 5px;
 }
 
 input[type="checkbox"] {
