@@ -2,7 +2,7 @@ var main = function() {
 
     var selectedTask;
     var userTask = [];
-    var selectedView;
+    var selectedView = 0;
     var selectedDate;
 
     //selected view
@@ -80,25 +80,45 @@ var main = function() {
 
     var taskCount = userTask.length - 1;
 
-
-
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
+        date1 = new Date();
+        date1 = date1.getTime();
+        
         for (var i = 0; i <= taskCount; i++) {
-            if (userTask[i].complete == false) {
-                displayTaskDetails(i)
+            var j = new Date(userTask[i].dueDate);
+            j = j.getTime();
+            console.log(date1);
+            console.log(j);
+            console.log(j < date1)
+            if (selectedView == 0) {
+                displayTaskDetails(i);
+            } else if (selectedView == 1) {
+                if (new Date(userTask[i].dueDate) == date1){
+                    displayTaskDetails(i);
+                };
+            } else if (selectedView == 2) {
+                if (j < date1){
+                    displayTaskDetails(i);
+                };
+            } else if (selectedView == 3) {
+                if (j > date1) {
+                    displayTaskDetails(i);
+                };
             };
         };
     };
 
     function displayTaskDetails(i) {
-        var dueDateDisplay = new Date(userTask[i].dueDate);
-        var dueDateReadable = dueDateDisplay.toDateString();
-        if (dueDateReadable == "Wed Dec 31 1969") {
-            dueDateReadable = "";
+        if (userTask[i].complete == false) {
+            var dueDateDisplay = new Date(userTask[i].dueDate);
+            var dueDateReadable = dueDateDisplay.toDateString();
+            if (dueDateReadable == "Wed Dec 31 1969") {
+                dueDateReadable = "";
+            };
+            $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
         };
-        $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
     };
 
     function displayComments() {
