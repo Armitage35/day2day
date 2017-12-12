@@ -219,6 +219,11 @@ var main = function() {
             //create a new task object
             var task = new Task($new_task, false, today, today);
             userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createdOn: new Date, dueDate: dueDate, commentNb: 0, comment: [] });
+            //sending to server
+            $.post("todos", {'userTask': userTask}, function (result) {
+                //this callback is called with the server response
+                console.log(result);
+            });
             $(".task-input input").val("");
             //send the new object to cookie  file
             var myUserTask = JSON.stringify(userTask);
