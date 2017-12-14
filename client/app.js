@@ -264,7 +264,12 @@ var main = function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
-            $("#addComment").on("click", function(event) {
+            
+        });
+    });
+    
+    //add the gif to the DOM
+    $("#addComment").on("click", function(event) {
                 $("#waitingGif").empty();
                 var requestedGif = $("#giphyRequest").val();
                 userTask[selectedTask].comment.push(gif);
@@ -276,8 +281,6 @@ var main = function() {
                 displayComments();
                 $("#giphyRequest").val("");
             });
-        });console.log(giphyResponse)
-    });
 
     //trigger task adding on button click
     $(".task-input #plusButton").on("click", function(event) {
