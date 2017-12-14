@@ -5,6 +5,8 @@ var main = function() {
     var selectedView = 0;
     var selectedDate;
     var gif;
+    var taskCount;
+    var myUserTask;
 
     //selected view
     $("#viewAll").on("click", function() {
@@ -79,20 +81,25 @@ var main = function() {
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
-        Cookies.set('myUserTask', '[{"title":"Start by adding a task","complete":false,"createdOn":"08/11/2017","dueDate":"08/11/2017"}');
-        console.log("cookie vide")
+        console.log("cookie vide");
     }
     else {
         userTask = Cookies.getJSON('myUserTask')
-        console.log(userTask);
     };
+    
+    //handle cookies
+    function updateCookie(){
+        myUserTask = JSON.stringify(userTask);
+        Cookies.remove('myUserTask');
+        Cookies.set('myUserTask', myUserTask);
+    }
 
-    var taskCount = userTask.length - 1;
+    taskCount = userTask.length - 1;
 
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
-        date1 = new Date();
+        var date1 = new Date();
         date1 = date1.getTime();
         var beginingOfDay = new Date();
         beginingOfDay.setHours(0, 0, 0);
@@ -163,9 +170,7 @@ var main = function() {
             console.log(userTask);
             $(".taskList").empty();
             displayTask();
-            var myUserTask = JSON.stringify(userTask);
-            Cookies.remove('myUserTask');
-            Cookies.set('myUserTask', myUserTask);
+            updateCookie();
             displayComments();
         };
 
@@ -173,7 +178,7 @@ var main = function() {
 
     //the onboarding
     function onboarding() {
-        if (taskCount == -1) {
+        if (taskCount == 0) {
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
@@ -185,9 +190,7 @@ var main = function() {
                 taskCount++;
                 userTask.push({ title: 'You can even add comments to your tasks', id: taskCount + 1, commentNb: 0, complete: false, createdOn: new Date, dueDate: "", comment: [] });
                 taskCount++;
-                var myUserTask = JSON.stringify(userTask);
-                Cookies.remove('myUserTask');
-                Cookies.set('myUserTask', myUserTask);
+                updateCookie();
                 displayTask();
                 console.log(userTask);
                 $('.onboarding').hide();
@@ -204,9 +207,7 @@ var main = function() {
         var completedTaskID = $(this).parent().attr('id');
         console.log(completedTaskID);
         userTask[completedTaskID].complete = true;
-        var myUserTask = JSON.stringify(userTask);
-        Cookies.remove('myUserTask');
-        Cookies.set('myUserTask', myUserTask);
+        updateCookie();
     });
 
     //adding tasks function
@@ -230,9 +231,7 @@ var main = function() {
             });
             $(".task-input input").val("");
             //send the new object to cookie  file
-            var myUserTask = JSON.stringify(userTask);
-            Cookies.remove('myUserTask');
-            Cookies.set('myUserTask', myUserTask);
+            updateCookie();
             console.log(userTask);
             taskCount = taskCount + 1;
             $(".datePicker").hide();
@@ -274,9 +273,7 @@ var main = function() {
         var requestedGif = $("#giphyRequest").val();
         userTask[selectedTask].comment.push(gif);
         userTask[selectedTask].commentNb++;
-        var myUserTask = JSON.stringify(userTask);
-        Cookies.remove('myUserTask');
-        Cookies.set('myUserTask', myUserTask);
+        updateCookie();
         displayTask();
         displayComments();
         $("#giphyRequest").val("");
