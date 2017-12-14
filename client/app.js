@@ -4,6 +4,7 @@ var main = function() {
     var userTask = [];
     var selectedView = 0;
     var selectedDate;
+    var gif;
 
     //selected view
     $("#viewAll").on("click", function() {
@@ -260,7 +261,7 @@ var main = function() {
         var requestedGif = $("#giphyRequest").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
-            var gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
+            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
             $("#addComment").on("click", function(event) {
@@ -275,7 +276,7 @@ var main = function() {
                 displayComments();
                 $("#giphyRequest").val("");
             });
-        });
+        });console.log(giphyResponse)
     });
 
     //trigger task adding on button click
