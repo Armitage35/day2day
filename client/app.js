@@ -104,15 +104,18 @@ var main = function() {
             j = j.getTime();
             if (selectedView == 0) {
                 displayTaskDetails(i);
-            } else if (selectedView == 1) {
-                if (j > beginingOfDay && j < endOfDay){
+            }
+            else if (selectedView == 1) {
+                if (j > beginingOfDay && j < endOfDay) {
                     displayTaskDetails(i);
                 };
-            } else if (selectedView == 2) {
-                if (j < date1 && j < beginingOfDay){
+            }
+            else if (selectedView == 2) {
+                if (j < date1 && j < beginingOfDay) {
                     displayTaskDetails(i);
                 };
-            } else if (selectedView == 3) {
+            }
+            else if (selectedView == 3) {
                 if (j > date1) {
                     displayTaskDetails(i);
                 };
@@ -220,7 +223,7 @@ var main = function() {
             var task = new Task($new_task, false, today, today);
             userTask.push({ title: $new_task, id: taskCount + 1, complete: false, createdOn: new Date, dueDate: dueDate, commentNb: 0, comment: [] });
             //sending to server
-            $.post("todos", {'userTask': userTask}, function (result) {
+            $.post("todos", { 'userTask': userTask }, function(result) {
                 //this callback is called with the server response
                 console.log(result);
             });
@@ -254,12 +257,10 @@ var main = function() {
 
     //looking for gif
     $("#testGif").on("click", function(event) {
-        var requestedGif = $("#giphyRequest").val();
-        var requestedGif = requestedGif.split(' ').join('+');
+        var requestedGif = $("#giphyRequest").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
-            var gif = giphyResponse.responseJSON.data[0].images.preview_gif.url;
-            var gif = '<img src="' + gif + '" class="gif">';
+            var gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
             $("#addComment").on("click", function(event) {
@@ -276,7 +277,6 @@ var main = function() {
             });
         });
     });
-
 
     //trigger task adding on button click
     $(".task-input #plusButton").on("click", function(event) {
