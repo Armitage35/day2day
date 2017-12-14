@@ -163,17 +163,16 @@ var main = function() {
     // adding comments
     $("#addComment").on("click", function() {
         var newComment = $("#message-text").val();
-        if (newComment != "") {
+        if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
             userTask[selectedTask].comment.push(newComment);
             userTask[selectedTask].commentNb++;
             console.log(userTask);
             $(".taskList").empty();
             displayTask();
-            updateCookie();
             displayComments();
+            updateCookie();
         };
-
     });
 
     //the onboarding
@@ -263,7 +262,6 @@ var main = function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
-
         });
     });
 
