@@ -264,23 +264,23 @@ var main = function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty();
             $("#waitingGif").prepend(gif);
-            
+
         });
     });
-    
+
     //add the gif to the DOM
     $("#addComment").on("click", function(event) {
-                $("#waitingGif").empty();
-                var requestedGif = $("#giphyRequest").val();
-                userTask[selectedTask].comment.push(gif);
-                userTask[selectedTask].commentNb++;
-                var myUserTask = JSON.stringify(userTask);
-                Cookies.remove('myUserTask');
-                Cookies.set('myUserTask', myUserTask);
-                displayTask();
-                displayComments();
-                $("#giphyRequest").val("");
-            });
+        $("#waitingGif").empty();
+        var requestedGif = $("#giphyRequest").val();
+        userTask[selectedTask].comment.push(gif);
+        userTask[selectedTask].commentNb++;
+        var myUserTask = JSON.stringify(userTask);
+        Cookies.remove('myUserTask');
+        Cookies.set('myUserTask', myUserTask);
+        displayTask();
+        displayComments();
+        $("#giphyRequest").val("");
+    });
 
     //trigger task adding on button click
     $(".task-input #plusButton").on("click", function(event) {
