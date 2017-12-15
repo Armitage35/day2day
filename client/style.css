@@ -130,3 +130,10 @@ footer {
     margin-bottom: 5px;
     max-height: 150px;
 }
+
+.onboarding{
+    text-align: center; 
+    background-color: white; 
+    color: black;
+    margin: 0px auto 0px auto
+}
