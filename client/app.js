@@ -78,7 +78,6 @@ var main = function() {
         this.comment;
     };
 
-
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
         console.log("cookie vide");
@@ -179,8 +178,8 @@ var main = function() {
         console.log(taskCount);
         if (taskCount == -1) {
             console.log("onboarding launch");
-            var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
-            $(".taskList").html(onboardingInvite);
+            var onboardingInvite = '<div draggable="false" class="onboarding"> <p> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding: 0px 10px 0px 10px; "> or </p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
+            $(".row").append(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
                     title: 'Start by adding a task',
@@ -188,7 +187,7 @@ var main = function() {
                     commentNb: 0,
                     complete: false,
                     createdOn: new Date,
-                    dueDate: "",
+                    dueDate: null,
                     comment: []
                 });
                 taskCount++;
@@ -198,7 +197,7 @@ var main = function() {
                     complete: false,
                     commentNb: 0,
                     createdOn: new Date,
-                    dueDate: "",
+                    dueDate: null,
                     comment: []
                 });
                 taskCount++;
@@ -208,17 +207,17 @@ var main = function() {
                     commentNb: 0,
                     complete: false,
                     createdOn: new Date,
-                    dueDate: "",
+                    dueDate: null,
                     comment: []
                 });
                 taskCount++;
                 userTask.push({
-                    title: 'You can even add comments to your tasks',
+                    title: 'You can even add comments and Giphy gifs to your tasks',
                     id: taskCount + 1,
                     commentNb: 0,
                     complete: false,
                     createdOn: new Date,
-                    dueDate: "",
+                    dueDate: null,
                     comment: []
                 });
                 taskCount++;
