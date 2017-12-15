@@ -95,18 +95,17 @@ var main = function() {
     }
 
     taskCount = userTask.length - 1;
+    var date1 = new Date().getTime();
+    var beginingOfDay = new Date();
+    beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
+    beginingOfDay = beginingOfDay.getTime();
+    var endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59);
+    endOfDay = endOfDay.getTime();
 
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
-        var date1 = new Date();
-        date1 = date1.getTime();
-        var beginingOfDay = new Date();
-        beginingOfDay.setHours(0, 0, 0);
-        beginingOfDay = beginingOfDay.getTime();
-        var endOfDay = new Date();
-        endOfDay.setHours(23, 59, 59);
-        endOfDay = endOfDay.getTime();
         for (var i = 0; i <= taskCount; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
@@ -177,7 +176,9 @@ var main = function() {
 
     //the onboarding
     function onboarding() {
-        if (taskCount == 0) {
+        console.log(taskCount);
+        if (taskCount == -1) {
+            console.log("onboarding launch");
             var onboardingInvite = '<div draggable="false" class="onboarding" style="text-align: center; background-color: white; color: black;"> <p style=" background-color: inherit; color: inherit; "> Is this your first time? </p> <div class="row justify-content-center" style=" text-align: center; "> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding-left: 0px; ">or</p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".taskList").html(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
@@ -228,9 +229,6 @@ var main = function() {
             });
         };
     };
-
-    onboarding();
-    displayTask();
 
     //mark task completed
     $(".taskList").on('click', "input", function() {
@@ -331,6 +329,8 @@ var main = function() {
         };
     });
 
+    onboarding();
+    displayTask();
 };
 
 $(document).ready(main);
