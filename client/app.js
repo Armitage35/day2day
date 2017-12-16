@@ -105,6 +105,7 @@ var main = function() {
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
+        onboarding();
         for (var i = 0; i <= taskCount; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
@@ -170,14 +171,15 @@ var main = function() {
             displayTask();
             displayComments();
             updateCookie();
+        }
+        else {
+            $(".onboarding").hide();
         };
     });
 
     //the onboarding
     function onboarding() {
-        console.log(taskCount);
         if (taskCount == -1) {
-            console.log("onboarding launch");
             var onboardingInvite = '<div draggable="false" class="onboarding"> <p> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding: 0px 10px 0px 10px; "> or </p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
             $(".row").append(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
@@ -224,7 +226,7 @@ var main = function() {
                 updateCookie();
                 displayTask();
                 console.log(userTask);
-                $('.onboarding').hide();
+                $(".onboarding").hide();
             });
         };
     };
@@ -328,7 +330,6 @@ var main = function() {
         };
     });
 
-    onboarding();
     displayTask();
 };
 
