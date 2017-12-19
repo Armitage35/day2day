@@ -144,7 +144,7 @@ var main = function() {
     function displayComments() {
         $(".taskComments").empty();
         if (userTask[selectedTask].commentNb != 0) {
-            for (i = 0; i < userTask[selectedTask].commentNb; i++) {
+            for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
                 $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p><hr / class='taskSeparator'>");
             };
         }
@@ -153,29 +153,7 @@ var main = function() {
         };
     };
 
-    //getting the task's ID and displaying comments in the modal
-    $(".taskList").on('click', "button", function() {
-        selectedTask = $(this).parent().attr('id');
-        displayComments();
-    });
 
-    // adding comments
-    $("#addComment").on("click", function() {
-        var newComment = $("#message-text").val();
-        if (newComment != "" && newComment != null && newComment != undefined) {
-            $("#message-text").val("");
-            userTask[selectedTask].comment.push(newComment);
-            userTask[selectedTask].commentNb++;
-            console.log(userTask);
-            $(".taskList").empty();
-            displayTask();
-            displayComments();
-            updateCookie();
-        }
-        else {
-            $(".onboarding").hide();
-        };
-    });
 
     //the onboarding
     function onboarding() {
@@ -283,16 +261,41 @@ var main = function() {
         }
     };
 
+    //getting the task's ID and displaying comments in the modal
+    $(".taskList").on('click', "button", function() {
+        selectedTask = $(this).parent().attr('id');
+        displayComments();
+    });
+
+    //adding comments
+    $("#addComment").on("click", function() {
+        let newComment = $("#message-text").val();
+        console.log(newComment);
+        if (newComment != "" && newComment != null && newComment != undefined) {
+            $("#message-text").val("");
+            userTask[selectedTask].comment.push(newComment);
+            userTask[selectedTask].commentNb++;
+            $(".taskList").empty();
+            displayTask();
+            updateCookie();
+            console.log(newComment);
+            displayComments();
+        };
+        console.log(newComment);
+    });
+
     //display giphy input box
     $("#gifButton").on("click", function(event) {
         $("#giphyInput").toggle();
         $("#message-text").toggle();
+        $("#addComment").hide();
     });
 
     //toggeling comments to text
     $("#textButton").on("click", function(event) {
         $("#giphyInput").toggle();
         $("#message-text").toggle();
+        $("#addComment").show();
     });
 
     //looking for gif
@@ -301,13 +304,12 @@ var main = function() {
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
-            $("#waitingGif").empty();
-            $("#waitingGif").prepend(gif);
+            $("#waitingGif").empty().prepend(gif);
         });
     });
 
     //add the gif to the DOM
-    $("#addComment").on("click", function(event) {
+    $("#addGif").on("click", function(event) {
         $("#waitingGif").empty();
         var requestedGif = $("#giphyRequest").val();
         userTask[selectedTask].comment.push(gif);

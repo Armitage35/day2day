@@ -46,7 +46,7 @@
                         <a class="nav-link" id="viewUpcoming" href="#">Upcoming</a>
                     </li>
                 </ul>
-                
+
             </div>
         </header>
         <main class="row">
@@ -75,12 +75,11 @@
                                         <textarea class="form-control" id="message-text" placeholder="Add a textual comment"></textarea>
                                         <div style="display:none" id="giphyInput">
                                             <div id="waitingGif"></div>
-                                                <input type="text" id="giphyRequest" placeholder="Look for a Giphy" style="" class="field" autofocus><button type="button" id="testGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-search" aria-hidden="true"></i>
-</button>
+                                            <input type="text" id="giphyRequest" placeholder="Look for a Giphy" style="" class="field" autofocus><button type="button" id="testGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-search" aria-hidden="true"></i></button><button type="button" id="addGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus" aria-hidden="true"></i></button>
                                         </div>
                                         <button class="bttn-sm" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="fa fa-comments-o" aria-hidden="true"></i></button><button class="bttn-sm" type="button" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                                         <div style="display:none" id="giphyInput">
-                                                <input type="text" id="giphyRequest" autofocus>
+                                            <input type="text" id="giphyRequest" autofocus>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-primary" id="addComment">Add a comment</button>
@@ -99,7 +98,8 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
-                                <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="fa  fa-calendar" aria-hidden="true"></i></button><button
+                                <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="fa  fa-calendar" aria-hidden="true"></i></button>
+                                <button
                                     class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus-circle" id="plusButton" aria-hidden="true"></i></button>
                                     <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
                             </div>
