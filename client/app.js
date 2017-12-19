@@ -1,3 +1,5 @@
+/* global $ */
+/* global Cookies */
 var main = function() {
 
     var selectedTask;
@@ -34,7 +36,7 @@ var main = function() {
         displayTask();
     });
 
-    //show & hide modal
+    //show & hide add task modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus()
     });

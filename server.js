@@ -15,7 +15,6 @@ app.get("/todos.json", function(req, res) {
 });
 
 app.post("/todos", function (req, res){
-    console.log("data has been posted to the server");
     var userTask = req.body;
     userTask = JSON.stringify(userTask);
     fs.writeFile('todos.json', userTask, 'utf8', function (err) {if (err) throw err; console.log('Saved!');});
