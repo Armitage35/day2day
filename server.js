@@ -20,7 +20,7 @@ var userTaskSchema = mongoose.Schema({
     title: String
 });
 
-var ToDo = mongoose.model("ToDo", ToDoSchema);
+var userTask2 = mongoose.model("userTask2", userTaskSchema);
 
 var port = process.env.PORT; //only for Cloud9
 var fs = require('fs'); //activate node file system
