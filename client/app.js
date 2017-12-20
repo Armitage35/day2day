@@ -272,7 +272,6 @@ var main = function() {
     //adding comments
     $("#addComment").on("click", function() {
         let newComment = $("#message-text").val();
-        console.log(newComment);
         if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
             userTask[selectedTask].comment.push(newComment);
@@ -280,10 +279,8 @@ var main = function() {
             $(".taskList").empty();
             displayTask();
             updateCookie();
-            console.log(newComment);
             displayComments();
         };
-        console.log(newComment);
     });
 
     //display giphy input box
