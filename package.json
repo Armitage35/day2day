@@ -1,0 +1,29 @@
+{
+  "name": "day2day",
+  "version": "1.0.0",
+  "description": "a todo app",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^3.21.2",
+    "mongoose": "^4.13.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armitage35/todoapp.git"
+  },
+  "keywords": [
+    "todo",
+    "app"
+  ],
+  "author": "Adrien Dubois Ahlqvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Armitage35/todoapp/issues"
+  },
+  "homepage": "https://github.com/Armitage35/todoapp#readme"
+}

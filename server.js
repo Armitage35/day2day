@@ -1,9 +1,26 @@
 var express = require("express"),
     http = require("http"),
+    mongoose = require("mongoose"),
     app = express();
     
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
+
+//connect mongoose to DB
+mongoose.connect('mongodb://localhost/my_database');
+
+//This is mongoose's model for todos
+var userTaskSchema = mongoose.Schema({
+    comment: [String],
+    commentNb: Number,
+    complete: Boolean,
+    createdOn: Date,
+    dueDate: Date,
+    id: Number,
+    title: String
+});
+
+var ToDo = mongoose.model("ToDo", ToDoSchema);
 
 var port = process.env.PORT; //only for Cloud9
 var fs = require('fs'); //activate node file system
