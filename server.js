@@ -7,17 +7,17 @@ app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
 
 //connect mongoose to DB
-mongoose.connect('mongodb://localhost/my_database');
+mongoose.connect('mongodb://localhost/tasks');
 
 //This is mongoose's model for todos
 var userTaskSchema = mongoose.Schema({
-    comment: [String],
+    comment: [],
     commentNb: Number,
     complete: Boolean,
     createdOn: Date,
     dueDate: Date,
     id: Number,
-    title: String
+    title: String,
 });
 
 var userTask = mongoose.model("userTask", userTaskSchema);
@@ -27,11 +27,11 @@ var fs = require('fs'); //activate node file system
 http.createServer(app).listen(port);
 
 //this route takes the place of our todos.json in our former exemple
-app.get("/todos.json", function(req, res) {
+/* app.get("/todos.json", function(req, res) {
     userTask.find({}, function(err, userTask) {
         res.json(userTask);
     });
-});
+}); */
 
 app.post("/todos", function(req, res) {
     console.log(req.body);
@@ -44,6 +44,7 @@ app.post("/todos", function(req, res) {
         "id": req.body.id,
         "title": req.body.title
     });
+    
     newUserTask.save(function (err, result){
         if (err !== null){
             console.log(err);

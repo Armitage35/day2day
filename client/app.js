@@ -71,15 +71,6 @@ var main = function() {
         $("#dueDate").val(now);
     });
 
-    //class creator
-    function Task(title, complete, createdOn, dueDate) {
-        this.title = title;
-        this.complete = false;
-        this.createdOn = new Date;
-        this.dueDate;
-        this.comment;
-    };
-
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
         console.log("cookie vide");
@@ -231,8 +222,16 @@ var main = function() {
             if (dueDate == "Invalid Date") {
                 dueDate = null;
             };
-            //create a new task object
-            var task = new Task($new_task, false, today, today);
+            var task = {
+                title: $new_task,
+                id: taskCount + 1,
+                complete: false,
+                createdOn: new Date,
+                dueDate: dueDate,
+                commentNb: 0,
+                comment: []
+            };
+            console.log(task);
             userTask.push({
                 title: $new_task,
                 id: taskCount + 1,

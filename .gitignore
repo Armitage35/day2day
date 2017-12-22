@@ -3,3 +3,8 @@ data/local.0
 data/local.ns
 data/mongod.loc
 data/mongod.lock
+data/my_database.0
+data/my_database.ns
+data/tasks.0
+data/tasks.ns
+data/mongod.lock
