@@ -1,5 +1,8 @@
 /* global $ */
 /* global Cookies */
+/* global Sortable */
+/* global draggable */
+
 var main = function() {
 
     var selectedTask;
@@ -65,7 +68,7 @@ var main = function() {
     today = dd + '/' + mm + '/' + yyyy;
     var now = yyyy + '-' + mm + '-' + dd;
 
-    //date input
+    //date input show / hide
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
         $("#dueDate").val(now);
@@ -121,6 +124,7 @@ var main = function() {
                 };
             };
         };
+        console.log(userTask);
     };
 
     function displayTaskDetails(i) {
@@ -145,8 +149,6 @@ var main = function() {
             $(".taskComments").append("<p>No comment has been added yet</p>");
         };
     };
-
-
 
     //the onboarding
     function onboarding() {
@@ -222,6 +224,7 @@ var main = function() {
             if (dueDate == "Invalid Date") {
                 dueDate = null;
             };
+
             var task = {
                 title: $new_task,
                 id: taskCount + 1,
@@ -231,8 +234,9 @@ var main = function() {
                 commentNb: 0,
                 comment: []
             };
+
             userTask.push(task);
-            
+
             //sending to server
             $.post("todos", {
                 'userTasks': task
@@ -240,7 +244,7 @@ var main = function() {
                 //this callback is called with the server response
                 console.log(result);
             });
-            
+
             $(".task-input input").val("");
             //send the new object to cookie  file
             updateCookie();
@@ -261,11 +265,12 @@ var main = function() {
         displayComments();
     });
 
-    //adding comments
+    //adding textual comments
     $("#addComment").on("click", function() {
         let newComment = $("#message-text").val();
         if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
+            newComment = newComment.replace(/\n\r?/g, '<br />');
             userTask[selectedTask].comment.push(newComment);
             userTask[selectedTask].commentNb++;
             $(".taskList").empty();
