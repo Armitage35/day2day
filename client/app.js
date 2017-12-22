@@ -231,23 +231,16 @@ var main = function() {
                 commentNb: 0,
                 comment: []
             };
-            console.log(task);
-            userTask.push({
-                title: $new_task,
-                id: taskCount + 1,
-                complete: false,
-                createdOn: new Date,
-                dueDate: dueDate,
-                commentNb: 0,
-                comment: []
-            });
+            userTask.push(task);
+            
             //sending to server
             $.post("todos", {
-                'userTask': userTask
+                'userTasks': task
             }, function(result) {
                 //this callback is called with the server response
                 console.log(result);
             });
+            
             $(".task-input input").val("");
             //send the new object to cookie  file
             updateCookie();
