@@ -111,21 +111,21 @@ var main = function() {
             else if (selectedView == 1) {
                 if (j > beginingOfDay && j < endOfDay) {
                     displayTaskDetails(i);
-                };
+                }
             }
             else if (selectedView == 2) {
                 if (j < date1 && j < beginingOfDay) {
                     displayTaskDetails(i);
-                };
+                }
             }
             else if (selectedView == 3) {
                 if (j > date1) {
                     displayTaskDetails(i);
-                };
-            };
-        };
+                }
+            }
+        }
         console.log(userTask);
-    };
+    }
 
     function displayTaskDetails(i) {
         if (userTask[i].complete == false) {
@@ -133,10 +133,11 @@ var main = function() {
             var dueDateReadable = dueDateDisplay.toDateString();
             if (dueDateReadable == "Wed Dec 31 1969") {
                 dueDateReadable = "";
-            };
-            $(".taskList").append("<p class='task list-group-item'  draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
-        };
-    };
+            }
+            console.log(userTask[i]._id);
+            $(".taskList").append("<p class='task list-group-item' data-mongo='" + userTask[i]._id +"' draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
+        }
+    }
 
     function displayComments() {
         $(".taskComments").empty();
@@ -242,9 +243,10 @@ var main = function() {
                 'userTasks': task
             }, function(result) {
                 //this callback is called with the server response
-                console.log(result);
+                userTask = result;
+                console.log(userTask);
             });
-
+            
             $(".task-input input").val("");
             //send the new object to cookie  file
             updateCookie();
@@ -277,7 +279,7 @@ var main = function() {
             displayTask();
             updateCookie();
             displayComments();
-        };
+        }
     });
 
     //display giphy input box

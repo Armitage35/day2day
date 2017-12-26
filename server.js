@@ -23,7 +23,6 @@ var TaskSchema = mongoose.Schema({
 var userTasks = mongoose.model("Task", TaskSchema);
 
 var port = process.env.PORT; //only for Cloud9
-var fs = require('fs'); //activate node file system
 http.createServer(app).listen(port);
 
 //this route gets tasks
