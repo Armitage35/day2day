@@ -320,7 +320,7 @@ var main = function() {
     });
 
     //trigger task adding on button click
-    $(".task-input #plusButton").on("click", function(event) {
+    $("#plusButton").on("click", function(event) {
         addTaskFromInputBox();
     });
 

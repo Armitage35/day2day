@@ -61,3 +61,7 @@ app.post("/todos", function(req, res) {
         }
     });
 });
+
+app.put("/todos", function(req, res) {
+    console.log(req.body);
+});
