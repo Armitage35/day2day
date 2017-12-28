@@ -229,10 +229,10 @@ var main = function() {
 
     //adding tasks function
     var addTaskFromInputBox = function() {
-        var $new_task;
+        var new_task;
         if ($("#newTask").val() !== "") {
+            new_task = $("#newTask").val();
             $("#newTask").empty();
-            $new_task = $("#newTask").val();
             var dueDate = new Date($("#dueDate").val());
             dueDate.setDate(dueDate.getDate() + 1);
             if (dueDate == "Invalid Date") {
@@ -240,7 +240,7 @@ var main = function() {
             }
 
             var task = {
-                title: $new_task,
+                title: new_task,
                 id: taskCount + 1,
                 complete: false,
                 createdOn: new Date,
@@ -257,16 +257,17 @@ var main = function() {
             }, function(result) {
                 //this callback is called with the server response
                 console.log(result);
-                userTask = result;
+                userTask.pop(); //removing the temp object created by client to replace it with the object from mongo
+                userTask.push(result);
+                console.log(userTask);
             });
 
             $(".task-input input").val("");
             //send the new object to cookie  file
             updateCookie();
-            console.log(userTask);
+            updateCookie();
             taskCount = taskCount + 1;
             $(".datePicker").hide();
-            //run the display function again
             displayTask();
         }
         else {

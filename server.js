@@ -50,16 +50,15 @@ app.post("/todos", function(req, res) {
             res.send("ERROR");
         }
         else {
-            // our client expects *all* of the todo items to be returned
-            // so we do an additional request to maintain compatibility
-            userTasks.find({}, function(err, result) {
+            // our client expects *all* of the todo items to be returned so we do an additional request to maintain compatibility
+            /* userTasks.find({}, function(err, result) {
                 if (err !== null) {
                     //the element did not get saved
                     res.send("ERROR");
                 }
                 res.json(result);
-            });
-        }
+            }); */
+        } res.json(result);
     });
 });
 
@@ -69,7 +68,6 @@ app.put("/todos", function(req, res) {
     
     userTasks.findById(taskID, function(err, task) {
         if (err) return handleError(err);
-
         task.complete = 'true';
         task.save(function(err, result) {
             if (err) return handleError(err);
