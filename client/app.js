@@ -135,7 +135,7 @@ var main = function() {
                 dueDateReadable = "";
             }
             console.log(userTask[i]._id);
-            $(".taskList").append("<p class='task list-group-item' data-mongo='" + userTask[i]._id +"' draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
+            $(".taskList").append("<p class='task list-group-item' data-mongo='" + userTask[i]._id + "' draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
         }
     }
 
@@ -211,6 +211,18 @@ var main = function() {
         var completedTaskID = $(this).parent().attr('id');
         var completedTaskMongoID = userTask[completedTaskID]._id;
         console.log(completedTaskMongoID);
+
+        //telling the server to update the task
+        $.ajax({
+            url: "/todos",
+            type: 'PUT',
+            data: {id: completedTaskMongoID},
+            success: function(data) {
+                console.log("Task completed");
+                console.log(data);
+            }
+        });
+
         userTask[completedTaskID].complete = true;
         updateCookie();
     });
@@ -247,7 +259,7 @@ var main = function() {
                 console.log(result);
                 userTask = result;
             });
-            
+
             $(".task-input input").val("");
             //send the new object to cookie  file
             updateCookie();
