@@ -41,7 +41,7 @@ var main = function() {
 
     //show & hide add task modal
     $('#myModal').on('shown.bs.modal', function() {
-        $('#myInput').focus()
+        $('#myInput').focus();
     });
 
     //make tasks draggable
@@ -51,7 +51,7 @@ var main = function() {
     $(document).on("keypress", function(event) {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
             $("#myInput").click();
-        };
+        }
     });
 
     //declaring today as being today
@@ -60,10 +60,10 @@ var main = function() {
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
     if (dd < 10) {
-        dd = '0' + dd
+        dd = '0' + dd;
     }
     if (mm < 10) {
-        mm = '0' + mm
+        mm = '0' + mm;
     }
     today = dd + '/' + mm + '/' + yyyy;
     var now = yyyy + '-' + mm + '-' + dd;
@@ -79,8 +79,8 @@ var main = function() {
         console.log("cookie vide");
     }
     else {
-        userTask = Cookies.getJSON('myUserTask')
-    };
+        userTask = Cookies.getJSON('myUserTask');
+    }
 
     //handle cookies
     function updateCookie() {
@@ -144,12 +144,12 @@ var main = function() {
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
                 $(".taskComments").append("<p>" + userTask[selectedTask].comment[i] + "</p><hr / class='taskSeparator'>");
-            };
+            }
         }
         else {
             $(".taskComments").append("<p>No comment has been added yet</p>");
-        };
-    };
+        }
+    }
 
     //the onboarding
     function onboarding() {
@@ -202,14 +202,15 @@ var main = function() {
                 console.log(userTask);
                 $(".onboarding").hide();
             });
-        };
-    };
+        }
+    }
 
     //mark task completed
     $(".taskList").on('click', "input", function() {
         $(this).parent().fadeOut();
         var completedTaskID = $(this).parent().attr('id');
-        console.log(completedTaskID);
+        var completedTaskMongoID = userTask[completedTaskID]._id;
+        console.log(completedTaskMongoID);
         userTask[completedTaskID].complete = true;
         updateCookie();
     });
@@ -224,7 +225,7 @@ var main = function() {
             dueDate.setDate(dueDate.getDate() + 1);
             if (dueDate == "Invalid Date") {
                 dueDate = null;
-            };
+            }
 
             var task = {
                 title: $new_task,
@@ -243,8 +244,8 @@ var main = function() {
                 'userTasks': task
             }, function(result) {
                 //this callback is called with the server response
+                console.log(result);
                 userTask = result;
-                console.log(userTask);
             });
             
             $(".task-input input").val("");
@@ -327,7 +328,7 @@ var main = function() {
     $(".task-input input").on("keypress", function(event) {
         if (event.keyCode === 13) {
             addTaskFromInputBox();
-        };
+        }
     });
 
     displayTask();
