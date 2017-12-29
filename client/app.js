@@ -217,7 +217,7 @@ var main = function() {
         $.ajax({
             url: "/todos",
             type: 'PUT',
-            data: {id: completedTaskMongoID},
+            data: { id: completedTaskMongoID },
             success: function(data) {
                 console.log("Task completed");
                 console.log(data);
@@ -282,25 +282,30 @@ var main = function() {
         displayComments();
     });
 
+    //toggeling between text and gif inputs
+    $("#textButton, #gifButton").on("click", function(event) {
+        $("#giphyInput").toggle();
+        $("#message-text").toggle();
+        $("#addComment").toggle();
+    });
+
+    function addComment(newComment){
+        userTask[selectedTask].comment.push(newComment);
+        userTask[selectedTask].commentNb++;
+    }
+
     //adding textual comments
     $("#addComment").on("click", function() {
         let newComment = $("#message-text").val();
         if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
             newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
-            userTask[selectedTask].comment.push(newComment);
-            userTask[selectedTask].commentNb++;
+            addComment(newComment)
             displayTask();
             updateCookie();
             displayComments();
         }
     });
-    
-    $("#textButton, #gifButton").on("click", function(event) {
-            $("#giphyInput").toggle();
-            $("#message-text").toggle();
-            $("#addComment").toggle();
-        });
 
     //looking for gif and showing it
     $("#testGif").on("click", function(event) {
@@ -315,8 +320,8 @@ var main = function() {
     //add the gif to userTasks
     $("#addGif").on("click", function(event) {
         $("#waitingGif").empty();
-        userTask[selectedTask].comment.push(gif);
-        userTask[selectedTask].commentNb++;
+        var newComment = gif;
+        addComment(newComment);
         updateCookie();
         displayTask();
         displayComments();
