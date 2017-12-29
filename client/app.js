@@ -292,6 +292,17 @@ var main = function() {
     function addComment(newComment){
         userTask[selectedTask].comment.push(newComment);
         userTask[selectedTask].commentNb++;
+        
+        //telling the server to update the task's comments with the last comment
+        $.ajax({
+            url: "/todos/comment",
+            type: 'PUT',
+            data: { id: userTask[selectedTask]._id, comment: newComment, commentNb : userTask[selectedTask].commentNb },
+            success: function(data) {
+                console.log("comment added to the task");
+                console.log(data);
+            }
+        });
     }
 
     //adding textual comments

@@ -62,13 +62,14 @@ app.post("/todos", function(req, res) {
     });
 });
 
-app.put("/todos", function(req, res) {
+app.put("/todos/comment", function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
     
     userTasks.findById(taskID, function(err, task) {
         if (err) return handleError(err);
-        task.complete = 'true';
+        task.comment.push(req.body.comment);
+        task.commentNb = req.body.commentNb;
         task.save(function(err, result) {
             if (err) return handleError(err);
             res.json(result);
