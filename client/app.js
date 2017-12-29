@@ -12,6 +12,7 @@ var main = function() {
     var gif;
     var taskCount;
     var myUserTask;
+    var giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV";
 
     //selected view
     $("#viewAll").on("click", function() {
@@ -286,44 +287,34 @@ var main = function() {
         let newComment = $("#message-text").val();
         if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
-            newComment = newComment.replace(/\n\r?/g, '<br />');
+            newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
             userTask[selectedTask].comment.push(newComment);
             userTask[selectedTask].commentNb++;
-            $(".taskList").empty();
             displayTask();
             updateCookie();
             displayComments();
         }
     });
+    
+    $("#textButton, #gifButton").on("click", function(event) {
+            $("#giphyInput").toggle();
+            $("#message-text").toggle();
+            $("#addComment").toggle();
+        });
 
-    //display giphy input box
-    $("#gifButton").on("click", function(event) {
-        $("#giphyInput").toggle();
-        $("#message-text").toggle();
-        $("#addComment").hide();
-    });
-
-    //toggeling comments to text
-    $("#textButton").on("click", function(event) {
-        $("#giphyInput").toggle();
-        $("#message-text").toggle();
-        $("#addComment").show();
-    });
-
-    //looking for gif
+    //looking for gif and showing it
     $("#testGif").on("click", function(event) {
         var requestedGif = $("#giphyRequest").val().split(' ').join('+');
-        var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV&limit=1";
+        var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty().prepend(gif);
         });
     });
 
-    //add the gif to the DOM
+    //add the gif to userTasks
     $("#addGif").on("click", function(event) {
         $("#waitingGif").empty();
-        var requestedGif = $("#giphyRequest").val();
         userTask[selectedTask].comment.push(gif);
         userTask[selectedTask].commentNb++;
         updateCookie();
