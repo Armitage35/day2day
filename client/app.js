@@ -8,11 +8,11 @@ var main = function() {
     var selectedTask;
     var userTask = [];
     var selectedView = 0;
-    var selectedDate;
     var gif;
     var taskCount;
     var myUserTask;
     var giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV";
+    var userID;
 
     //selected view
     $("#viewAll").on("click", function() {
@@ -77,20 +77,20 @@ var main = function() {
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     if (Cookies.get('myUserTask') == undefined) {
-        console.log("cookie vide");
+        console.log("user tasks cookie is empty");
     }
     else {
         userTask = Cookies.getJSON('myUserTask');
     }
 
-    //handle cookies
+    //handle user task cookie
     function updateCookie() {
         myUserTask = JSON.stringify(userTask);
         Cookies.remove('myUserTask');
         Cookies.set('myUserTask', myUserTask);
     }
 
-    taskCount = userTask.length - 1;
+    taskCount = userTask.length - 1; //could be set at top
     var date1 = new Date().getTime();
     var beginingOfDay = new Date();
     beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
@@ -289,15 +289,15 @@ var main = function() {
         $("#addComment").toggle();
     });
 
-    function addComment(newComment){
+    function addComment(newComment) {
         userTask[selectedTask].comment.push(newComment);
         userTask[selectedTask].commentNb++;
-        
+
         //telling the server to update the task's comments with the last comment
         $.ajax({
             url: "/todos/comment",
             type: 'PUT',
-            data: { id: userTask[selectedTask]._id, comment: newComment, commentNb : userTask[selectedTask].commentNb },
+            data: { id: userTask[selectedTask]._id, comment: newComment, commentNb: userTask[selectedTask].commentNb },
             success: function(data) {
                 console.log("comment added to the task");
                 console.log(data);
@@ -350,6 +350,25 @@ var main = function() {
             addTaskFromInputBox();
         }
     });
+
+    //handling user id cookie
+    if (Cookies.get('userid') == undefined) {
+        userID = Math.floor(Math.random() * 100000);
+        //telling the server to create a user
+        $.ajax({
+            url: "/user",
+            type: 'POST',
+            data: {  },
+            success: function(data) {
+                userID = data._id;
+                console.log(userID);
+                Cookies.remove('userid');
+                Cookies.set('userid', userID);
+            }
+        });
+    } else {
+        userID = Cookies.get('userid');
+    }
 
     displayTask();
 };

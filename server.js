@@ -7,7 +7,7 @@ app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
 
 //connect mongoose to DB
-mongoose.connect('mongodb://localhost/tasks');
+mongoose.connect('mongodb://localhost/day2day');
 
 //This is mongoose's model for todos
 var TaskSchema = mongoose.Schema({
@@ -18,9 +18,24 @@ var TaskSchema = mongoose.Schema({
     dueDate: Date,
     id: Number,
     title: String,
+    user: Number,
 });
 
 var userTasks = mongoose.model("Task", TaskSchema);
+
+//This is mongoose's model for users
+var UserSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    createdOn: Date,
+    lastConnected: Date,
+    name: String,
+    city: String,
+    avatar: String,
+    tempID: Number
+});
+
+var User = mongoose.model("User", UserSchema);
 
 var port = process.env.PORT; //only for Cloud9
 http.createServer(app).listen(port);
@@ -31,6 +46,21 @@ http.createServer(app).listen(port);
         res.json(userTask);
     });
 }); */
+
+app.post("/user", function(req, res) {
+    console.log(req.body);
+    var newUser = new User({
+        "tempID": req.body.tempUserid,
+    });
+
+    newUser.save(function(err, result) {
+        if (err !== null) {
+            console.log(err);
+            res.send("ERROR");
+        }
+        res.json(result);
+    });
+});
 
 app.post("/todos", function(req, res) {
     console.log(req.body);
@@ -49,23 +79,14 @@ app.post("/todos", function(req, res) {
             console.log(err);
             res.send("ERROR");
         }
-        else {
-            // our client expects *all* of the todo items to be returned so we do an additional request to maintain compatibility
-            /* userTasks.find({}, function(err, result) {
-                if (err !== null) {
-                    //the element did not get saved
-                    res.send("ERROR");
-                }
-                res.json(result);
-            }); */
-        } res.json(result);
+        res.json(result);
     });
 });
 
 app.put("/todos/comment", function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
-    
+
     userTasks.findById(taskID, function(err, task) {
         if (err) return handleError(err);
         task.comment.push(req.body.comment);
