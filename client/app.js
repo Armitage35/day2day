@@ -247,7 +247,8 @@ var main = function() {
                 createdOn: new Date,
                 dueDate: dueDate,
                 commentNb: 0,
-                comment: []
+                comment: [],
+                userID: userID
             };
 
             userTask.push(task);

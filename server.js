@@ -18,7 +18,7 @@ var TaskSchema = mongoose.Schema({
     dueDate: Date,
     id: Number,
     title: String,
-    user: Number,
+    userid: String,
 });
 
 var userTasks = mongoose.model("Task", TaskSchema);
@@ -71,7 +71,8 @@ app.post("/todos", function(req, res) {
         "createdOn": req.body.userTasks.createdOn,
         "dueDate": req.body.userTasks.dueDate,
         "id": req.body.userTasks.id,
-        "title": req.body.userTasks.title
+        "title": req.body.userTasks.title,
+        "userid": req.body.userTasks.userID
     });
 
     newTask.save(function(err, result) {
