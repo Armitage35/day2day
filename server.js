@@ -47,6 +47,8 @@ http.createServer(app).listen(port);
     });
 }); */
 
+
+//user handling
 app.post("/user", function(req, res) {
     console.log(req.body);
     var newUser = new User({
@@ -62,6 +64,8 @@ app.post("/user", function(req, res) {
     });
 });
 
+
+//tasks handling
 app.post("/todos", function(req, res) {
     console.log(req.body);
     var newTask = new userTasks({
@@ -98,4 +102,20 @@ app.put("/todos/comment", function(req, res) {
         });
     });
 
+});
+
+app.get("/todos", function(req, res) {
+    console.log(req.query);
+    var userID = req.query.userID;
+    
+    var query = userTasks.findOne({ 'userid': userID });
+
+    // selecting the `name` and `occupation` fields
+    query.select('userid title');
+
+    // execute the query at a later time
+    query.exec(function(err, userTasks) {
+        if (err) return handleError(err);
+        console.log(userTasks.title, userTasks.commentNb) // Space Ghost is a talk show host.
+    })
 });

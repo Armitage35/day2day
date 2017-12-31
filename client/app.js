@@ -352,7 +352,7 @@ var main = function() {
         }
     });
 
-    //handling user id cookie
+    //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) {
         userID = Math.floor(Math.random() * 100000);
         //telling the server to create a user
@@ -369,6 +369,15 @@ var main = function() {
         });
     } else {
         userID = Cookies.get('userid');
+        console.log(userID);
+        $.ajax({
+            url: "/todos",
+            type: 'GET',
+            data: { userID },
+            success: function(data) {
+                console.log(userID);
+            }
+        });
     }
 
     displayTask();
