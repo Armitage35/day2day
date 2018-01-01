@@ -108,14 +108,29 @@ app.get("/todos", function(req, res) {
     console.log(req.query);
     var userID = req.query.userID;
     
-    var query = userTasks.findOne({ 'userid': userID });
+    userTasks.find({ userid: userID, complete: false }).exec(function(err, userTasks) {
+        if (err) {
+            console.log("an error has occured");
+        }
+        else {
+            console.log(userTasks);
+            res.json(userTasks);
+        }
+    });
+});
 
-    // selecting the `name` and `occupation` fields
-    query.select('userid title');
-
-    // execute the query at a later time
-    query.exec(function(err, userTasks) {
+app.put("/todos", function(req, res) {
+    console.log(req.body);
+    var taskID = req.body.id;
+    
+    userTasks.findById(taskID, function(err, task) {
         if (err) return handleError(err);
-        console.log(userTasks.title, userTasks.commentNb) // Space Ghost is a talk show host.
-    })
+
+        task.complete = 'true';
+        task.save(function(err, result) {
+            if (err) return handleError(err);
+            res.json(result);
+        });
+    });
+
 });

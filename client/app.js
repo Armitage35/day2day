@@ -76,12 +76,12 @@ var main = function() {
     });
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
-    if (Cookies.get('myUserTask') == undefined) {
+    /* if (Cookies.get('myUserTask') == undefined) {
         console.log("user tasks cookie is empty");
     }
     else {
         userTask = Cookies.getJSON('myUserTask');
-    }
+    } */
 
     //handle user task cookie
     function updateCookie() {
@@ -102,8 +102,9 @@ var main = function() {
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
-        onboarding();
-        for (var i = 0; i <= taskCount; i++) {
+        //onboarding();
+        console.log(taskCount)
+        for (var i = 0; i <= userTask.length; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
             if (selectedView == 0) {
@@ -135,7 +136,6 @@ var main = function() {
             if (dueDateReadable == "Wed Dec 31 1969") {
                 dueDateReadable = "";
             }
-            console.log(userTask[i]._id);
             $(".taskList").append("<p class='task list-group-item' data-mongo='" + userTask[i]._id + "' draggable='true' style='cursor:move' id='" + userTask[i].id + "'><i class='fa fa-bars' aria-hidden='true'></i> <input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</p>");
         }
     }
@@ -198,7 +198,7 @@ var main = function() {
                     comment: []
                 });
                 taskCount++;
-                updateCookie();
+                //updateCookie();
                 displayTask();
                 console.log(userTask);
                 $(".onboarding").hide();
@@ -225,7 +225,7 @@ var main = function() {
         });
 
         userTask[completedTaskID].complete = true;
-        updateCookie();
+        //updateCookie();
     });
 
     //adding tasks function
@@ -266,8 +266,8 @@ var main = function() {
 
             $(".task-input input").val("");
             //send the new object to cookie  file
-            updateCookie();
-            updateCookie();
+            //updateCookie();
+            //updateCookie();
             taskCount = taskCount + 1;
             $(".datePicker").hide();
             displayTask();
@@ -314,7 +314,7 @@ var main = function() {
             newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
             addComment(newComment)
             displayTask();
-            updateCookie();
+            //updateCookie();
             displayComments();
         }
     });
@@ -334,7 +334,7 @@ var main = function() {
         $("#waitingGif").empty();
         var newComment = gif;
         addComment(newComment);
-        updateCookie();
+        //updateCookie();
         displayTask();
         displayComments();
         $("#giphyRequest").val("");
@@ -376,6 +376,9 @@ var main = function() {
             data: { userID },
             success: function(data) {
                 console.log(userID);
+                userTask = data;
+                displayTask();
+                console.log(userTask);
             }
         });
     }
