@@ -102,7 +102,7 @@ var main = function() {
     //show tasks from object
     function displayTask() {
         $(".taskList").empty();
-        //onboarding();
+        onboarding();
         console.log(taskCount)
         for (var i = 0; i <= userTask.length; i++) {
             var j = new Date(userTask[i].dueDate);
@@ -154,9 +154,9 @@ var main = function() {
 
     //the onboarding
     function onboarding() {
-        if (taskCount == -1) {
-            var onboardingInvite = '<div draggable="false" class="onboarding"> <p> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding: 0px 10px 0px 10px; "> or </p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
-            $(".row").append(onboardingInvite);
+        if (userTask.length === 0) {
+            var onboardingInvite = '<div draggable="false" class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding: 0px 10px 0px 10px; "> or </p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
+            $(".taskList").append(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
                     title: 'Start by adding a task',

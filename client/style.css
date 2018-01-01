@@ -77,13 +77,15 @@ input[type="checkbox"]:checked {
 }
 
 .taskList p {
+    background-color: #1d89ff;
+    color: white;
     margin: 5px;
     padding-left:5px;
 }
 
-.taskList p {
-    background-color: #1d89ff;
-    color: white;
+.onboardingMessage {
+    background-color: white !important;
+    color: black !important;
 }
 
 .field {
