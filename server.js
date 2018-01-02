@@ -1,6 +1,7 @@
 var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
+    validator = require('validator'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -29,7 +30,7 @@ var UserSchema = mongoose.Schema({
     password: String,
     createdOn: Date,
     lastConnected: Date,
-    name: String,
+    username: String,
     city: String,
     avatar: String,
     tempID: Number
@@ -40,29 +41,50 @@ var User = mongoose.model("User", UserSchema);
 var port = process.env.PORT; //only for Cloud9
 http.createServer(app).listen(port);
 
-//this route gets tasks
-/* app.get("/todos.json", function(req, res) {
-    userTask.find({}, function(err, userTask) {
-        res.json(userTask);
-    });
-}); */
-
-
 //user handling
 app.post("/user", function(req, res) {
     console.log(req.body);
-    
+
+    var tempID = req.body.tempUserid;
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    var passwordRepeat = req.body.passwordRepeat;
+    var emailTaken;
     var newUser = new User({
-        "tempID": req.body.tempUserid,
+        "tempID": tempID,
+        "username": username,
+        "email": email,
+        "password": password,
     });
 
-    newUser.save(function(err, result) {
-        if (err !== null) {
-            console.log(err);
-            res.send("ERROR");
+    User.findOne({ 'email': email }, function(err, User) {
+        if (err) {
+            return handleError(err); 
+        } else if (User === null) {
+            emailTaken = false;
+        } else {
+            emailTaken = true;
         }
-        res.json(result);
-    });
+    })
+
+    //making required checks on user info
+    if (validator.isEmail(email) === false) {
+        res.redirect('/auth.html?e=' + encodeURIComponent('Email is not valid'));
+    }
+    else if (password != passwordRepeat) {
+        res.redirect('/auth.html?e=' + encodeURIComponent('Password do not match'));
+    } else if (emailTaken != true) {
+        res.redirect('/auth.html?e=' + encodeURIComponent('Email is alerady taken'));
+    } else {
+        newUser.save(function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send("ERROR");
+            }
+            res.json(result);
+        });
+    }
 });
 
 
@@ -108,7 +130,7 @@ app.put("/todos/comment", function(req, res) {
 app.get("/todos", function(req, res) {
     console.log(req.query);
     var userID = req.query.userID;
-    
+
     userTasks.find({ userid: userID, complete: false }).exec(function(err, userTasks) {
         if (err) {
             console.log("an error has occured");
@@ -123,7 +145,7 @@ app.get("/todos", function(req, res) {
 app.put("/todos", function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
-    
+
     userTasks.findById(taskID, function(err, task) {
         if (err) return handleError(err);
 
