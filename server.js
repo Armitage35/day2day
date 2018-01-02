@@ -51,6 +51,7 @@ http.createServer(app).listen(port);
 //user handling
 app.post("/user", function(req, res) {
     console.log(req.body);
+    
     var newUser = new User({
         "tempID": req.body.tempUserid,
     });

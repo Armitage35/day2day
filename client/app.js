@@ -367,6 +367,7 @@ var main = function() {
                 Cookies.set('userid', userID);
             }
         });
+        window.location.replace("/auth.html");
     } else {
         userID = Cookies.get('userid');
         console.log(userID);
