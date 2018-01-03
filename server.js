@@ -43,28 +43,30 @@ http.createServer(app).listen(port);
 
 //user handling
 app.post("/user", function(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
 
-    var tempID = req.body.tempUserid;
-    var username = req.body.username;
-    var email = req.body.email;
-    var password = req.body.password;
-    var passwordRepeat = req.body.passwordRepeat;
-    var emailTaken;
+    var tempID = req.body.tempUserid,
+        username = req.body.username,
+        email = req.body.email,
+        password = req.body.password,
+        passwordRepeat = req.body.passwordRepeat;
+
     var newUser = new User({
         "tempID": tempID,
         "username": username,
         "email": email,
         "password": password,
     });
+    console.log(password.length);
 
     User.findOne({ 'email': email }, function(err, User) {
-        if (err) {
-            return handleError(err); 
-        } else if (User === null) {
-            emailTaken = false;
-        } else {
-            emailTaken = true;
+        if (err) { console.log(err) }
+        else if (User) {
+            console.log(User);
+            //You have to make a promise to handle waiting...
+        }
+        else {
+            console.log("looks like a new user");
         }
     })
 
@@ -74,9 +76,10 @@ app.post("/user", function(req, res) {
     }
     else if (password != passwordRepeat) {
         res.redirect('/auth.html?e=' + encodeURIComponent('Password do not match'));
-    } else if (emailTaken != true) {
-        res.redirect('/auth.html?e=' + encodeURIComponent('Email is alerady taken'));
-    } else {
+    } else if (password.length < 5) {
+        res.redirect('/auth.html?e=' + encodeURIComponent('Password should be at least 5 character long'));
+    }
+    else {
         newUser.save(function(err, result) {
             if (err !== null) {
                 console.log(err);
