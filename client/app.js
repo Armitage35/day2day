@@ -16,10 +16,8 @@ var main = function() {
 
     //show alerts in auth page
     var errorMessage = decodeURI(window.location.href.split(/\?e=(.+)/)[1]);
-    console.log(errorMessage);
     if (errorMessage != "undefined" && window.location.pathname === "/auth.html") {
         $("#signUp").prepend('<div class="alert alert-danger" role="alert">' + errorMessage  + '</div>');
-        console.log("youpi");
     }
 
     //selected view
@@ -361,9 +359,15 @@ var main = function() {
     });
 
     //handling user id cookie and getting user's tasks
-    if (Cookies.get('userid') == undefined) {
+    var authID = decodeURI(window.location.href.split(/\?id=(.+)/)[1]); //when ID is sent from auth
+    if (authID != "undefined"){
+        userID = authID;
+        Cookies.set('userid', userID);
+        window.location.replace("/index.html");
+    } else if (Cookies.get('userid') == undefined) { //when id is not in a cookie
+        window.location.replace("/auth.html");
+        /* telling the server to create a user
         userID = Math.floor(Math.random() * 100000);
-        //telling the server to create a user
         $.ajax({
             url: "/user",
             type: 'POST',
@@ -374,7 +378,7 @@ var main = function() {
                 Cookies.remove('userid');
                 Cookies.set('userid', userID);
             }
-        });
+        }); */
         window.location.replace("/auth.html");
     } else {
         userID = Cookies.get('userid');

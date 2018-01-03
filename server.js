@@ -43,7 +43,7 @@ http.createServer(app).listen(port);
 
 //user handling
 app.post("/user", function(req, res) {
-    //console.log(req.body);
+    console.log(req.body);
 
     var tempID = req.body.tempUserid,
         username = req.body.username,
@@ -57,9 +57,9 @@ app.post("/user", function(req, res) {
         "email": email,
         "password": password,
     });
-    console.log(password.length);
 
-    User.findOne({ 'email': email }, function(err, User) {
+    //misses a promise to work
+    /* User.findOne({ 'email': email }, function(err, User) {
         if (err) { console.log(err) }
         else if (User) {
             console.log(User);
@@ -68,7 +68,7 @@ app.post("/user", function(req, res) {
         else {
             console.log("looks like a new user");
         }
-    })
+    }) */
 
     //making required checks on user info
     if (validator.isEmail(email) === false) {
@@ -80,12 +80,13 @@ app.post("/user", function(req, res) {
         res.redirect('/auth.html?e=' + encodeURIComponent('Password should be at least 5 character long'));
     }
     else {
-        newUser.save(function(err, result) {
+        newUser.save(function(err, user) {
             if (err !== null) {
                 console.log(err);
                 res.send("ERROR");
             }
-            res.json(result);
+            console.log(user);
+            res.redirect('/index.html?id='+ user._id + encodeURIComponent('&?m=Registration successful'));
         });
     }
 });
