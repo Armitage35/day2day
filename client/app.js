@@ -14,6 +14,14 @@ var main = function() {
     var giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV";
     var userID;
 
+    //show alerts in auth page
+    var errorMessage = decodeURI(window.location.href.split(/\?e=(.+)/)[1]);
+    console.log(errorMessage);
+    if (errorMessage != "undefined" && window.location.pathname === "/auth.html") {
+        $("#signUp").prepend('<div class="alert alert-danger" role="alert">' + errorMessage  + '</div>');
+        console.log("youpi");
+    }
+
     //selected view
     $("#viewAll").on("click", function() {
         selectedView = 0;
