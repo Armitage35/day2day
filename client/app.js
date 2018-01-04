@@ -5,19 +5,42 @@
 
 var main = function() {
 
-    var selectedTask;
-    var userTask = [];
-    var selectedView = 0;
-    var gif;
-    var taskCount;
-    var myUserTask;
-    var giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV";
-    var userID;
+    var selectedTask,
+    userTask = [],
+     selectedView = 0,
+     gif,
+     taskCount,
+     myUserTask,
+     giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
+     userID;
+
+    //posting auth info from auth.html
+    $("#createAccount").on("click", function() {
+        userID = Math.floor(Math.random() * 100000);
+        //get fields value
+        $.ajax({
+            url: "/user",
+            type: 'POST',
+            data: {
+                username : $("#username").val(),
+                email : $("#email").val(),
+                password : $("#password").val(),
+                passwordRepeat : $("#passwordRepeat").val()
+            },
+            success: function(data) {
+                userID = data._id;
+                console.log(userID);
+                Cookies.remove('userid');
+                Cookies.set('userid', userID);
+                //window.location = "/index.html";
+            }
+        });
+    });
 
     //show alerts in auth page
     var errorMessage = decodeURI(window.location.href.split(/\?e=(.+)/)[1]);
     if (errorMessage != "undefined" && window.location.pathname === "/auth.html") {
-        $("#signUp").prepend('<div class="alert alert-danger" role="alert">' + errorMessage  + '</div>');
+        $("#signUp").prepend('<div class="alert alert-danger" role="alert">' + errorMessage + '</div>');
     }
 
     //selected view
@@ -360,28 +383,16 @@ var main = function() {
 
     //handling user id cookie and getting user's tasks
     var authID = decodeURI(window.location.href.split(/\?id=(.+)/)[1]); //when ID is sent from auth
-    if (authID != "undefined"){
+    if (authID != "undefined") {
         userID = authID;
         Cookies.set('userid', userID);
         window.location.replace("/index.html");
-    } else if (Cookies.get('userid') == undefined) { //when id is not in a cookie
+    }
+    else if (Cookies.get('userid') == undefined) { //when id is not in a cookie
         window.location.replace("/auth.html");
-        /* telling the server to create a user
-        userID = Math.floor(Math.random() * 100000);
-        $.ajax({
-            url: "/user",
-            type: 'POST',
-            data: {  },
-            success: function(data) {
-                userID = data._id;
-                console.log(userID);
-                Cookies.remove('userid');
-                Cookies.set('userid', userID);
-            }
-        }); */
-        window.location.replace("/auth.html");
-    } else {
-        userID = Cookies.get('userid');
+    }
+    else {
+        userID = Cookies.get('userid'); //when user alerady has a cookie
         console.log(userID);
         $.ajax({
             url: "/todos",

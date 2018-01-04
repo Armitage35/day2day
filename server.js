@@ -70,25 +70,31 @@ app.post("/user", function(req, res) {
         }
     }) */
 
-    //making required checks on user info
+    //making checks on user info
+    var error = [];
     if (validator.isEmail(email) === false) {
-        res.redirect('/auth.html?e=' + encodeURIComponent('Email is not valid'));
+        error.push('Need a valid email');
     }
-    else if (password != passwordRepeat) {
-        res.redirect('/auth.html?e=' + encodeURIComponent('Password do not match'));
-    } else if (password.length < 5) {
-        res.redirect('/auth.html?e=' + encodeURIComponent('Password should be at least 5 character long'));
+    if (password != passwordRepeat) {
+        error.push('Password do not match');
+    } 
+    if (password.length < 5) {
+        error.push('Password should be at least 5 character long');
     }
-    else {
-        newUser.save(function(err, user) {
+    if (error.length > 0) {
+        res.send(error);
+    } else {
+        newUser.save(function(err, result) {
             if (err !== null) {
                 console.log(err);
                 res.send("ERROR");
+            } else {
+                console.log(result);
+                res.send(result._id);
             }
-            console.log(user);
-            res.redirect('/index.html?id='+ user._id + encodeURIComponent('&?m=Registration successful'));
         });
     }
+    console.log(error);
 });
 
 
