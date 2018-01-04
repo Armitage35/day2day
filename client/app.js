@@ -46,7 +46,11 @@ var main = function() {
                 }
                 if (data.includes('E3') === true) {
                     console.log('Password should be at least 5 character long');
-                    $("#password").parent().addClass("has-danger").append('<div class="form-control-feedback">Password should have more than 5 character </div>');;
+                    $("#password").parent().addClass("has-danger").append('<div class="form-control-feedback">Password should have more than 5 character </div>');
+                }
+                if (data.includes('E4') === true) {
+                    console.log('email taken');
+                    $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Email alerady used</div>');
                 }
             }
         });
@@ -395,9 +399,7 @@ var main = function() {
     //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) { //when id is not in a cookie
         window.location.replace("/auth.html");
-    } else if (window.location.pathname === "/auth.html" && Cookies.get('userid') !== "undefined") {
-        window.location = "/index.html";
-    }
+    } 
     else {
         userID = Cookies.get('userid'); //when user alerady has a cookie
         console.log(userID);

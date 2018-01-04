@@ -58,43 +58,60 @@ app.post("/user", function(req, res) {
         "password": password,
     });
 
-    //misses a promise to work
-    /* User.findOne({ 'email': email }, function(err, User) {
+    //making the promise
+    var emailTakenPromise = User.findOne({ 'email': email }, function(err, User) {
         if (err) { console.log(err) }
         else if (User) {
-            console.log(User);
+            console.log("looks like a user I know" + User);
+            emailTakenPromise = User.email;
+            console.log(emailTakenPromise);
             //You have to make a promise to handle waiting...
         }
         else {
             console.log("looks like a new user");
         }
-    }) */
+    });
 
-    //making checks on user info
-    var error = [];
-    if (validator.isEmail(email) === false) {
-        error.push('E1');
-    }
-    if (password != passwordRepeat) {
-        error.push('E2');
-    } 
-    if (password.length < 5) {
-        error.push('E3');
-    }
-    if (error.length > 0) {
-        res.send(error);
-    } else {
-        newUser.save(function(err, result) {
-            if (err !== null) {
-                console.log(err);
-                res.send("ERROR");
-            } else {
-                console.log(result);
-                res.send(result);
-            }
-        });
-    }
-    console.log(error);
+    //checking on our promise
+    var emailTaken;
+    emailTakenPromise.then(function() {
+        emailTaken = email === emailTakenPromise;
+        console.log("email taken " + emailTaken);
+
+        //making checks on user info
+        var error = [];
+        if (validator.isEmail(email) === false) {
+            error.push('E1');
+        }
+        if (password != passwordRepeat) {
+            error.push('E2');
+        }
+        if (password.length < 5) {
+            error.push('E3');
+        }
+        if (emailTaken === true) {
+            error.push('E4');
+        }
+        if (error.length > 0) {
+            res.send(error);
+        }
+        else {
+            newUser.save(function(err, result) {
+                if (err !== null) {
+                    console.log(err);
+                    res.send("ERROR");
+                }
+                else {
+                    console.log(result);
+                    res.send(result);
+                }
+            });
+        }
+        console.log(error);
+    });
+
+
+
 });
 
 
