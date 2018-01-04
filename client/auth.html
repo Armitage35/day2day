@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <!--Bootstrap CSS lib-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <!--JQuery lib-->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <!--Bootstrap JS lib-->
@@ -46,19 +47,19 @@
         </div>
         <div class="container__child signup__form" id="signUp">
             <form method="post">
-                <div class="form-group">
+                <div class="form-group" id="usernameParent">
                     <label for="username">Name</label>
                     <input class="form-control" type="text" name="name" id="username" placeholder="Bilbo Baggins" required />
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="emailParent">
                     <label for="email">Email</label>
                     <input class="form-control" type="text" name="email" id="email" placeholder="bbaggins@shire.com" required />
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="passwordParent">
                     <label for="password">Password</label>
                     <input class="form-control" type="password" name="password" id="password" placeholder="********" required />
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="repeatPasswordParent">
                     <label for="passwordRepeat">Repeat Password</label>
                     <input class="form-control" type="password" name="passwordRepeat" id="passwordRepeat" placeholder="********" required />
                 </div>

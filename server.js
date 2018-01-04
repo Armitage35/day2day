@@ -73,13 +73,13 @@ app.post("/user", function(req, res) {
     //making checks on user info
     var error = [];
     if (validator.isEmail(email) === false) {
-        error.push('Need a valid email');
+        error.push('E1');
     }
     if (password != passwordRepeat) {
-        error.push('Password do not match');
+        error.push('E2');
     } 
     if (password.length < 5) {
-        error.push('Password should be at least 5 character long');
+        error.push('E3');
     }
     if (error.length > 0) {
         res.send(error);

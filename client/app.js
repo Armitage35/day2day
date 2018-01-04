@@ -6,13 +6,13 @@
 var main = function() {
 
     var selectedTask,
-    userTask = [],
-     selectedView = 0,
-     gif,
-     taskCount,
-     myUserTask,
-     giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
-     userID;
+        userTask = [],
+        selectedView = 0,
+        gif,
+        taskCount,
+        myUserTask,
+        giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
+        userID;
 
     //posting auth info from auth.html
     $("#createAccount").on("click", function() {
@@ -20,26 +20,36 @@ var main = function() {
             url: "/user",
             type: 'POST',
             data: {
-                username : $("#username").val(),
-                email : $("#email").val(),
-                password : $("#password").val(),
-                passwordRepeat : $("#passwordRepeat").val()
+                username: $("#username").val(),
+                email: $("#email").val(),
+                password: $("#password").val(),
+                passwordRepeat: $("#passwordRepeat").val()
             },
             success: function(data) {
                 userID = data._id;
                 console.log(userID);
                 Cookies.remove('userid');
                 Cookies.set('userid', userID);
-                window.location = "/index.html";
+                //window.location = "/index.html";
+                
+                //show alerts in auth page
+                if (data.includes('E1') === true){
+                    console.log("Need a valid email");
+                    $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Please use a valid email</div>');
+                }
+                if (data.includes('E2') === true){
+                    console.log('Password do not match');
+                    $("#passwordRepeat").parent().addClass("has-danger").append('<div class="form-control-feedback">Password do not match</div>');
+                }
+                if (data.includes('E3')=== true){
+                    console.log('Password should be at least 5 character long');
+                    $("#password").parent().addClass("has-danger").append('<div class="form-control-feedback">Password should have more than 5 character </div>');;
+                }
             }
         });
     });
 
-    //show alerts in auth page
-    var errorMessage = decodeURI(window.location.href.split(/\?e=(.+)/)[1]);
-    if (errorMessage != "undefined" && window.location.pathname === "/auth.html") {
-        $("#signUp").prepend('<div class="alert alert-danger" role="alert">' + errorMessage + '</div>');
-    }
+
 
     //selected view
     $("#viewAll").on("click", function() {
