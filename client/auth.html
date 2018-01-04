@@ -24,6 +24,10 @@
 </head>
 
 <body>
+    <script>
+    if (window.location.pathname === "/auth.html" && Cookies.get('userid') !== "undefined") {
+        window.location = "/index.html";
+    }</script>
     <div class="signup__container">
         <div class="container__child signup__thumbnail">
             <div class="thumbnail__logo">
@@ -47,19 +51,19 @@
         </div>
         <div class="container__child signup__form" id="signUp">
             <form method="post">
-                <div class="form-group" id="usernameParent">
+                <div class="form-group">
                     <label for="username">Name</label>
                     <input class="form-control" type="text" name="name" id="username" placeholder="Bilbo Baggins" required />
                 </div>
-                <div class="form-group" id="emailParent">
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input class="form-control" type="text" name="email" id="email" placeholder="bbaggins@shire.com" required />
                 </div>
-                <div class="form-group" id="passwordParent">
+                <div class="form-group">
                     <label for="password">Password</label>
                     <input class="form-control" type="password" name="password" id="password" placeholder="********" required />
                 </div>
-                <div class="form-group" id="repeatPasswordParent">
+                <div class="form-group">
                     <label for="passwordRepeat">Repeat Password</label>
                     <input class="form-control" type="password" name="passwordRepeat" id="passwordRepeat" placeholder="********" required />
                 </div>

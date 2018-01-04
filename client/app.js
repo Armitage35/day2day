@@ -28,20 +28,23 @@ var main = function() {
             success: function(data) {
                 userID = data._id;
                 console.log(userID);
-                Cookies.remove('userid');
-                Cookies.set('userid', userID);
-                //window.location = "/index.html";
-                
+
+                if (userID != undefined) {
+                    Cookies.remove('userid');
+                    Cookies.set('userid', userID);
+                    window.location = "/index.html";
+                }
+
                 //show alerts in auth page
-                if (data.includes('E1') === true){
+                if (data.includes('E1') === true) {
                     console.log("Need a valid email");
                     $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Please use a valid email</div>');
                 }
-                if (data.includes('E2') === true){
+                if (data.includes('E2') === true) {
                     console.log('Password do not match');
                     $("#passwordRepeat").parent().addClass("has-danger").append('<div class="form-control-feedback">Password do not match</div>');
                 }
-                if (data.includes('E3')=== true){
+                if (data.includes('E3') === true) {
                     console.log('Password should be at least 5 character long');
                     $("#password").parent().addClass("has-danger").append('<div class="form-control-feedback">Password should have more than 5 character </div>');;
                 }
@@ -390,14 +393,10 @@ var main = function() {
     });
 
     //handling user id cookie and getting user's tasks
-    var authID = decodeURI(window.location.href.split(/\?id=(.+)/)[1]); //when ID is sent from auth
-    if (authID != "undefined") {
-        userID = authID;
-        Cookies.set('userid', userID);
-        window.location.replace("/index.html");
-    }
-    else if (Cookies.get('userid') == undefined) { //when id is not in a cookie
+    if (Cookies.get('userid') == undefined) { //when id is not in a cookie
         window.location.replace("/auth.html");
+    } else if (window.location.pathname === "/auth.html" && Cookies.get('userid') !== "undefined") {
+        window.location = "/index.html";
     }
     else {
         userID = Cookies.get('userid'); //when user alerady has a cookie
