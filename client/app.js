@@ -16,8 +16,6 @@ var main = function() {
 
     //posting auth info from auth.html
     $("#createAccount").on("click", function() {
-        userID = Math.floor(Math.random() * 100000);
-        //get fields value
         $.ajax({
             url: "/user",
             type: 'POST',
@@ -32,7 +30,7 @@ var main = function() {
                 console.log(userID);
                 Cookies.remove('userid');
                 Cookies.set('userid', userID);
-                //window.location = "/index.html";
+                window.location = "/index.html";
             }
         });
     });

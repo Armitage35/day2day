@@ -90,7 +90,7 @@ app.post("/user", function(req, res) {
                 res.send("ERROR");
             } else {
                 console.log(result);
-                res.send(result._id);
+                res.send(result);
             }
         });
     }
