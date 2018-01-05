@@ -6,7 +6,6 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "express": "^3.21.2",
-    "izitoast": "^1.2.0",
     "mongoose": "^4.13.7",
     "validator": "^9.2.0"
   },

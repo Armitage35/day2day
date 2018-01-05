@@ -111,11 +111,15 @@ label {
     border-color: #111;
 }
 
-.signin__link {
+.signin__link, .signup__link {
     font-size: .8rem;
     font-weight: 600;
     text-decoration: underline;
     color: #999;
+}
+
+#signIn {
+    display: none;
 }
 
 #signin {

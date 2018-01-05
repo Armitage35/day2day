@@ -61,6 +61,16 @@ var main = function() {
         });
     });
 
+    //togelling between sign in and sign up
+    $(".signin__link").on('click', function() {
+        $("#signUp").toggle();
+        $("#signIn").toggle();
+    });
+
+    $(".signup__link").on('click', function() {
+        $("#signUp").toggle();
+        $("#signIn").toggle();
+    });
 
 
     //selected view
@@ -404,7 +414,7 @@ var main = function() {
     //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) { //when id is not in a cookie
         window.location.replace("/auth.html");
-    } 
+    }
     else {
         userID = Cookies.get('userid'); //when user alerady has a cookie
         console.log(userID);
