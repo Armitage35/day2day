@@ -42,7 +42,7 @@ var User = mongoose.model("User", UserSchema);
 var port = process.env.PORT; //only for Cloud9
 http.createServer(app).listen(port);
 
-//user handling
+//user registration handling
 app.post("/user", function(req, res) {
     console.log(req.body);
 
@@ -51,7 +51,7 @@ app.post("/user", function(req, res) {
         email = req.body.email,
         password = req.body.password,
         passwordRepeat = req.body.passwordRepeat, 
-        hashedPassword = bcrypt.hashSync(password, 10);
+        hashedPassword = bcrypt.hashSync(password, 10); //hash password syncronously
 
     var newUser = new User({
         "tempID": tempID,

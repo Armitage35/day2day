@@ -14,6 +14,11 @@ var main = function() {
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
         userID;
 
+    //auto sign in if cookie's here
+    if (Cookies.get(userID) !== undefined && window.location.pathname === "/auth.html") {
+        window.location = "index.html";
+    }
+
     //posting auth info from auth.html
     $("#createAccount").on("click", function() {
         $.ajax({
