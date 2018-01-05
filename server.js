@@ -2,6 +2,7 @@ var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
     validator = require('validator'),
+    session = require('express-session'),
     bcrypt = require('bcrypt'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
@@ -9,21 +10,10 @@ var express = require("express"),
 
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
+app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUninitialize: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-passport.use(new LocalStrategy(
-  function(email, password, done) {
-    User.findOne({ email: email }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -56,16 +46,51 @@ var UserSchema = mongoose.Schema({
 
 var User = mongoose.model("User", UserSchema);
 
-var port = process.env.PORT; 
+var port = process.env.PORT;
 http.createServer(app).listen(port);
 
+//passort local strategy
+passport.use(new LocalStrategy(
+    function(email, password, done) {
+        User.findOne({ email: email }, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                console.log("No user match this email");
+                return done(null, false, { message: 'Incorrect email.' });
+            }
+            console.log("Recieved password " + password);
+            console.log("Do passwords match: " + bcrypt.compareSync(password, user.password));
+            if (bcrypt.compareSync(password, user.password) === false) {
+                console.log("wrong password");
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
+        });
+    }
+));
+
 //user login
-app.post("/login", passport.authenticate('local'), function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    console.log(req.body);
-    res.redirect('/users/' + req.user.username);
-  });
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/index.html'); }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/index.html');
+        });
+    })(req, res, next);
+    
+    //handling user sessions trough a cool secure cookie
+    /* passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            done(err, user);
+        });
+    }); */
+});
 
 //user registration handling
 app.post("/user", function(req, res) {
@@ -75,7 +100,7 @@ app.post("/user", function(req, res) {
         username = req.body.username,
         email = req.body.email,
         password = req.body.password,
-        passwordRepeat = req.body.passwordRepeat, 
+        passwordRepeat = req.body.passwordRepeat,
         hashedPassword = bcrypt.hashSync(password, 10); //hash password syncronously
 
     var newUser = new User({

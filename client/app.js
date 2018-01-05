@@ -73,7 +73,7 @@ var main = function() {
             url: "/login",
             type: 'POST',
             data: {
-                email: $("#emailLogIn").val(),
+                username: $("#emailLogIn").val(),
                 password: $("#passwordLogIn").val(),
             },
             success: function(data) {
