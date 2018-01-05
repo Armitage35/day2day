@@ -3,10 +3,27 @@ var express = require("express"),
     mongoose = require("mongoose"),
     validator = require('validator'),
     bcrypt = require('bcrypt'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
     app = express();
 
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
+
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    User.findOne({ email: email }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -39,8 +56,16 @@ var UserSchema = mongoose.Schema({
 
 var User = mongoose.model("User", UserSchema);
 
-var port = process.env.PORT; //only for Cloud9
+var port = process.env.PORT; 
 http.createServer(app).listen(port);
+
+//user login
+app.post("/login", passport.authenticate('local'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    console.log(req.body);
+    res.redirect('/users/' + req.user.username);
+  });
 
 //user registration handling
 app.post("/user", function(req, res) {
@@ -105,11 +130,7 @@ app.post("/user", function(req, res) {
         }
         console.log(error);
     });
-
-
-
 });
-
 
 //tasks handling
 app.post("/todos", function(req, res) {

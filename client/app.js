@@ -62,16 +62,25 @@ var main = function() {
     });
 
     //togelling between sign in and sign up
-    $(".signin__link").on('click', function() {
+    $(".signin__link, .signup__link").on('click', function() {
         $("#signUp").toggle();
         $("#signIn").toggle();
     });
 
-    $(".signup__link").on('click', function() {
-        $("#signUp").toggle();
-        $("#signIn").toggle();
+    //request to login
+    $("#login").on("click", function() {
+        $.ajax({
+            url: "/login",
+            type: 'POST',
+            data: {
+                email: $("#emailLogIn").val(),
+                password: $("#passwordLogIn").val(),
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
     });
-
 
     //selected view
     $("#viewAll").on("click", function() {
