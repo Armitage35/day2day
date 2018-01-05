@@ -70,21 +70,19 @@ passport.use(new LocalStrategy(
 ));
 
 //user login
-app.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err); }
-        if (!user) { return res.redirect('/index.html'); }
+app.post('/login', function(req, res) {
+    passport.authenticate('local', { session: false }, function(err, user, info) {
+        if (err) { return err; }
+        if (!user) { return res.send('you do not exist dude'); }
         req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.redirect('/index.html');
+            return res.json(user._id);
         });
-    })(req, res, next);
-    
-    //handling user sessions trough a cool secure cookie
-    /* passport.serializeUser(function(user, done) {
+    })(req, res);
+
+/*
+passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
-
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
