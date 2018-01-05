@@ -2,6 +2,7 @@ var express = require("express"),
     http = require("http"),
     mongoose = require("mongoose"),
     validator = require('validator'),
+    bcrypt = require('bcrypt'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -49,26 +50,21 @@ app.post("/user", function(req, res) {
         username = req.body.username,
         email = req.body.email,
         password = req.body.password,
-        passwordRepeat = req.body.passwordRepeat;
+        passwordRepeat = req.body.passwordRepeat, 
+        hashedPassword = bcrypt.hashSync(password, 10);
 
     var newUser = new User({
         "tempID": tempID,
         "username": username,
         "email": email,
-        "password": password,
+        "password": hashedPassword,
     });
 
     //making the promise
     var emailTakenPromise = User.findOne({ 'email': email }, function(err, User) {
         if (err) { console.log(err) }
         else if (User) {
-            console.log("looks like a user I know" + User);
             emailTakenPromise = User.email;
-            console.log(emailTakenPromise);
-            //You have to make a promise to handle waiting...
-        }
-        else {
-            console.log("looks like a new user");
         }
     });
 
