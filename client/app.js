@@ -15,7 +15,7 @@ var main = function() {
         userID;
 
     //auto sign in if cookie's here
-    if (Cookies.get(userID) !== undefined && window.location.pathname === "/auth.html") {
+    if (Cookies.get('userid') !== undefined && window.location.pathname === "/auth.html") {
         window.location = "index.html";
     }
 
