@@ -59,9 +59,8 @@ passport.use(new LocalStrategy(
                 return done(null, false, { message: 'Incorrect email.' });
             }
             console.log("Recieved password " + password);
-            console.log("Do passwords match: " + bcrypt.compareSync(password, user.password));
             if (bcrypt.compareSync(password, user.password) === false) {
-                console.log("wrong password");
+                console.log("Do passwords match: " + bcrypt.compareSync(password, user.password));
                 return done(null, false, { message: 'Incorrect password.' });
             }
             return done(null, user);
@@ -73,7 +72,7 @@ passport.use(new LocalStrategy(
 app.post('/login', function(req, res) {
     passport.authenticate('local', { session: false }, function(err, user, info) {
         if (err) { return err; }
-        if (!user) { return res.send('you do not exist dude'); }
+        if (!user) { return res.send('not found'); }
         req.logIn(user, function(err) {
             return res.json(user._id);
         });

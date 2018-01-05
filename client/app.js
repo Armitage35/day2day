@@ -77,7 +77,12 @@ var main = function() {
                 password: $("#passwordLogIn").val(),
             },
             success: function(data) {
-                console.log(data);
+                if (data === "not found") {
+                    console.log("nope")
+                } else {
+                    Cookies.set('userid', data._id);
+                    window.location.replace("/index.html");
+                }
             }
         });
     });
