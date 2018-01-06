@@ -70,23 +70,25 @@ passport.use(new LocalStrategy(
 
 //user login
 app.post('/login', function(req, res) {
-    passport.authenticate('local', { session: false }, function(err, user, info) {
+    passport.authenticate('local', { session: true }, function(err, user, info) {
         if (err) { return err; }
         if (!user) { return res.send('not found'); }
         req.logIn(user, function(err) {
+            console.log("user am logging in" + user);
             return res.json(user._id);
         });
     })(req, res);
 
-/*
+
 passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        done(null, user._id);
+        console.log(user);
     });
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
-    }); */
+    }); 
 });
 
 //user registration handling

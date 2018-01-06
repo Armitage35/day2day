@@ -78,9 +78,10 @@ var main = function() {
             },
             success: function(data) {
                 if (data === "not found") {
-                    console.log("nope")
+                    console.log("wrong credentials")
+                    $("#emailLogIn").parent().addClass("has-danger").append('<div class="form-control-feedback">Credentials do not match</div>');
                 } else {
-                    Cookies.set('userid', data._id);
+                    Cookies.set('userid', data);
                     window.location.replace("/index.html");
                 }
             }
