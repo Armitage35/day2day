@@ -1,6 +1,8 @@
-var express = require("express"),
-    http = require("http"),
-    mongoose = require("mongoose"),
+var express = require('express'),
+    http = require('http'),
+    mongoose = require('mongoose'),
+    User = require('./models/users.js'),
+    userTasks = require('./models/tasks.js'),
     validator = require('validator'),
     session = require('express-session'),
     bcrypt = require('bcrypt'),
@@ -14,37 +16,8 @@ app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUni
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
-
-//This is mongoose's model for todos
-var TaskSchema = mongoose.Schema({
-    comment: [],
-    commentNb: Number,
-    complete: Boolean,
-    createdOn: Date,
-    dueDate: Date,
-    id: Number,
-    title: String,
-    userid: String,
-});
-
-var userTasks = mongoose.model("Task", TaskSchema);
-
-//This is mongoose's model for users
-var UserSchema = mongoose.Schema({
-    email: String,
-    password: String,
-    createdOn: Date,
-    lastConnected: Date,
-    username: String,
-    city: String,
-    avatar: String,
-    tempID: Number
-});
-
-var User = mongoose.model("User", UserSchema);
 
 var port = process.env.PORT;
 http.createServer(app).listen(port);
@@ -139,8 +112,7 @@ app.post("/user", function(req, res) {
         }
         if (error.length > 0) {
             res.send(error);
-        }
-        else {
+        } else {
             newUser.save(function(err, result) {
                 if (err !== null) {
                     console.log(err);
