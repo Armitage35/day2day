@@ -1,37 +1,40 @@
 {
-   "name": "day2day",
-   "version": "1.0.0",
-   "description": "Hi there!",
-   "main": "server.js",
-   "dependencies": {
-      "bcrypt": "^1.0.3",
-      "cf-nodejs-client": "^0.13.0",
-      "cloudfoundry-cli": "^0.8.0",
-      "express": "^3.21.2",
-      "express-validator": "^4.3.0",
-      "mongoose": "^4.13.9",
-      "passport-local": "^1.0.0",
-      "passport": "^0.4.0",
-      "sax": "^1.2.4",
-      "validator": "^9.2.0"
-   },
-   "devDependencies": {},
-   "scripts": {
-      "prestart": "./mongod & start mongod --dbpath ./mongo-db",
-      "start": "node server.js",
-      "poststart": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\"",
-      "pretest": "start mongod --dbpath data",
-      "test": "mocha test",
-      "posttest": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\""
-   },
-   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/Armitage35/todoapp.git"
-   },
-   "author": "Adrien D. Ahlqvist",
-   "license": "ISC",
-   "bugs": {
-      "url": "https://github.com/Armitage35/todoapp/issues"
-   },
-   "homepage": "https://github.com/Armitage35/todoapp#readme"
+  "name": "day2day",
+  "version": "1.0.0",
+  "description": "Hi there!",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "cf-nodejs-client": "^0.13.0",
+    "cloudfoundry-cli": "^0.8.0",
+    "express": "^3.21.2",
+    "express-validator": "^4.3.0",
+    "mongoose": "^4.13.9",
+    "passport-local": "^1.0.0",
+    "passport": "^0.4.0",
+    "sax": "^1.2.4",
+    "validator": "^9.2.0"
+  },
+  "devDependencies": {},
+  "bin": {
+    "module-name": "./bin"
+  },
+  "scripts": {
+    "prestart": "./mongod & start mongod --dbpath ./mongo-db",
+    "start": "node server.js",
+    "poststart": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\"",
+    "pretest": "start mongod --dbpath data",
+    "test": "mocha test",
+    "posttest": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armitage35/todoapp.git"
+  },
+  "author": "Adrien D. Ahlqvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Armitage35/todoapp/issues"
+  },
+  "homepage": "https://github.com/Armitage35/todoapp#readme"
 }
