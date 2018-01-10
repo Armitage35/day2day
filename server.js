@@ -19,7 +19,7 @@ app.use(passport.session());
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
 
-var port = process.env.PORT;
+var port = process.env.PORT || 3000;
 http.createServer(app).listen(port);
 
 //passort local strategy
