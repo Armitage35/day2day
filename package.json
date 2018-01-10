@@ -20,7 +20,7 @@
     "module-name": "./bin"
   },
   "scripts": {
-    "prestart": "./mongod & start mongod --dbpath ./mongo-db",
+    "prestart": "./mongod & start mongod --dbpath ./mongo-db & npm install",
     "start": "node server.js",
     "poststart": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\"",
     "pretest": "start mongod --dbpath data",
