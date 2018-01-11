@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Day2Day</title>
+    <meta charset="utf-8">
+    <!--Bootstrap CSS lib-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!--JQuery lib-->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <!--Bootstrap JS lib-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!--Drag & drop lib-->
+    <script src="//rubaxa.github.io/Sortable/Sortable.js"></script>
+    <!-- Font awesome 5 -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+    <!--Cookie lib-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <link href="stylev2.css" type="text/css" rel="stylesheet">
+    <link href="bttn.min.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="../favicon.ico">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div class="branding">
+                    <img src="https://gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-bdcd44a3bfb9a5fd01eb8b86f9e033fa1a9897c3a15b33adfc2649a002dab1b6.png" alt="Day2Day logo">
+                    <p>Day2Day <br /> by Armitage</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="user">
+                    <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAqEAAAAJDI4OTVkNDQ1LWI2YmYtNDlkNi1hNTBkLTIyYjE1Zjg4ZWFhNQ.jpg" alt="user picture" class="userPicture">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- display date / time ect -->
+            <div class="col-2">
+                <div class="pictureCredits">
+                    <p>A picture by Robert</p>
+                </div>
+            </div>
+            <div class="col-6 align-self-center">
+                <div class="timeDateWeather">
+                    <h1>17:01</h1>
+                    <h2>6 Janv | -18</h2>
+                </div>
+            </div>
+            <!-- display user's content -->
+            <div class="col-3">
+                <div class="tool">
+                    <button class="bttn-material-circle bttn-sm bttn-warning" style="float:left; margin-top:10px; margin-left:5px"><i class="fas fa-plus"></i></button>
+                    <p class="addTask">New task</p>
+                </div>
+                <!--Task lists-->
+                <div class="task">
+                </div>
+            </div>
+            <!-- display tool bar -->
+            <div class="col-1 accessTools">
+
+                <div class="shortcut">
+                    <i class="fas fa-tasks fa-2x"></i>
+                </div>
+                <div class="shortcut">
+                    <i class="fas fa-sticky-note fa-2x"></i>
+                </div>
+                <div class="shortcut">
+                    <i class="fab fa-get-pocket fa-2x"></i>
+                </div>
+                <div class="shortcut">
+                    <i class="fas fa-cog fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
