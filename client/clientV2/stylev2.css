@@ -1,6 +1,5 @@
 body {
 	background-image: url("https://images.unsplash.com/uploads/1413142095961484763cf/d141726c?auto=format&fit=crop&w=1500&q=80");
-	color: white;
 	font-family: 'Raleway';
 }
 
@@ -17,12 +16,17 @@ h3 {
   padding-left: 15px;
 }
 
-p, h1, h2 {
+h1, h2 {
 	color:white
+}
+
+h5 {
+	color: black;
 }
 
 .branding {
 	margin-top: 10px;
+	color: white;
 }
 
 .branding > img {
@@ -33,7 +37,8 @@ p, h1, h2 {
 
 .pictureCredits {
 	position: fixed;
-	bottom: 0px
+	bottom: 0px;
+	color: white;
 }
 
 .user {
@@ -73,6 +78,12 @@ p, h1, h2 {
 	padding-left: 15px
 }
 
+.field {
+    height: 34px;
+    border: 1px solid #1d89ff;
+    border-right-width: 0px;
+}
+
 li {
   color: black;
 }
@@ -106,7 +117,7 @@ input[type="checkbox"]:checked {
 #fixedBottom {
   text-transform: uppercase;
   position: fixed;
-  bottom: 10px
+  bottom: 0px
 }
 
 .accessTools {
