@@ -1,10 +1,10 @@
 Hi there!
 
-This is my first attempt at using the MEAN stack to create a todo app. In the end this will become a personal dashboard and will take the form of a progressive web app notably available from the Chrome Web Store for Chrome OS and for every chrome user.
+Day2Day is the next home page for people who are looking for a relaxing yet productive environment to start their day. 
 
-Help and feedback is greatly apreciated as it is my first attempt at coding and as I don't really know what this app will really become.
+Help and feedback is greatly apreciated so don't hold back and get in touch at dev@day2dayapp.net.
 
 ---
-Link to Day2Day app: [here](https://armitage35.github.io/todoapp/client/index.html)
+Link to Day2Day app: [here](https://day2dayapp.net)
 
-Link to the GitHub project: [here](https://github.com/Armitage35/todoapp)
+Link to the GitHub project: [here](https://github.com/Armitage35/day2day)
