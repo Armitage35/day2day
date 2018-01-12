@@ -16,7 +16,7 @@ var main = function() {
 
     //auto sign in if cookie's here
     if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
-        window.location = "day2day.html";
+        window.location = "clientV2/day2day.html";
     }
 
     //selected view
@@ -120,16 +120,6 @@ var main = function() {
                     displayTaskDetails(i);
                 }
             }
-            else if (selectedView == 2) {
-                if (j < date1 && j < beginingOfDay) {
-                    displayTaskDetails(i);
-                }
-            }
-            else if (selectedView == 3) {
-                if (j > date1) {
-                    displayTaskDetails(i);
-                }
-            }
         }
         console.log(userTask);
     }
@@ -184,16 +174,6 @@ var main = function() {
                 });
                 taskCount++;
                 userTask.push({
-                    title: 'Reorder task by drag and dropping them',
-                    id: taskCount + 1,
-                    commentNb: 0,
-                    complete: false,
-                    createdOn: new Date,
-                    dueDate: null,
-                    comment: []
-                });
-                taskCount++;
-                userTask.push({
                     title: 'You can even add comments and Giphy gifs to your tasks',
                     id: taskCount + 1,
                     commentNb: 0,
@@ -220,7 +200,7 @@ var main = function() {
 
         //telling the server to update the task
         $.ajax({
-            url: "/todos",
+            url: "../../todos",
             type: 'PUT',
             data: { id: completedTaskMongoID },
             success: function(data) {
@@ -301,7 +281,7 @@ var main = function() {
 
         //telling the server to update the task's comments with the last comment
         $.ajax({
-            url: "/todos/comment",
+            url: "../../todos/comment",
             type: 'PUT',
             data: { id: userTask[selectedTask]._id, comment: newComment, commentNb: userTask[selectedTask].commentNb },
             success: function(data) {
@@ -365,7 +345,7 @@ var main = function() {
         userID = Cookies.get('userid'); //when user alerady has a cookie
         console.log(userID);
         $.ajax({
-            url: "/todos",
+            url: "../../todos",
             type: 'GET',
             data: { userID },
             success: function(data) {

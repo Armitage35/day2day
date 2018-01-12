@@ -64,7 +64,6 @@
                         <a class="nav-link" href="#">Done</a>
                     </nav>
                     <ul class="taskList">
-                        <li class="task list-group-item" data-mongo="undefined" draggable="true" style="cursor:move" id="0"><i class="fa fa-bars" aria-hidden="true"></i> <input type="checkbox" name="task-marker">new<br><button type="button" class="btn btn-link comments" data-toggle="modal" data-target="#commentsModal" id="0"><i class="fa fa-comment" aria-hidden="true"></i> 0 </button></li>
                     </ul>
                     <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="fixedBottom">+</button>
                 </div>
@@ -74,7 +73,6 @@
             </div>
             <!-- display tool bar -->
             <div class="col-1 accessTools">
-
                 <div class="shortcut">
                     <i class="fas fa-tasks fa-2x"></i>
                 </div>
@@ -101,7 +99,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="fa  fa-calendar" aria-hidden="true"></i></button>
+                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
                     <button
                         class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                         <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
@@ -136,7 +134,7 @@
                                 <button
                                     type="button" id="addGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus" aria-hidden="true"></i></button>
                             </div>
-                            <button class="bttn-sm" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="fa fa-comments-o" aria-hidden="true"></i></button><button class="bttn-sm" type="button" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                            <button class="bttn-sm" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="far fa-comments"></i></button><button class="bttn-sm" type="button" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                             <div style="display:none" id="giphyInput">
                                 <input type="text" id="giphyRequest" autofocus>
                             </div>

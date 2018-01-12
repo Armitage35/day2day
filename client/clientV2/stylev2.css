@@ -86,6 +86,7 @@ h5 {
 
 li {
   color: black;
+  border-bottom: solid 1px;
 }
 
 ul {
