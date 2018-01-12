@@ -22,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <link href="stylev2.css" type="text/css" rel="stylesheet">
-    <link href="bttn.min.css" type="text/css" rel="stylesheet">
+    <link href="../bttn.css" type="text/css" rel="stylesheet">
     <link rel="icon" href="../favicon.ico">
 </head>
 
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="branding">
-                    <img src="https://gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-bdcd44a3bfb9a5fd01eb8b86f9e033fa1a9897c3a15b33adfc2649a002dab1b6.png" alt="Day2Day logo">
+                    <img src="../assets/armitageLogo.png" alt="Day2Day logo">
                     <p>Day2Day <br /> by Armitage</p>
                 </div>
             </div>
@@ -57,8 +57,16 @@
             <!-- display user's content -->
             <div class="col-3">
                 <div class="tool">
-                    <button class="bttn-material-circle bttn-sm bttn-warning" style="float:left; margin-top:10px; margin-left:5px"><i class="fas fa-plus"></i></button>
-                    <p class="addTask">New task</p>
+                    <h3>Today</h3>
+                    <nav class="nav">
+                        <a class="nav-link active" href="#">Today</a>
+                        <a class="nav-link" href="#">Backlog</a>
+                        <a class="nav-link" href="#">Done</a>
+                    </nav>
+                    <ul>
+                        <li class="task list-group-item" data-mongo="undefined" draggable="true" style="cursor:move" id="0"><i class="fa fa-bars" aria-hidden="true"></i> <input type="checkbox" name="task-marker">new<br><button type="button" class="btn btn-link comments" data-toggle="modal" data-target="#commentsModal" id="0"><i class="fa fa-comment" aria-hidden="true"></i> 0 </button></li>
+                    </ul>
+                    <button type="button" class="bttn-unite bttn-sm bttn-primary" id="fixedBottom" data-dismiss="modal">Add a task</button>
                 </div>
                 <!--Task lists-->
                 <div class="task">
