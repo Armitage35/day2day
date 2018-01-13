@@ -71,6 +71,10 @@ h5 {
 	padding-top: 10px;
 }
 
+.active {
+  color: #1d89ff;
+}
+
 .addTask {
 	color: black;
 	margin-left: 45px;

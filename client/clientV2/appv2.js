@@ -289,6 +289,7 @@ var main = function() {
                 console.log(data);
             }
         });
+        displayComments();
     }
 
     //adding textual comments
@@ -356,6 +357,9 @@ var main = function() {
             }
         });
     }
+
+    //handle tools
+    $(".fa-tasks").addClass("active");
 
     displayTask();
 };
