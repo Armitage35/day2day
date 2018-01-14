@@ -61,10 +61,16 @@ var main = function() {
     });
 
     //declaring today as being today
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
+    var today = new Date(),
+        dd = today.getDate(),
+        mm = today.getMonth() + 1, //January is 0!
+        yyyy = today.getFullYear(),
+        hh = today.getHours(),
+        minutes = today.getMinutes(),
+        seconds = today.getSeconds(),
+        month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        
+        
     if (dd < 10) {
         dd = '0' + dd;
     }
@@ -358,10 +364,21 @@ var main = function() {
         });
     }
 
+    //display time
+    function updateClock (){
+        now = new Date;
+        $(".time").html(now.getHours() + ":" + now.getMinutes());
+        $(".date").html(now.getDate() + " " + month[now.getMonth()]);
+        setInterval(updateClock, 2000);
+    }
+
+    updateClock();
+
     //handle tools
     $(".fa-tasks").addClass("active");
 
     displayTask();
+
 };
 
 $(document).ready(main);

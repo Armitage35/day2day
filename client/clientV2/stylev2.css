@@ -138,3 +138,7 @@ input[type="checkbox"]:checked {
 .svg-inline--fa:active {
   color: #1d89ff;
 }
+
+.date, .temperature {
+	display: inline
+}
