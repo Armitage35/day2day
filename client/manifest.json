@@ -1,0 +1,12 @@
+{
+  "short_name": "Day2Day",
+  "name": "Day2Day",
+  "icons": [
+    {
+      "src": "armitageLogo.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    }
+  ],
+  "start_url": "index.html"
+}
