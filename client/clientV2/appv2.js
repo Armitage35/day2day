@@ -12,6 +12,7 @@ var main = function() {
         taskCount,
         myUserTask,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
+        unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
         userID;
 
     //auto sign in if cookie's here
@@ -69,8 +70,8 @@ var main = function() {
         minutes = today.getMinutes(),
         seconds = today.getSeconds(),
         month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        
-        
+
+
     if (dd < 10) {
         dd = '0' + dd;
     }
@@ -364,8 +365,25 @@ var main = function() {
         });
     }
 
+    //display new background pictures from unsplash
+    function updateWallpaper() {
+        $.ajax({
+            url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=landscape",
+            type: "GET",
+            success: function(data) {
+                console.log(data);
+                let background = '<img src=' + data.urls.regular + '>';
+                $(document.body).css('background-image', background);
+                $(".thanks").html('<a href="' + data.links.html + '"target="_blank" >A picture by' + data.user.name + '</a>');
+            }
+        });
+        setInterval(updateClock, 180000); //refresh every 3 minutes
+    }
+
+    updateWallpaper();
+
     //display time
-    function updateClock (){
+    function updateClock() {
         now = new Date;
         $(".time").html(now.getHours() + ":" + now.getMinutes());
         $(".date").html(now.getDate() + " " + month[now.getMonth()]);
