@@ -1,6 +1,9 @@
 body {
 	/*background-image: url("https://images.unsplash.com/uploads/1413142095961484763cf/d141726c?auto=format&fit=crop&w=1500&q=80");*/
 	font-family: 'Raleway';
+	background-repeat: no-repeat;
+	background-size: cover;
+	
 }
 
 h1 {
@@ -22,6 +25,14 @@ h1, h2 {
 
 h5 {
 	color: black;
+}
+
+a {
+	color: white;
+}
+
+.nav > a {
+	color: #0275d8;
 }
 
 .branding {

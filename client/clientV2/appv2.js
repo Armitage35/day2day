@@ -372,15 +372,13 @@ var main = function() {
             type: "GET",
             success: function(data) {
                 console.log(data);
-                let background = '<img src=' + data.urls.regular + '>';
-                $(document.body).css('background-image', background);
-                $(".thanks").html('<a href="' + data.links.html + '"target="_blank" >A picture by' + data.user.name + '</a>');
+                let background = 'url("' + data.urls.regular + '")';
+                $('body').css('background-image', background);
+                $(".thanks").html('<a href="' + data.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + '</a>');
             }
         });
-        setInterval(updateClock, 180000); //refresh every 3 minutes
+        setInterval(updateWallpaper(), 180000); //refresh every 3 minutes
     }
-
-    updateWallpaper();
 
     //display time
     function updateClock() {
@@ -396,6 +394,7 @@ var main = function() {
     $(".fa-tasks").addClass("active");
 
     displayTask();
+    updateWallpaper();
 
 };
 
