@@ -12,6 +12,7 @@ var main = function() {
         taskCount,
         myUserTask,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
+        avatar,
         userID;
 
     //auto sign in if cookie's here
@@ -32,7 +33,8 @@ var main = function() {
             },
             success: function(data) {
                 userID = data._id;
-                console.log(userID);
+                avatar = data.avatar;
+                console.log("id: " + userID + " avatar: " + avatar);
 
                 if (userID != undefined) {
                     Cookies.remove('userid');

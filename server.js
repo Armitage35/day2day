@@ -49,8 +49,8 @@ app.post('/login', function(req, res) {
         if (err) { return err; }
         if (!user) { return res.send('not found'); }
         req.logIn(user, function(err) {
-            console.log("user am logging in" + user);
-            return res.json(user._id);
+            console.log("user am logging in " + user);
+            return res.json({'user._id' : user._id, 'avatar': user.avatar});
         });
     })(req, res);
 
@@ -129,6 +129,21 @@ app.post("/user", function(req, res) {
             });
         }
         console.log(error);
+    });
+});
+
+app.get("/user", function(req, res) {
+    console.log(req.query);
+    var userID = req.query.userID;
+
+    User.findById(userID).exec(function(err, user) {
+        if (err) {
+            console.log("an error has occured");
+        }
+        else {
+            console.log(user);
+            res.json(user);
+        }
     });
 });
 

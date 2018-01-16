@@ -13,12 +13,44 @@ var main = function() {
         myUserTask,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
         unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
+        userAvatar,
         userID;
 
     //auto sign in if cookie's here
     if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
         window.location = "clientV2/day2day.html";
     }
+    
+    //handling user id cookie and getting user's tasks
+    if (Cookies.get('userid') == undefined) { //when id is not in a cookie
+        window.location.replace("/auth.html");
+    }
+    else {
+        userID = Cookies.get('userid'); //when user alerady has a cookie
+        console.log(userID);
+        $.ajax({
+            url: "../../todos",
+            type: 'GET',
+            data: { userID },
+            success: function(data) {
+                console.log(userID);
+                userTask = data;
+                displayTask();
+                console.log(userTask);
+            }
+        });
+    }
+    
+    //Getting user avatar
+    $.ajax({
+            url: "/user",
+            type: 'GET',
+            data: { userID },
+            success: function(data) {
+                userAvatar = data.avatar;
+                $('.userPicture').attr('src', userAvatar);
+            }
+    });
 
     //selected view
     $("#viewAll").on("click", function() {
@@ -344,26 +376,6 @@ var main = function() {
             addTaskFromInputBox();
         }
     });
-
-    //handling user id cookie and getting user's tasks
-    if (Cookies.get('userid') == undefined) { //when id is not in a cookie
-        window.location.replace("/auth.html");
-    }
-    else {
-        userID = Cookies.get('userid'); //when user alerady has a cookie
-        console.log(userID);
-        $.ajax({
-            url: "../../todos",
-            type: 'GET',
-            data: { userID },
-            success: function(data) {
-                console.log(userID);
-                userTask = data;
-                displayTask();
-                console.log(userTask);
-            }
-        });
-    }
 
     //display new background pictures from unsplash
     function updateWallpaper() {
