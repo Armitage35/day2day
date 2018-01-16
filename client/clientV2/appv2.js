@@ -374,7 +374,7 @@ var main = function() {
                 console.log(data);
                 let background = 'url("' + data.urls.regular + '")';
                 $('body').css('background-image', background);
-                $(".thanks").html('<a href="' + data.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + '</a>');
+                $(".thanks").html('<a href="' + data.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + ' | Unsplash </a>');
             }
         });
         setInterval(updateWallpaper, 180000); //refresh every 3 minutes

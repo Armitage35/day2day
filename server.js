@@ -8,6 +8,7 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    gravatar = require('gravatar'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -73,6 +74,7 @@ app.post("/user", function(req, res) {
         username = req.body.username,
         email = req.body.email,
         password = req.body.password,
+        avatar = gravatar.url(req.body.email, {protocol: 'https'}),
         passwordRepeat = req.body.passwordRepeat,
         hashedPassword = bcrypt.hashSync(password, 10); //hash password syncronously
 
@@ -81,6 +83,7 @@ app.post("/user", function(req, res) {
         "username": username,
         "email": email,
         "password": hashedPassword,
+        "avatar": avatar,
     });
 
     //making the promise
