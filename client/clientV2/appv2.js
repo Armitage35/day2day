@@ -99,11 +99,7 @@ var main = function() {
         dd = today.getDate(),
         mm = today.getMonth() + 1, //January is 0!
         yyyy = today.getFullYear(),
-        hh = today.getHours(),
-        minutes = today.getMinutes(),
-        seconds = today.getSeconds(),
         month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
 
     if (dd < 10) {
         dd = '0' + dd;
@@ -126,14 +122,14 @@ var main = function() {
     }
     else {
         userTask = Cookies.getJSON('myUserTask');
-    } */
+    } 
 
     //handle user task cookie
     function updateCookie() {
         myUserTask = JSON.stringify(userTask);
         Cookies.remove('myUserTask');
         Cookies.set('myUserTask', myUserTask);
-    }
+    }*/
 
     taskCount = userTask.length - 1; //could be set at top
     var date1 = new Date().getTime();
@@ -250,6 +246,7 @@ var main = function() {
         });
 
         userTask[completedTaskID].complete = true;
+        displayTask();
         //updateCookie();
     });
 
@@ -258,7 +255,7 @@ var main = function() {
         var new_task;
         if ($("#newTask").val() !== "") {
             new_task = $("#newTask").val();
-            $("#newTask").empty();
+            $("#newTask").val("");
             var dueDate = new Date($("#dueDate").val());
             dueDate.setDate(dueDate.getDate() + 1);
             if (dueDate == "Invalid Date") {
@@ -349,6 +346,7 @@ var main = function() {
     $("#testGif").on("click", function(event) {
         var requestedGif = $("#giphyRequest").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
+        $("#giphyRequest").val("");
         var giphyResponse = $.getJSON(giphyCall, function() {
             gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
             $("#waitingGif").empty().prepend(gif);
