@@ -410,22 +410,37 @@ var main = function() {
 
     //handle weather
     function handleWeather() {
-        let userIP;
+        let userIP,
+            weather;
 
         function getIP() { //first, we get the user's IP
             $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
                 function(json) {
                     console.log(json.ip);
                     userIP = json.ip;
+                    getLocation();
                 }
             );
         }
+
         function getLocation() { // we then get the user's loc based on his IP
-            let freegeoip = "freegeoip.net/json/" + userIP;
-            $.get(freegeoip, function(data) {
+            let freegeoip = "https://freegeoip.net/json/" + userIP;
+            $.getJSON(freegeoip, function(data) {
+                userIP = data;
                 console.log(data);
+                getLocalWeather();
             });
         }
+
+        function getLocalWeather() { // we then get the user's loc based on his IP
+            let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=metric&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
+            $.get(openWeatherMapReq, function(data) {
+                console.log(data);
+                weather = data;
+                $(".temperature").text(" | " + Math.ceil(data.main.temp) + " °C");
+            });
+        }
+        getIP();
     }
 
     handleWeather();
