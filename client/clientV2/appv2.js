@@ -402,7 +402,7 @@ var main = function() {
     function updateClock() {
         now = new Date;
         $(".time").html(now.getHours() + ":" + now.getMinutes());
-        $(".date").html(now.getDate() + " " + month[now.getMonth()]);
+        $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
         setInterval(updateClock, 2000);
     }
 
