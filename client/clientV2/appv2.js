@@ -370,7 +370,7 @@ var main = function() {
     });
 
     //trigger task adding on enter key
-    $(".task-input input").on("keypress", function(event) {
+    $("#newTask").on("keypress", function(event) {
         if (event.keyCode === 13) {
             addTaskFromInputBox();
         }
@@ -408,13 +408,10 @@ var main = function() {
 
     //handle weather
     function handleWeather() {
-        let userIP,
-            weather;
-
+        let userIP;
         function getIP() { //first, we get the user's IP
             $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
                 function(json) {
-                    console.log(json.ip);
                     userIP = json.ip;
                     getLocation();
                 }
@@ -425,7 +422,6 @@ var main = function() {
             let freegeoip = "https://freegeoip.net/json/" + userIP;
             $.getJSON(freegeoip, function(data) {
                 userIP = data;
-                console.log(data);
                 getLocalWeather();
             });
         }
@@ -433,7 +429,6 @@ var main = function() {
         function getLocalWeather() { // we then get the user's loc based on his IP
             let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=metric&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
             $.get(openWeatherMapReq, function(data) {
-                console.log(data);
                 weather = data;
                 $(".temperature").text(" | " + Math.ceil(data.main.temp) + " °C");
             });
