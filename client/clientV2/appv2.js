@@ -13,6 +13,7 @@ var main = function() {
         myUserTask,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
         unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
+        openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
         userAvatar,
         userID;
 
@@ -20,7 +21,7 @@ var main = function() {
     if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
         window.location = "clientV2/day2day.html";
     }
-    
+
     //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) { //when id is not in a cookie
         window.location.replace("/auth.html");
@@ -40,16 +41,16 @@ var main = function() {
             }
         });
     }
-    
+
     //Getting user avatar
     $.ajax({
-            url: "/user",
-            type: 'GET',
-            data: { userID },
-            success: function(data) {
-                userAvatar = data.avatar;
-                $('.userPicture').attr('src', userAvatar);
-            }
+        url: "/user",
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userAvatar = data.avatar;
+            $('.userPicture').attr('src', userAvatar);
+        }
     });
 
     //selected view
@@ -377,6 +378,9 @@ var main = function() {
         }
     });
 
+    //handle tools
+    $(".fa-tasks").addClass("active");
+
     //display new background pictures from unsplash
     function updateWallpaper() {
         $.ajax({
@@ -404,9 +408,27 @@ var main = function() {
 
     updateClock();
 
-    //handle tools
-    $(".fa-tasks").addClass("active");
+    //handle weather
+    function handleWeather() {
+        let userIP;
 
+        function getIP() { //first, we get the user's IP
+            $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+                function(json) {
+                    console.log(json.ip);
+                    userIP = json.ip;
+                }
+            );
+        }
+        function getLocation() { // we then get the user's loc based on his IP
+            let freegeoip = "freegeoip.net/json/" + userIP;
+            $.get(freegeoip, function(data) {
+                console.log(data);
+            });
+        }
+    }
+
+    handleWeather();
     displayTask();
 
 };
