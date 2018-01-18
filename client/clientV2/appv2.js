@@ -377,11 +377,16 @@ var main = function() {
     //display new background pictures from unsplash
     function updateWallpaper() {
         $.ajax({
-            url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=landscape",
+            url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=nature",
             type: "GET",
             success: function(data) {
                 console.log(data);
-                let background = 'url("' + data.urls.regular + '")';
+                let background;
+                if (window.screen.width >= 2000) {
+                    background = 'url("' + data.urls.full + '")';
+                } else if (window.screen.width < 2000) {
+                    background = 'url("' + data.urls.regular + '")';
+                }
                 $('body').css('background-image', background);
                 $(".thanks").html('<a href="' + data.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + ' | Unsplash </a>');
             }
