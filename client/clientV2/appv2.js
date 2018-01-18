@@ -76,9 +76,6 @@ var main = function() {
         $('#myInput').focus();
     });
 
-    //make tasks draggable
-    //Sortable.create(draggable, { /* options */ });
-
     //using the ctrl + enter keys to display the add task modal
     $(document).on("keypress", function(event) {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
@@ -151,7 +148,7 @@ function displayTaskDetails(i) {
         if (dueDateReadable == "Wed Dec 31 1969") {
             dueDateReadable = "";
         }
-        $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "'style='cursor:move' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+        $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
     }
 }
 
