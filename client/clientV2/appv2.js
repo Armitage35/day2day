@@ -9,7 +9,6 @@ var main = function() {
         userTask = [],
         selectedView = 0,
         gif,
-        taskCount,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
         unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
         openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
@@ -119,23 +118,7 @@ var main = function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
     });
-
-    //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
-    /* if (Cookies.get('myUserTask') == undefined) {
-        console.log("user tasks cookie is empty");
-    }
-    else {
-        userTask = Cookies.getJSON('myUserTask');
-    } 
-
-    //handle user task cookie
-    function updateCookie() {
-        myUserTask = JSON.stringify(userTask);
-        Cookies.remove('myUserTask');
-        Cookies.set('myUserTask', myUserTask);
-    }*/
-
-    taskCount = userTask.length - 1; //could be set at top
+    
     var beginingOfDay = new Date();
     beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
     beginingOfDay = beginingOfDay.getTime();
@@ -147,7 +130,6 @@ var main = function() {
     function displayTask() {
         $(".taskList").empty();
         onboarding();
-        console.log(taskCount)
         for (var i = 0; i <= userTask.length; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
@@ -194,34 +176,28 @@ var main = function() {
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
                     title: 'Start by adding a task',
-                    id: taskCount + 1,
                     commentNb: 0,
                     complete: false,
                     createdOn: new Date,
                     dueDate: null,
                     comment: []
                 });
-                taskCount++;
                 userTask.push({
                     title: 'Then complete a task by clicking in the checkbox',
-                    id: taskCount + 1,
                     complete: false,
                     commentNb: 0,
                     createdOn: new Date,
                     dueDate: null,
                     comment: []
                 });
-                taskCount++;
                 userTask.push({
                     title: 'You can even add comments and Giphy gifs to your tasks',
-                    id: taskCount + 1,
                     commentNb: 0,
                     complete: false,
                     createdOn: new Date,
                     dueDate: null,
                     comment: []
                 });
-                taskCount++;
                 //updateCookie();
                 displayTask();
                 console.log(userTask);
@@ -267,7 +243,6 @@ var main = function() {
 
             var task = {
                 title: new_task,
-                id: taskCount + 1,
                 complete: false,
                 createdOn: new Date,
                 dueDate: dueDate,
@@ -293,7 +268,6 @@ var main = function() {
             //send the new object to cookie  file
             //updateCookie();
             //updateCookie();
-            taskCount = taskCount + 1;
             $(".datePicker").hide();
             displayTask();
         }
