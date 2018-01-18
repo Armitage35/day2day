@@ -10,7 +10,6 @@ var main = function() {
         selectedView = 0,
         gif,
         taskCount,
-        myUserTask,
         giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
         unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
         openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
@@ -28,7 +27,6 @@ var main = function() {
     }
     else {
         userID = Cookies.get('userid'); //when user alerady has a cookie
-        console.log(userID);
         $.ajax({
             url: "../../todos",
             type: 'GET',
@@ -36,8 +34,8 @@ var main = function() {
             success: function(data) {
                 console.log(userID);
                 userTask = data;
-                displayTask();
                 console.log(userTask);
+                displayTask();
             }
         });
     }
@@ -115,6 +113,12 @@ var main = function() {
         $(".datePicker").toggle();
         $("#dueDate").val(now);
     });
+    
+    //getting the task's ID and displaying comments in the modal
+    $(".taskList").on('click', "button", function() {
+        selectedTask = $(this).parent().attr('id');
+        displayComments();
+    });
 
     //Create an empty cookie file if no cookie is to be found but if one exists, fill the userTask to match the cookie's content
     /* if (Cookies.get('myUserTask') == undefined) {
@@ -132,7 +136,6 @@ var main = function() {
     }*/
 
     taskCount = userTask.length - 1; //could be set at top
-    var date1 = new Date().getTime();
     var beginingOfDay = new Date();
     beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
     beginingOfDay = beginingOfDay.getTime();
@@ -167,7 +170,7 @@ var main = function() {
             if (dueDateReadable == "Wed Dec 31 1969") {
                 dueDateReadable = "";
             }
-            $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "'style='cursor:move' id='" + userTask[i].id + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+            $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "'style='cursor:move' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' class='btn btn-link comments' data-toggle='modal' data-target='#commentsModal' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
         }
     }
 
@@ -299,12 +302,6 @@ var main = function() {
         }
     };
 
-    //getting the task's ID and displaying comments in the modal
-    $(".taskList").on('click', "button", function() {
-        selectedTask = $(this).parent().attr('id');
-        displayComments();
-    });
-
     //toggeling between text and gif inputs
     $("#textButton, #gifButton").on("click", function(event) {
         $("#giphyInput").toggle();
@@ -337,7 +334,6 @@ var main = function() {
             newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
             addComment(newComment)
             displayTask();
-            //updateCookie();
             displayComments();
         }
     });
@@ -358,7 +354,6 @@ var main = function() {
         $("#waitingGif").empty();
         var newComment = gif;
         addComment(newComment);
-        //updateCookie();
         displayTask();
         displayComments();
         $("#giphyRequest").val("");
@@ -409,6 +404,7 @@ var main = function() {
     //handle weather
     function handleWeather() {
         let userIP;
+
         function getIP() { //first, we get the user's IP
             $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
                 function(json) {
@@ -429,7 +425,6 @@ var main = function() {
         function getLocalWeather() { // we then get the user's loc based on his IP
             let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=metric&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
             $.get(openWeatherMapReq, function(data) {
-                weather = data;
                 $(".temperature").text(" | " + Math.ceil(data.main.temp) + " °C");
             });
         }
@@ -438,7 +433,6 @@ var main = function() {
 
     handleWeather();
     displayTask();
-
 };
 
 $(document).ready(main);
