@@ -27,9 +27,6 @@ h5 {
 	color: black;
 }
 
-a {
-	color: white;
-}
 
 .nav > a {
 	color: #0275d8;
@@ -38,10 +35,15 @@ a {
 .branding {
 	margin-top: 10px;
 	color: white;
+	font-size: 12px;
+}
+
+.branding > p > a {
+	color: white;
 }
 
 .branding > img {
-	max-width:42px;
+	max-width:36px;
 	float: left;
 	margin-right: 10px;
 }
@@ -49,6 +51,11 @@ a {
 .pictureCredits {
 	position: fixed;
 	bottom: 0px;
+	color: white;
+	font-size: 12px;
+}
+
+.thanks > a {
 	color: white;
 }
 

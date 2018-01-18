@@ -82,7 +82,7 @@ var main = function() {
     //using the ctrl + enter keys to display the add task modal
     $(document).on("keypress", function(event) {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
-            $("#myInput").click();
+            $("#fixedBottom").click();
         }
     });
 
