@@ -1,7 +1,5 @@
 /* global $ */
 /* global Cookies */
-/* global Sortable */
-/* global draggable */
 
 var main = function() {
 
@@ -51,28 +49,25 @@ var main = function() {
     });
 
     //selected view
-    $("#viewAll").on("click", function() {
+    $("#today").on("click", function() {
         selectedView = 0;
-        $("#viewAll").addClass("active");
-        $("#viewToday, #viewLate, #viewUpcoming").removeClass("active");
+        $("#today").addClass("active");
+        $("#backlog, #done").removeClass("active");
+        $("#selectedTaskView").text("Today");
         displayTask();
     });
-    $("#viewToday").on("click", function() {
+    $("#backlog").on("click", function() {
         selectedView = 1;
-        $("#viewToday").addClass("active");
-        $("#viewAll, #viewLate, #viewUpcoming").removeClass("active");
+        $("#backlog").addClass("active");
+        $("#today, #done").removeClass("active");
+        $("#selectedTaskView").text("Backlog");
         displayTask();
     });
-    $("#viewLate").on("click", function() {
+    $("#done").on("click", function() {
         selectedView = 2;
-        $("#viewLate").addClass("active");
-        $("#viewAll, #viewToday, #viewUpcoming").removeClass("active");
-        displayTask();
-    });
-    $("#viewUpcoming").on("click", function() {
-        selectedView = 3;
-        $("#viewUpcoming").addClass("active");
-        $("#viewAll, #viewLate, #viewToday").removeClass("active");
+        $("#done").addClass("active");
+        $("#today, #backlog").removeClass("active");
+        $("#selectedTaskView").text("Done");
         displayTask();
     });
 
@@ -133,10 +128,10 @@ var main = function() {
         for (var i = 0; i <= userTask.length; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
-            if (selectedView == 0) {
+            if (selectedView == 1) {
                 displayTaskDetails(i);
             }
-            else if (selectedView == 1) {
+            else if (selectedView == 0) {
                 if (j > beginingOfDay && j < endOfDay) {
                     displayTaskDetails(i);
                 }
