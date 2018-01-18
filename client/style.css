@@ -1,52 +1,125 @@
-* {
-    font-family: 'Raleway', sans-serif;
+body {
+	/*background-image: url("https://images.unsplash.com/uploads/1413142095961484763cf/d141726c?auto=format&fit=crop&w=1500&q=80");*/
+	font-family: 'Raleway';
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+
+h1 {
+	font-size: 6.5rem;
+}
+
+h2 {
+	font-size: 3.5rem;
+}
+
+h3 {
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+h1, h2 {
+	color:white
+}
+
+h5 {
+	color: black;
 }
 
 
-
-body{
-      background-color: #f7f7f7;
+.nav > a {
+	color: #0275d8;
 }
 
-.content {
-    margin: 5%;
-    padding: 2%;
-    background-color: white;
-    border-style: solid;
-    border-color: #e3e3e3;
-    border-width: thin;
+.branding {
+	margin-top: 10px;
+	color: white;
+	font-size: 12px;
 }
 
-a {
-    color: black;
+.branding > p > a {
+	color: white;
 }
 
-header {
-    margin: 20px;
-    text-align:center;
-    display: inline;
+.branding > img {
+	max-width:36px;
+	float: left;
+	margin-right: 10px;
 }
 
-fa {
-    color: #1d89ff;
+.pictureCredits {
+	position: fixed;
+	bottom: 0px;
+	color: white;
+	font-size: 12px;
 }
 
-fa:hover {
-    color: white;
+.thanks > a {
+	color: white;
 }
 
-
-.top { }
-
-.task-input {
-    margin-left: 15px;
+.user {
+	text-align: right;
+	margin-top:10px;
 }
 
-.outer {
-    margin-top: 10px;
-    border: solid grey;
-    border-width: 1px 0px;
-    padding: 5px;
+.user > img {
+	max-width:33px;
+	float: right;
+	border-radius: 100%;
+}
+
+.timeDateWeather {
+	text-align: center;
+	color: white;
+	vertical-align: middle;
+}
+
+.tool {
+	background-color: white;
+	color: black;
+	position: fixed;
+	bottom:0px;
+	height: 80%;
+	width:22%;
+	text-align: left;
+	border-radius: 5px 5px 0px 0px;
+	padding-left: 0px;
+	padding-top: 10px;
+	overflow-x: auto;
+}
+
+.active {
+  color: #1d89ff;
+}
+
+.addTask {
+	color: black;
+	margin-left: 45px;
+	margin-top:10px;
+	padding-left: 15px
+}
+
+.field {
+    height: 34px;
+    border: 1px solid #1d89ff;
+    border-right-width: 0px;
+    width: 75%;
+}
+
+li {
+  color: black;
+  border-bottom: solid 1px;
+}
+
+ul {
+  padding-left: 0px
+}
+
+.task {
+  border-radius: 0px;
+  border-width: 0px 0px 1px;
 }
 
 input[type="checkbox"] {
@@ -55,87 +128,37 @@ input[type="checkbox"] {
     background-color: white;
     border-radius: 50%;
     vertical-align: middle;
-    border: 3px solid #fff;
+    border: 3px solid #1d89ff;
     -webkit-appearance: none;
     outline: none;
     cursor: pointer;
     margin:0px 10px 0px 5px;
 }
 
-.list-group-item:first-child {
-    border-top-left-radius: .0rem;
-    border-top-right-radius: .0rem;
-}
-
 input[type="checkbox"]:checked {
     background-color: #1d89ff;
 }
 
-.taskList {
-    margin: 10px;
-    z-index: 1;
+#fixedBottom {
+  text-transform: uppercase;
+  position: fixed;
+  bottom: 0px
 }
 
-.taskList p {
-    background-color: #1d89ff;
-    color: white;
-    margin: 5px;
-    padding-left:5px;
+.accessTools {
+	margin-top: 100px;
+	text-align:right;
 }
 
-.onboardingMessage {
-    background-color: white !important;
-    color: black !important;
+.shortcut {
+	margin-bottom: 20px;
+	color: white;
 }
 
-.field {
-    height: 34px;
-    border: 1px solid #1d89ff;
-    border-right-width: 0px;
+.svg-inline--fa:active {
+  color: #1d89ff;
 }
 
-.checkbox {
-    margin-right: 10px;
-}
-
-.red {
-    border: solid 1px red;
-}
-
-footer {
-    margin: 20px;
-}
-
-.btn-link {
-    color: white;
-    text-decoration: none;
-}
-
-.btn-link:hover {
-    text-decoration: none;
-}
-
-.btn.focus, .btn:focus {
-    outline: 0;
-    -webkit-box-shadow: 0 0 0 0px rgba(2,117,216,.25);
-    box-shadow: 0 0 0 0px rgba(2,117,216,.25); 
-    text-decoration: none;
-}
-
-.taskSeparator {
-    width: 30%;
-    margin-left: 0px;
-}
-
-.gif {
-    display: block;
-    margin-bottom: 5px;
-    max-height: 150px;
-}
-
-.onboarding{
-    text-align: center; 
-    background-color: white; 
-    color: black;
-    margin: 0px auto 0px auto
+.date, .temperature {
+	display: inline
 }
