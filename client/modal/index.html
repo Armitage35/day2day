@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Comments | Day2Day</title>
+	<meta charset="utf-8">
+	<!--Bootstrap CSS lib-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://use.fontawesome.com/d931389769.js"></script>
+	<!--Cookie lib-->
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<link href="bttn.min.css" type="text/css" rel="stylesheet">
+	<link href="style.css" type="text/css" rel="stylesheet">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+
+
+</head>
+
+<div class="container-fluid">
+	<div class="row">
+		<!-- the comment col -->
+		<div class="col-8 commentsSection">
+			<div class="row comment" id="c1">
+				<!--the text input zone -->
+				<div class="newComment">
+					<div>
+						<input type="text" class="newCommentInput" />
+						<button class="bttn-material-circle bttn-sm bttn-primary"><i class="fas fa-paper-plane"></i></button>
+					</div>
+					<i class="fas fa-font fa-lg"></i>
+					<i class="far fa-image fa-lg"></i>
+					<i class="fas fa-rocket fa-lg"></i>
+				</div>
+				<!-- the picture col -->
+				<div class="col-1">
+					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+				</div>
+				<!-- the comments bubbles col -->
+				<div class="col-11">
+					<div class="bubble">
+						<p class="commentBody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla. Quisque pharetra purus ut leo rhoncus vestibulum. Lorem
+							ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt semper mattis.</p>
+					</div>
+					<p class="timeStamp">6th january, 15h28</p>
+				</div>
+			</div>
+			<div class="row comment" id="c2">
+				<!-- the picture col -->
+				<div class="col-1">
+					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+				</div>
+				<!-- the comments bubbles col -->
+				<div class="col-11">
+					<div class="bubble">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
+						<img src="https://images.unsplash.com/photo-1468276311594-df7cb65d8df6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ%3D%3D&s=d5a923d4fd0c1f8680014e6cd094f53c" class="picComment" />
+					</div>
+					<p class="timeStamp">6th january, 15h28</p>
+				</div>
+			</div>
+			<div class="row comment" id="c2">
+				<!-- the picture col -->
+				<div class="col-1">
+					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+				</div>
+				<!-- the comments bubbles col -->
+				<div class="col-11">
+					<div class="bubble">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
+						<div class="row">
+							<div class="col-3 favicon">
+								<!-- to put the fav icon -->
+								<img src="https://avatars-na.curseapp.net/files/c2b44502-e7b3-442f-bd7b-d7cef2029cbf/980354d4-488b-4662-aa86-d5a98a7ee58b.png" />
+							</div>
+							<div class="col-9 linkPreview">
+								<!-- to put the page's info -->
+								<p class="linkTitle">Cloud9</p>
+								<p class="linkDescription">Cloud9 IDE is an online integrated development environment, published as open source...</p>
+							</div>
+						</div>
+					</div>
+					<p class="timeStamp">6th january, 15h28</p>
+				</div>
+			</div>
+		</div>
+		<!-- the details col -->
+		<div class="col-4 details">
+			<input type="checkbox" id="TaskName" style="float:left">
+			<h1>Buy tickets for star wars</h1>
+			<p>26th July</p>
+			<p>6th Feb</p>
+			<hr />
+		</div>
+	</div>
+</div>
