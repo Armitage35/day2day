@@ -23,7 +23,8 @@ var main = function() {
                 passwordRepeat: $("#passwordRepeat").val()
             },
             success: function(data) {
-                userID = data.user._id;
+                userID = data._id;
+                console.log(userID);
                 avatar = data.avatar;
                 console.log("id: " + userID + " avatar: " + avatar);
 
@@ -49,6 +50,8 @@ var main = function() {
                 if (data.includes('E4') === true) {
                     console.log('email taken');
                     $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Email alerady used</div>');
+                } else {
+                    window.location = "/index.html";
                 }
             }
         });
