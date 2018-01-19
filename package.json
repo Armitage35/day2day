@@ -5,15 +5,12 @@
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^1.0.3",
-    "cf-nodejs-client": "^0.13.0",
-    "cloudfoundry-cli": "^0.8.0",
     "express": "^3.21.2",
     "express-validator": "^4.3.0",
     "gravatar": "^1.6.0",
     "mongoose": "^4.13.9",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "sax": "^1.2.4",
     "validator": "^9.2.0"
   },
   "devDependencies": {},
@@ -30,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Armitage35/todoapp.git"
+    "url": "git+https://github.com/Armitage35/day2day.git"
   },
   "author": "Adrien D. Ahlqvist",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Armitage35/todoapp/issues"
+    "url": "https://github.com/Armitage35/day2day/issues"
   },
-  "homepage": "https://github.com/Armitage35/todoapp#readme"
+  "homepage": "https://github.com/Armitage35/day2day#readme"
 }
