@@ -50,7 +50,7 @@ app.post('/login', function(req, res) {
         if (!user) { return res.send('not found'); }
         req.logIn(user, function(err) {
             console.log("user am logging in " + user);
-            return res.json({'user._id' : user._id, 'avatar': user.avatar});
+            return res.json(user._id);
         });
     })(req, res);
 

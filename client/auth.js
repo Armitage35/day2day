@@ -3,6 +3,9 @@
 
 var main = function() {
 
+    var userID,
+        avatar;
+
     //auto sign in if cookie's here
     if (Cookies.get('userid') !== undefined && window.location.pathname === "/auth.html") {
         window.location = "index.html";
@@ -20,7 +23,7 @@ var main = function() {
                 passwordRepeat: $("#passwordRepeat").val()
             },
             success: function(data) {
-                userID = user._id;
+                userID = data.user._id;
                 avatar = data.avatar;
                 console.log("id: " + userID + " avatar: " + avatar);
 
@@ -67,6 +70,7 @@ var main = function() {
                 password: $("#passwordLogIn").val(),
             },
             success: function(data) {
+                console.log(data);
                 if (data === "not found") {
                     console.log("wrong credentials")
                     $("#emailLogIn").parent().addClass("has-danger").append('<div class="form-control-feedback">Credentials do not match</div>');
