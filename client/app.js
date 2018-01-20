@@ -13,6 +13,12 @@ var main = function() {
         userAvatar,
         userID;
 
+    $("#pop, #close").on("click", function() {
+        $("#main").toggle();
+        $("#pop").toggle();
+        $("#experiment").show();
+    });
+
     //auto sign in if cookie's here
     if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
         window.location = "index.html";

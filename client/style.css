@@ -162,3 +162,140 @@ input[type="checkbox"]:checked {
 .date, .temperature {
 	display: inline
 }
+
+.fa-times {
+	position: fixed;
+	right: 10px;
+	top: 10px;
+	color: white;
+	z-index: 1;
+}
+
+.commentsSection {
+	background-color: #ecf0f1;
+}
+
+.details {
+	background-color: #2980b9;
+	color: white;
+	position: fixed;
+	right: 0px;
+	height:100%;
+	padding: 30px;
+}
+
+input[type="checkbox"] {
+    width: 1.3em;
+    height: 1.3em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 3px solid #1d89ff;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    margin:0px 10px 0px 5px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #1d89ff;
+}
+
+.details > .row > div > svg {
+	float: left;
+	margin-right: 10px
+}
+
+hr {
+	border: 1px solid white;
+}
+
+.comment {
+	margin-top:10px;
+	overflow: auto
+}
+
+.avatarComment {
+	width:100%; 
+	border-radius: 100%
+}
+
+.commentBody {
+    margin-bottom: 0px;
+}
+
+.timeStamp {
+    margin-top: 0px;
+    font-size: 12px;
+}
+
+.bubble {
+	background-color: white;
+	border-radius: 10px;
+}
+
+.bubble > p {
+	padding: 15px;
+	margin: 0px
+}
+
+.bubble > img {
+	padding: 0;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px
+}
+
+.picComment{
+	padding: 0px;
+	width:100%
+}
+
+.favicon {
+	float: left;
+}
+
+.favicon > img{
+	max-height: 100%;
+	max-width: 100%;
+	border-bottom-left-radius: 10px;
+}
+
+.linkPreview {
+    background-color: lightgrey;
+    position: relative;
+    left: -15px;
+}
+
+.linkTitle {
+	margin-bottom: 0px;
+}
+
+.newComment{
+    background-color: white;
+    width: 66.65%;
+    position: fixed;
+    z-index: 1;
+    bottom: 0px;
+    padding: 5px;
+}
+
+.newComment > div > button {
+    position: relative;
+    top: 15px;
+} 
+
+.newComment > svg {
+    margin-left: 20px;
+} 
+
+.newCommentInput {
+    width: 90%;
+    height: 36px;
+    border-style: hidden;
+    padding-left: 20px;
+    margin-bottom: 10px
+}
+
+.newCommentInput:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
