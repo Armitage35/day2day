@@ -18,13 +18,14 @@
 
 <div class="container-fluid">
 	<div class="row">
+		<i class="fas fa-times fa-lg"></i>
 		<!-- the comment col -->
 		<div class="col-8 commentsSection">
 			<div class="row comment" id="c1">
 				<!--the text input zone -->
 				<div class="newComment">
 					<div>
-						<input type="text" class="newCommentInput" />
+						<input type="text" class="newCommentInput" placeholder="Type your new comment here" />
 						<button class="bttn-material-circle bttn-sm bttn-primary"><i class="fas fa-paper-plane"></i></button>
 					</div>
 					<i class="fas fa-font fa-lg"></i>
@@ -85,11 +86,21 @@
 		</div>
 		<!-- the details col -->
 		<div class="col-4 details">
-			<input type="checkbox" id="TaskName" style="float:left">
-			<h1>Buy tickets for star wars</h1>
-			<p>26th July</p>
-			<p>6th Feb</p>
+			<div class="row">
+				<div class="col-1">
+					<input type="checkbox" id="TaskName">
+				</div>
+				<div class="col-11">
+					<h1>Buy tickets for star wars</h1>
+					<i class="far fa-plus-square"></i>
+					<p>26th July</p>
+					<i class="far fa-calendar"></i>
+					<p>6th Feb</p>
+				</div>
+			</div>
 			<hr />
+			<i class="fas fa-trash"></i>
+			<i class="fas fa-code"></i>
 		</div>
 	</div>
 </div>
