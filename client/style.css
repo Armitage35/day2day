@@ -18,6 +18,9 @@ h3 {
 h5 {
   color: black; }
 
+::placeholder {
+  color: #999; }
+
 .nav a {
   color: #1d89ff; }
 
@@ -207,6 +210,8 @@ hr {
   .newComment div button {
     position: relative;
     top: 15px; }
+    .newComment div button svg {
+      margin-left: 0px; }
   .newComment svg {
     margin-left: 20px; }
 
@@ -219,5 +224,111 @@ hr {
 
 .newCommentInput:focus {
   outline: -webkit-focus-ring-color auto 0px; }
+
+.details div h1 {
+  font-size: 40px; }
+
+.signup__container {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  transform: translateY(-50%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50rem;
+  height: 33rem;
+  border-radius: 0.1875rem;
+  box-shadow: 0px 0.1875rem 0.4375rem rgba(0, 0, 0, 0.25); }
+  .signup__container .container__child {
+    width: 50%;
+    height: 100%;
+    color: #fff; }
+  .signup__container .signup__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); }
+
+.signup__thumbnail {
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: url(https://images.unsplash.com/photo-1491555103944-7c647fd857e6);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover; }
+
+.thumbnail__logo,
+.thumbnail__content,
+.thumbnail__links {
+  position: relative;
+  z-index: 2; }
+
+.thumbnail__logo {
+  align-self: flex-start; }
+
+.logoText {
+  display: inline-block;
+  font-size: .8rem;
+  font-weight: 700;
+  vertical-align: bottom;
+  cursor: default; }
+
+.thumbnail__content {
+  align-self: center; }
+
+.heading--primary {
+  font-size: 1.999rem; }
+
+.heading--secondary {
+  font-size: 1.414rem; }
+
+.thumbnail__links {
+  align-self: flex-end;
+  width: 100%; }
+  .thumbnail__links a {
+    font-size: 1rem;
+    color: #fff; }
+
+.signup__form {
+  padding: 2.5rem;
+  background: #fafafa; }
+
+label {
+  font-size: .85rem;
+  text-transform: uppercase;
+  color: #1d89ff; }
+
+.form-control {
+  background-color: transparent;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0; }
+
+.form-control:focus {
+  border-color: #111; }
+
+.signin__link,
+.signup__link {
+  font-size: .8rem;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #999; }
+
+#signIn {
+  display: none; }
+
+#signin {
+  margin-top: 10px; }
 
 /*# sourceMappingURL=style.css.map */
