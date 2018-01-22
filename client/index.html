@@ -76,7 +76,7 @@
             <!-- display tool bar -->
             <div class="col-1 accessTools">
                 <div class="shortcut">
-                    <i class="fas fa-tasks fa-2x" ></i>
+                    <i class="fas fa-tasks fa-2x"></i>
                 </div>
                 <div class="shortcut">
                     <i class="fas fa-sticky-note fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
@@ -101,8 +101,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button><button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                    <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
+                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
+                    <button
+                        class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                        <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
@@ -133,7 +135,8 @@
                                 <input type="text" id="giphyRequest" placeholder="Look for a Giphy" style="" class="field" autofocus><button type="button" id="testGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-search" aria-hidden="true"></i></button>
                                 <button type="button" id="addGif" class="bttn-unite bttn-sm bttn-primary" style=""><i class="fa fa-plus" aria-hidden="true"></i></button>
                             </div>
-                            <button class="bttn-unite bttn-sm bttn-primary" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="far fa-comments"></i></button><button class="bttn-unite bttn-sm bttn-primary" type="button" id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                            <button class="bttn-unite bttn-sm bttn-primary" type="button" id="textButton" style="border:solid; border-width:1px 0px"><i class="far fa-comments"></i></button><button class="bttn-unite bttn-sm bttn-primary" type="button"
+                                id="gifButton" style="border:solid; border-width:1px 0px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                             <div style="display:none" id="giphyInput">
                                 <input type="text" id="giphyRequest" autofocus>
                             </div>
@@ -165,97 +168,96 @@
             </div>
         </div>
     </div>
-    
+
     <!--new comment modal-->
-    <div class="container-fluid">
-	<button class="bttn-material-flat bttn-md bttn-primary" id="pop">Display Modal</button>
-	<div class="row" id="experiment" style="display:none">
-		<i class="fas fa-times fa-lg" id="close"></i>
-		<!-- the comment col -->
-		<div class="col-8 commentSection">
-			<div class="row comment" id="c1">
-				<!--the text input zone -->
-				<div class="newComment">
-					<div>
-						<input type="text" class="newCommentInput" placeholder="Type your new comment here" />
-						<button class="bttn-material-circle bttn-sm bttn-primary"><i class="fas fa-paper-plane"></i></button>
-					</div>
-					<i class="fas fa-font fa-lg"></i>
-					<i class="far fa-image fa-lg"></i>
-					<i class="fas fa-rocket fa-lg"></i>
-				</div>
-				<!-- the picture col -->
-				<div class="col-1">
-					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
-				</div>
-				<!-- the comments bubbles col -->
-				<div class="col-11">
-					<div class="bubble">
-						<p class="commentBody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla. Quisque pharetra purus ut leo rhoncus vestibulum. Lorem
-							ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt semper mattis.</p>
-					</div>
-					<p class="timeStamp">6th january, 15h28</p>
-				</div>
-			</div>
-			<div class="row comment" id="c2">
-				<!-- the picture col -->
-				<div class="col-1">
-					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
-				</div>
-				<!-- the comments bubbles col -->
-				<div class="col-11">
-					<div class="bubble">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
-						<img src="https://images.unsplash.com/photo-1468276311594-df7cb65d8df6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ%3D%3D&s=d5a923d4fd0c1f8680014e6cd094f53c" class="picComment" />
-					</div>
-					<p class="timeStamp">6th january, 15h28</p>
-				</div>
-			</div>
-			<div class="row comment" id="c2">
-				<!-- the picture col -->
-				<div class="col-1">
-					<img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
-				</div>
-				<!-- the comments bubbles col -->
-				<div class="col-11">
-					<div class="bubble">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
-						<div class="row">
-							<div class="col-3 favicon">
-								<!-- to put the fav icon -->
-								<img src="https://avatars-na.curseapp.net/files/c2b44502-e7b3-442f-bd7b-d7cef2029cbf/980354d4-488b-4662-aa86-d5a98a7ee58b.png" />
-							</div>
-							<div class="col-9 linkPreview">
-								<!-- to put the page's info -->
-								<p class="linkTitle">Cloud9</p>
-								<p class="linkDescription">Cloud9 IDE is an online integrated development environment, published as open source...</p>
-							</div>
-						</div>
-					</div>
-					<p class="timeStamp">6th january, 15h28</p>
-				</div>
-			</div>
-		</div>
-		<!-- the details col -->
-		<div class="col-4 details">
-			<div class="row">
-				<div class="col-1">
-					<input type="checkbox" id="TaskName">
-				</div>
-				<div class="col-11">
-					<h1>Buy tickets for star wars</h1>
-					<i class="far fa-plus-square"></i>
-					<p>26th July</p>
-					<i class="far fa-calendar"></i>
-					<p>6th Feb</p>
-				</div>
-			</div>
-			<hr />
-			<i class="fas fa-trash"></i>
-			<i class="fas fa-code"></i>
-		</div>
-	</div>
-</div>
+    <div class="container-fluid" id="experiment" style="display:none">
+        <!--the new comment input zone -->
+        <div class="newComment">
+            <div>
+                <input type="text" class="newCommentInput" placeholder="Type your new comment here" />
+                <button class="bttn-material-circle bttn-sm bttn-primary"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <i class="fas fa-font fa-lg"></i>
+            <i class="far fa-image fa-lg"></i>
+            <i class="fas fa-rocket fa-lg"></i>
+        </div>
+        <div class="row">
+            <i class="fas fa-times fa-lg" id="close"></i>
+            <!-- the comment col -->
+            <div class="col-8 commentSection">
+                <div class="row comment" id="c1">
+                    <!-- the picture col -->
+                    <div class="col-1">
+                        <img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+                    </div>
+                    <!-- the comments bubbles col -->
+                    <div class="col-11">
+                        <div class="bubble">
+                            <p class="commentBody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla. Quisque pharetra purus ut leo
+                                rhoncus vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt semper mattis.</p>
+                        </div>
+                        <p class="timeStamp">6th january, 15h28</p>
+                    </div>
+                </div>
+                <div class="row comment" id="c2">
+                    <!-- the picture col -->
+                    <div class="col-1">
+                        <img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+                    </div>
+                    <!-- the comments bubbles col -->
+                    <div class="col-11">
+                        <div class="bubble">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
+                            <img src="https://images.unsplash.com/photo-1468276311594-df7cb65d8df6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ%3D%3D&s=d5a923d4fd0c1f8680014e6cd094f53c" class="picComment" />
+                        </div>
+                        <p class="timeStamp">6th january, 15h28</p>
+                    </div>
+                </div>
+                <div class="row comment" id="c2">
+                    <!-- the picture col -->
+                    <div class="col-1">
+                        <img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
+                    </div>
+                    <!-- the comments bubbles col -->
+                    <div class="col-11">
+                        <div class="bubble">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
+                            <div class="row">
+                                <div class="col-3 favicon">
+                                    <!-- to put the fav icon -->
+                                    <img src="https://avatars-na.curseapp.net/files/c2b44502-e7b3-442f-bd7b-d7cef2029cbf/980354d4-488b-4662-aa86-d5a98a7ee58b.png" />
+                                </div>
+                                <div class="col-9 linkPreview">
+                                    <!-- to put the page's info -->
+                                    <p class="linkTitle">Cloud9</p>
+                                    <p class="linkDescription">Cloud9 IDE is an online integrated development environment, published as open source...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="timeStamp">6th january, 15h28</p>
+                    </div>
+                </div>
+            </div>
+            <!-- the details col -->
+            <div class="col-4 details">
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox" id="TaskName">
+                    </div>
+                    <div class="col-11">
+                        <h1>Buy tickets for star wars</h1>
+                        <i class="far fa-plus-square"></i>
+                        <p>26th July</p>
+                        <i class="far fa-calendar"></i>
+                        <p>6th Feb</p>
+                    </div>
+                </div>
+                <hr />
+                <i class="fas fa-trash"></i>
+                <i class="fas fa-code"></i>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
