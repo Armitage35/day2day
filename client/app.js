@@ -278,6 +278,19 @@ var main = function() {
         $("#addComment").toggle();
     });
 
+    //adding textual comments
+    $("#addComment").on("click", function() {
+        let newComment = $("#message-text").val();
+        console.log(newComment);
+        if (newComment != "" && newComment != null && newComment != undefined) {
+            $("#message-text").val("");
+            newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
+            addComment(newComment)
+            displayTask();
+            displayComments();
+        }
+    });
+
     function addComment(newComment) {
         userTask[selectedTask].comment.push(newComment);
         userTask[selectedTask].commentNb++;
@@ -293,19 +306,8 @@ var main = function() {
             }
         });
         displayComments();
+        $("#main, #newCommentModal").toggle();
     }
-
-    //adding textual comments
-    $("#addComment").on("click", function() {
-        let newComment = $("#message-text").val();
-        if (newComment != "" && newComment != null && newComment != undefined) {
-            $("#message-text").val("");
-            newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
-            addComment(newComment)
-            displayTask();
-            displayComments();
-        }
-    });
 
     //looking for gif and showing it
     $("#testGif").on("click", function(event) {
