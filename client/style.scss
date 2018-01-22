@@ -173,7 +173,7 @@ input[type="checkbox"]:checked {
 	display: inline
 }
 
-.fa-times {
+#closeNewCommentModal {
 	position: fixed;
 	right: 10px;
 	top: 10px;
@@ -275,16 +275,26 @@ hr {
 	left: 0px;
 	padding: 5px;
 	div {
-		button {
+		#addComment {
 			position: relative;
 			top: 15px;
 			svg {
+				color: white;
+				margin-left: 0px;
+			}
+		}
+		#testGif {
+			position: relative;
+			top: 15px;
+			display: none;
+			svg {
+				color: white;
 				margin-left: 0px;
 			}
 		}
 	}
 	svg {
-		margin-left: 20px;
+		color: black;
 	}
 }
 

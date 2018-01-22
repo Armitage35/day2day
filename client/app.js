@@ -146,10 +146,17 @@ var main = function() {
             $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
         }
     }
-
+    
+    //closing the comment modal
+    $("#closeNewCommentModal").on('click', function() {
+        $("#newCommentModal").hide();
+        $("#main").show();
+    });
+    
     function displayComments() {
         $(".commentSection").children().empty();
         $("#main, #newCommentModal").toggle();
+        $("#textComment").addClass("active");
         $(".commentTaskTitle").text(userTask[selectedTask].title);
         $(".createdOn").children("p").empty().text(userTask[selectedTask].createdOn);
         $(".dueFor").children("p").empty().text(userTask[selectedTask].dueDate);
@@ -272,10 +279,8 @@ var main = function() {
     };
 
     //toggeling between text and gif inputs
-    $("#textButton, #gifButton").on("click", function(event) {
-        $("#giphyInput").toggle();
-        $("#message-text").toggle();
-        $("#addComment").toggle();
+    $("#textComment, #giphyComment").on("click", function(event) {
+        $("#message-text, #message-giphy, #addComment, #testGif").toggle();
     });
 
     //adding textual comments

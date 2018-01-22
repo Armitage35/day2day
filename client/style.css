@@ -131,7 +131,7 @@ input[type="checkbox"]:checked {
 .temperature {
   display: inline; }
 
-.fa-times {
+#closeNewCommentModal {
   position: fixed;
   right: 10px;
   top: 10px;
@@ -208,13 +208,21 @@ hr {
   bottom: 0px;
   left: 0px;
   padding: 5px; }
-  .newComment div button {
+  .newComment div #addComment {
     position: relative;
     top: 15px; }
-    .newComment div button svg {
+    .newComment div #addComment svg {
+      color: white;
+      margin-left: 0px; }
+  .newComment div #testGif {
+    position: relative;
+    top: 15px;
+    display: none; }
+    .newComment div #testGif svg {
+      color: white;
       margin-left: 0px; }
   .newComment svg {
-    margin-left: 20px; }
+    color: black; }
 
 .newCommentInput {
   width: 90%;

@@ -176,14 +176,18 @@
         <div class="newComment">
             <div>
                 <input type="text" class="newCommentInput" id="message-text" placeholder="Type your new comment here" />
+                <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
                 <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment"><i class="fas fa-paper-plane"></i></button>
+                <button class="bttn-material-circle bttn-sm bttn-primary" id="testGif"><i class="fas fa-random"></i></button>
             </div>
-            <i class="fas fa-font fa-lg"></i>
-            <i class="far fa-image fa-lg"></i>
-            <i class="fas fa-rocket fa-lg"></i>
+            <button type="button" class="btn btn-link" id="textComment"><i class="fas fa-font fa-lg"></i></button>
+            <button type="button" class="btn btn-link" id="giphyComment"><i class="fas fa-rocket fa-lg" ></i></button>
+            <button type="button" class="btn btn-link" id="pictureComment" data-toggle="modal" data-target="#comingSoon"><i class="far fa-image fa-lg" ></i></i></button>
+            
+           
         </div>
         <div class="row">
-            <i class="fas fa-times fa-lg" id="close"></i>
+            <button type="button" class="btn btn-link" id="closeNewCommentModal"><i class="fas fa-times fa-lg" ></i></button>
             <!-- the comment col -->
             <div class="col-8 commentSection">
                 <div class="row comment" id="c1">
