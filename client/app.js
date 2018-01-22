@@ -148,12 +148,14 @@ var main = function() {
     }
 
     function displayComments() {
-        $(".commentSection").empty();
-        $("#main").toggle();
-        $("#experiment").toggle();
+        $(".commentSection").children().empty();
+        $("#main, #newCommentModal").toggle();
+        $(".commentTaskTitle").text(userTask[selectedTask].title);
+        $(".createdOn").children("p").empty().text(userTask[selectedTask].createdOn);
+        $(".dueFor").children("p").empty().text(userTask[selectedTask].dueDate);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
-                $(".taskComments").append('<div class="row comment"> <!-- the picture col --> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <!-- the comments bubbles col --> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">6th january, 15h28</p> </div> </div>');
+                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <!-- the comments bubbles col --> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">6th january, 15h28</p> </div> </div>');
             }
         }
         else {
@@ -409,6 +411,7 @@ var main = function() {
 };
 
 $(document).ready(main);
+
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
     window.location = "index.html";

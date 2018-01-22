@@ -170,12 +170,12 @@
     </div>
 
     <!--new comment modal-->
-    <div class="container-fluid" id="experiment" style="display:none">
+    <div class="container-fluid" id="newCommentModal" style="display:none">
         <!--the new comment input zone -->
         <div class="newComment">
             <div>
                 <input type="text" class="newCommentInput" placeholder="Type your new comment here" />
-                <button class="bttn-material-circle bttn-sm bttn-primary"><i class="fas fa-paper-plane"></i></button>
+                <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment"><i class="fas fa-paper-plane"></i></button>
             </div>
             <i class="fas fa-font fa-lg"></i>
             <i class="far fa-image fa-lg"></i>
@@ -205,13 +205,6 @@
                         <img src="https://www.gravatar.com/avatar/f0922c3dcfcf8b12e44af4ceaaad84b1" class="avatarComment" />
                     </div>
                     <!-- the comments bubbles col -->
-                    <div class="col-11">
-                        <div class="bubble">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod diam id maximus elementum. Integer ut pulvinar lorem, euismod sagittis nisi. Quisque ut tempus mauris. Nam in enim nulla.</p>
-                            <img src="https://images.unsplash.com/photo-1468276311594-df7cb65d8df6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ%3D%3D&s=d5a923d4fd0c1f8680014e6cd094f53c" class="picComment" />
-                        </div>
-                        <p class="timeStamp">6th january, 15h28</p>
-                    </div>
                 </div>
                 <div class="row comment" id="c2">
                     <!-- the picture col -->
@@ -245,11 +238,15 @@
                         <input type="checkbox" id="TaskName">
                     </div>
                     <div class="col-11">
-                        <h1>Buy tickets for star wars</h1>
-                        <i class="far fa-plus-square"></i>
-                        <p>26th July</p>
-                        <i class="far fa-calendar"></i>
-                        <p>6th Feb</p>
+                        <h1 class="commentTaskTitle">Buy tickets for star wars</h1>
+                        <div class="createdOn">
+                            <i class="far fa-plus-square"></i>
+                            <p>26th July</p>
+                        </div>
+                        <div class="dueFor">
+                            <i class="far fa-calendar"></i>
+                            <p>6th Feb</p>
+                        </div>
                     </div>
                 </div>
                 <hr />
