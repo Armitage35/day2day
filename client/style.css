@@ -147,6 +147,10 @@ input[type="checkbox"]:checked {
   background-color: #ecf0f1;
   height: calc(100vh - 95px);
   overflow: auto; }
+  .commentSection .commentColdState {
+    position: relative;
+    top: 50%;
+    text-align: center; }
 
 .details {
   background-color: #2980b9;

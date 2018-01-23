@@ -158,7 +158,9 @@ var main = function() {
         }
         $(".commentTaskTitle").text(userTask[selectedTask].title);
         $(".createdOn").children("p").empty().text(createdOnDisplay);
-        if (userTask[selectedTask].commentNb != 0) {
+        if (userTask[selectedTask].commentNb === 0) {
+            $(".commentSection").append("<p class='commentColdState'>You have no comments yet<p>");
+        } else if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
                 $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
             }
