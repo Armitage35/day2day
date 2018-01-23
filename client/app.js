@@ -160,42 +160,46 @@ var main = function() {
         $(".createdOn").children("p").empty().text(createdOnDisplay);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
-                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
+                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
             }
         }
         else {
             $(".taskComments").append("<p>No comment has been added yet</p>");
         }
     }
+    
+    function triggerBacklog() {
+        document.getElementById("backlog").click();
+    }
 
     //the onboarding
     function onboarding() {
         if (userTask.length === 0) {
-            var onboardingInvite = '<div draggable="false" class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> <p style=" background-color: inherit; color: inherit; padding: 0px 10px 0px 10px; "> or </p> <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="myInput">Create a task</button> </div> </div>';
+            var onboardingInvite = '<div class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" onclick=triggerBacklog id="onboardingBttn">Show me around</button> </div> </div>';
             $(".taskList").append(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
                     title: 'Start by adding a task',
                     commentNb: 0,
                     complete: false,
-                    createdOn: new Date,
-                    dueDate: null,
+                    createdOn: new Date(),
+                    dueDate: new Date(),
                     comment: []
                 });
                 userTask.push({
                     title: 'Then complete a task by clicking in the checkbox',
                     complete: false,
                     commentNb: 0,
-                    createdOn: new Date,
-                    dueDate: null,
+                    createdOn: new Date(),
+                    dueDate: new Date(),
                     comment: []
                 });
                 userTask.push({
                     title: 'You can even add comments and Giphy gifs to your tasks',
                     commentNb: 0,
                     complete: false,
-                    createdOn: new Date,
-                    dueDate: null,
+                    createdOn: new Date(),
+                    dueDate: new Date(),
                     comment: []
                 });
                 //updateCookie();

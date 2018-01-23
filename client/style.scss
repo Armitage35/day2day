@@ -37,6 +37,12 @@ h5 {
 		color: $day2dayBlue;
 	}
 }
+.onboarding {
+	margin-top: 30%;
+	.onboardingMessage {
+		text-align: center;
+	}
+}
 
 .branding {
 	margin-top: 10px;
@@ -214,7 +220,7 @@ hr {
 }
 
 .avatarComment {
-	width: 100%;
+	width: 75%;
 	border-radius: 100%
 }
 
@@ -236,8 +242,7 @@ hr {
 	}
 	img {
 		padding: 0;
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
+		border-radius: 10px;
 		min-with: 125px;
 		max-width: 100%;
 	}
