@@ -103,7 +103,7 @@ var main = function() {
     //date input show / hide
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
-        $("#dueDate").val(today);
+        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth()+1 + "-" + new Date().getDate());
     });
 
     var beginingOfDay = new Date();
