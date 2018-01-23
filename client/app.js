@@ -151,11 +151,13 @@ var main = function() {
         $(".commentSection").empty();
         $("#main, #newCommentModal").toggle();
         $("#textComment").addClass("active");
-        let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
-        let dueDateDisplay = new Date(userTask[selectedTask].dueDate).toLocaleDateString();
+            let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
+        if (!!userTask[selectedTask].dueDate) {
+            let dueDateDisplay = new Date(userTask[selectedTask].dueDate).toLocaleDateString();
+            $(".dueFor").children("p").empty().text(dueDateDisplay);
+        }
         $(".commentTaskTitle").text(userTask[selectedTask].title);
         $(".createdOn").children("p").empty().text(createdOnDisplay);
-        $(".dueFor").children("p").empty().text(dueDateDisplay);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
                 $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
