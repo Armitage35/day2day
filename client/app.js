@@ -158,7 +158,7 @@ var main = function() {
         $(".dueFor").children("p").empty().text(dueDateDisplay);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
-                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i].commentContent + '</p> </div> <p class="timeStamp">'+ userTask[selectedTask].comment[i].commentModifiedOn +'</p> </div> </div>');
+                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
             }
         }
         else {
@@ -299,7 +299,7 @@ var main = function() {
         $.ajax({
             url: "todos/comment",
             type: 'PUT',
-            data: { id: userTask[selectedTask]._id, comment: {commentContent: newComment, commentCreatedOn: new Date(), commentModifiedOn: new Date()}, commentNb: userTask[selectedTask].commentNb },
+            data: { id: userTask[selectedTask]._id, comment: newComment, commentNb: userTask[selectedTask].commentNb },
             success: function(data) {
                 console.log("comment added to the task");
                 console.log(data);
