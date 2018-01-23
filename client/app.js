@@ -290,7 +290,7 @@ var main = function() {
         if (newComment != "" && newComment != null && newComment != undefined) {
             $("#message-text").val("");
             newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
-            addComment(newComment)
+            addComment(newComment);
             displayTask();
             displayComments();
         }
@@ -317,11 +317,12 @@ var main = function() {
     //looking for gif and showing it
     $("#testGif").on("click", function(event) {
         $(".testGif").remove();
+        $("#addGif").show();
         var requestedGif = $("#message-giphy").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
-            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
-        $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <img class="commentBody" ' + gif + ' " /> <button class="bttn-material-circle bttn-sm bttn-primary " id="addComment "> <i class="fas fa-paper-plane "></i></button> </div> <p class="timeStamp ">6th january, 15h28</p> </div> </div>');
+            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif>';
+        $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
         });
     });
 

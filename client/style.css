@@ -225,6 +225,13 @@ hr {
     .newComment div #testGif svg {
       color: white;
       margin-left: 0px; }
+  .newComment div #addGif {
+    position: relative;
+    top: 15px;
+    display: none; }
+    .newComment div #addGif svg {
+      color: white;
+      margin-left: 0px; }
   .newComment svg {
     color: black; }
 
@@ -234,6 +241,9 @@ hr {
   border-style: hidden;
   padding-left: 20px;
   margin-bottom: 10px; }
+
+#message-giphy {
+  width: 80%; }
 
 .newCommentInput:focus {
   outline: -webkit-focus-ring-color auto 0px; }

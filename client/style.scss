@@ -296,6 +296,15 @@ hr {
 				margin-left: 0px;
 			}
 		}
+		#addGif {
+			position: relative;
+			top: 15px;
+			display: none;
+			svg {
+				color: white;
+				margin-left: 0px;
+			}
+		}
 	}
 	svg {
 		color: black;
@@ -308,6 +317,10 @@ hr {
 	border-style: hidden;
 	padding-left: 20px;
 	margin-bottom: 10px
+}
+
+#message-giphy {
+	width: 80%;
 }
 
 .newCommentInput:focus {
