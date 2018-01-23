@@ -103,7 +103,7 @@ var main = function() {
     //date input show / hide
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
-        $("#dueDate").val(now);
+        $("#dueDate").val(today);
     });
 
     var beginingOfDay = new Date();
@@ -157,9 +157,11 @@ var main = function() {
         $(".commentSection").empty();
         $("#main, #newCommentModal").toggle();
         $("#textComment").addClass("active");
+        let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
+        let dueDateDisplay = new Date(userTask[selectedTask].dueDate).toLocaleDateString();
         $(".commentTaskTitle").text(userTask[selectedTask].title);
-        $(".createdOn").children("p").empty().text(userTask[selectedTask].createdOn);
-        $(".dueFor").children("p").empty().text(userTask[selectedTask].dueDate);
+        $(".createdOn").children("p").empty().text(createdOnDisplay);
+        $(".dueFor").children("p").empty().text(dueDateDisplay);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
                 $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <!-- the comments bubbles col --> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">6th january, 15h28</p> </div> </div>');
@@ -321,7 +323,7 @@ var main = function() {
         var requestedGif = $("#message-giphy").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
         var giphyResponse = $.getJSON(giphyCall, function() {
-            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif>';
+            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
         $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
         });
     });
