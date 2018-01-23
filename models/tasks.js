@@ -2,7 +2,11 @@ var mongoose = require("mongoose");
 
 //This is mongoose's model for todos
 var TaskSchema = mongoose.Schema({
-    comment: [],
+    comment: [{
+        commentCreatedOn: Date,
+        commentModifiedOn: Date,
+        commentContent: String,
+    }],
     commentNb: Number,
     complete: Boolean,
     createdOn: Date,

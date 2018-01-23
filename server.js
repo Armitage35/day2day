@@ -57,7 +57,6 @@ app.post('/login', function(req, res) {
 
 passport.serializeUser(function(user, done) {
         done(null, user._id);
-        console.log(user);
     });
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {

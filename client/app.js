@@ -52,22 +52,16 @@ var main = function() {
     //selected view
     $("#today").on("click", function() {
         selectedView = 0;
-        $("#today").addClass("active");
-        $("#backlog, #upcoming").removeClass("active");
         $("#selectedTaskView").text("Today");
         displayTask();
     });
     $("#upcoming").on("click", function() {
         selectedView = 1;
-        $("#tomorrow").addClass("active");
-        $("#today, #backlog").removeClass("active");
         $("#selectedTaskView").text("Upcoming");
         displayTask();
     });
     $("#backlog").on("click", function() {
         selectedView = 2;
-        $("#backlog").addClass("active");
-        $("#today, #upcoming").removeClass("active");
         $("#selectedTaskView").text("Backlog");
         displayTask();
     });
@@ -164,7 +158,7 @@ var main = function() {
         $(".dueFor").children("p").empty().text(dueDateDisplay);
         if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
-                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <!-- the comments bubbles col --> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">6th january, 15h28</p> </div> </div>');
+                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + 'class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i].commentContent + '</p> </div> <p class="timeStamp">'+ userTask[selectedTask].comment[i].commentModifiedOn +'</p> </div> </div>');
             }
         }
         else {
@@ -287,11 +281,10 @@ var main = function() {
 
     //adding textual comments
     $("#addComment").on("click", function() {
-        let newComment = $("#message-text").val();
-        console.log(newComment);
-        if (newComment != "" && newComment != null && newComment != undefined) {
+        let newComment = {commentContent: $("#message-text").val(), commentCreatedOn: new Date(), commentModifiedOn: new Date()};
+        if (newComment.commentContent != "" && newComment.commentContent != null && newComment.commentContent != undefined) {
             $("#message-text").val("");
-            newComment = newComment.replace(/\n\r?/g, '<br />'); //handling spaces
+            newComment = newComment.commentContent.replace(/\n\r?/g, '<br />'); //handling spaces
             addComment(newComment);
             displayTask();
             displayComments();
@@ -306,7 +299,7 @@ var main = function() {
         $.ajax({
             url: "todos/comment",
             type: 'PUT',
-            data: { id: userTask[selectedTask]._id, comment: newComment, commentNb: userTask[selectedTask].commentNb },
+            data: { id: userTask[selectedTask]._id, comment: {commentContent: newComment, commentCreatedOn: new Date(), commentModifiedOn: new Date()}, commentNb: userTask[selectedTask].commentNb },
             success: function(data) {
                 console.log("comment added to the task");
                 console.log(data);
