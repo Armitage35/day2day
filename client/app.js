@@ -154,7 +154,7 @@ var main = function() {
     });
     
     function displayComments() {
-        $(".commentSection").children().empty();
+        $(".commentSection").empty();
         $("#main, #newCommentModal").toggle();
         $("#textComment").addClass("active");
         $(".commentTaskTitle").text(userTask[selectedTask].title);
@@ -316,12 +316,12 @@ var main = function() {
 
     //looking for gif and showing it
     $("#testGif").on("click", function(event) {
-        var requestedGif = $("#giphyRequest").val().split(' ').join('+');
+        $(".testGif").remove();
+        var requestedGif = $("#message-giphy").val().split(' ').join('+');
         var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
-        $("#giphyRequest").val("");
         var giphyResponse = $.getJSON(giphyCall, function() {
-            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif">';
-            $("#waitingGif").empty().prepend(gif);
+            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
+        $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <img class="commentBody" ' + gif + ' " /> <button class="bttn-material-circle bttn-sm bttn-primary " id="addComment "> <i class="fas fa-paper-plane "></i></button> </div> <p class="timeStamp ">6th january, 15h28</p> </div> </div>');
         });
     });
 

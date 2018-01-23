@@ -139,7 +139,9 @@ input[type="checkbox"]:checked {
   z-index: 1; }
 
 .commentSection {
-  background-color: #ecf0f1; }
+  background-color: #ecf0f1;
+  height: calc(100vh - 95px);
+  overflow: auto; }
 
 .details {
   background-color: #2980b9;
@@ -179,7 +181,9 @@ hr {
   .bubble img {
     padding: 0;
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px; }
+    border-bottom-right-radius: 10px;
+    min-with: 125px;
+    max-width: 100%; }
 
 .picComment {
   padding: 0px;
