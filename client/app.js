@@ -143,7 +143,7 @@ var main = function() {
     
     //closing the comment modal
     $("#closeNewCommentModal").on('click', function() {
-        $("#newCommentModal, #main").toggle("slow");
+        $("#newCommentModal, #main").toggle();
     });
     
     function displayComments() {
@@ -227,7 +227,7 @@ var main = function() {
 
     //mark task complete from the details screen
     $(".detailsCheckbox").on('click', function() {
-        $("#newCommentModal, #main").toggle("slow");
+        $("#newCommentModal, #main").toggle();
         var completedTaskID = selectedTask;
         completeTask(completedTaskID);
     });

@@ -76,6 +76,10 @@ h5 {
   padding-top: 10px;
   overflow-x: auto; }
 
+#plusButton {
+  position: relative;
+  left: -4px; }
+
 .active {
   color: #1d89ff; }
 
@@ -203,11 +207,6 @@ hr {
     max-height: 100%;
     max-width: 100%;
     border-bottom-left-radius: 10px; }
-
-.linkPreview {
-  background-color: lightgrey;
-  position: relative;
-  left: -15px; }
 
 .linkTitle {
   margin-bottom: 0px; }
