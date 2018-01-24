@@ -319,6 +319,12 @@ hr {
 	svg {
 		color: black;
 	}
+	.active {
+		color: $day2dayBlue;
+	}
+	button:focus {
+		outline: 0px;
+	}
 }
 
 .newCommentInput {

@@ -38,7 +38,7 @@ var main = function() {
         });
     }
 
-    //Getting user avatar
+    //getting user avatar
     $.ajax({
         url: "/user",
         type: 'GET',
@@ -49,7 +49,7 @@ var main = function() {
         }
     });
 
-    //selected view
+    //handle selected view
     $("#today").on("click", function() {
         selectedView = 0;
         $("#selectedTaskView").text("Today");
@@ -149,7 +149,7 @@ var main = function() {
     function displayComments() {
         console.log(selectedTask)
         $(".commentSection").empty();
-        $("#main, #newCommentModal").toggle("slow");
+        $("#main, #newCommentModal").toggle();
         $(".detailsCheckbox").attr('id', userTask[selectedTask]._id);
         $("#textComment").addClass("active");
             let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
@@ -211,8 +211,6 @@ var main = function() {
 
     function completeTask(completedTaskID) {
         var completedTaskMongoID = userTask[completedTaskID]._id;
-
-        //telling the server to update the task
         $.ajax({
             url: "todos",
             type: 'PUT',
@@ -222,7 +220,6 @@ var main = function() {
                 console.log(data);
             }
         });
-
         userTask[completedTaskID].complete = true;
         displayTask();
     }
@@ -287,11 +284,23 @@ var main = function() {
             $('#myModal').modal('hide');
         }
     };
-
-    //toggeling between text and gif inputs
-    $("#textComment, #giphyComment").on("click", function(event) {
-        $("#message-text, #message-giphy, #addComment, #testGif").toggle();
+    
+    //display text input on task details
+    $("#textComment").on("click", function(event) {
+        $("#message-text,#addComment").show();
+        $("#message-giphy, #testGif, #addGif").hide();
+        $(this).children().addClass("active");
+        $("#giphyComment").children().removeClass("active");
     });
+    
+    //display giphy input on task details
+    $("#giphyComment").on("click", function(event) {
+        $("#message-text,#addComment").hide();
+        $("#message-giphy, #testGif").show();
+        $(this).children().addClass("active");
+        $("#textComment").children().removeClass("active");
+    });
+
 
     //adding textual comments
     $("#addComment").on("click", function() {
@@ -320,7 +329,7 @@ var main = function() {
             }
         });
         displayComments();
-        $("#main, #newCommentModal").toggle("slow");
+        $("#main, #newCommentModal").toggle();
     }
 
     //looking for gif and showing it

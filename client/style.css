@@ -242,6 +242,10 @@ hr {
       margin-left: 0px; }
   .newComment svg {
     color: black; }
+  .newComment .active {
+    color: #1d89ff; }
+  .newComment button:focus {
+    outline: 0px; }
 
 .newCommentInput {
   width: 90%;
