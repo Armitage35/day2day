@@ -147,6 +147,7 @@ var main = function() {
     });
     
     function displayComments() {
+        $('.detailsCheckbox').prop('checked', false);
         console.log(selectedTask)
         $(".commentSection").empty();
         $("#main, #newCommentModal").toggle();
