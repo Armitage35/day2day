@@ -143,13 +143,14 @@ var main = function() {
     
     //closing the comment modal
     $("#closeNewCommentModal").on('click', function() {
-        $("#newCommentModal").hide();
-        $("#main").show();
+        $("#newCommentModal, #main").toggle("slow");
     });
     
     function displayComments() {
+        console.log(selectedTask)
         $(".commentSection").empty();
-        $("#main, #newCommentModal").toggle();
+        $("#main, #newCommentModal").toggle("slow");
+        $(".detailsCheckbox").attr('id', userTask[selectedTask]._id);
         $("#textComment").addClass("active");
             let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
         if (!!userTask[selectedTask].dueDate) {
@@ -169,15 +170,11 @@ var main = function() {
             $(".taskComments").append("<p>No comment has been added yet</p>");
         }
     }
-    
-    function triggerBacklog() {
-        document.getElementById("backlog").click();
-    }
 
     //the onboarding
     function onboarding() {
         if (userTask.length === 0) {
-            var onboardingInvite = '<div class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" onclick=triggerBacklog id="onboardingBttn">Show me around</button> </div> </div>';
+            var onboardingInvite = '<div class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
             $(".taskList").append(onboardingInvite);
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
@@ -212,12 +209,8 @@ var main = function() {
         }
     }
 
-    //mark task completed
-    $(".taskList").on('click', "input", function() {
-        $(this).parent().fadeOut();
-        var completedTaskID = $(this).parent().attr('id');
+    function completeTask(completedTaskID) {
         var completedTaskMongoID = userTask[completedTaskID]._id;
-        console.log(completedTaskMongoID);
 
         //telling the server to update the task
         $.ajax({
@@ -232,7 +225,20 @@ var main = function() {
 
         userTask[completedTaskID].complete = true;
         displayTask();
-        //updateCookie();
+    }
+
+    //mark task complete from the details screen
+    $(".detailsCheckbox").on('click', function() {
+        $("#newCommentModal, #main").toggle("slow");
+        var completedTaskID = selectedTask;
+        completeTask(completedTaskID);
+    });
+
+    //mark task completed from the main screen
+    $(".taskList").on('click', "input", function() {
+        $(this).parent().fadeOut();
+        var completedTaskID = $(this).parent().attr('id');
+        completeTask(completedTaskID);
     });
 
     //adding tasks function
@@ -314,7 +320,7 @@ var main = function() {
             }
         });
         displayComments();
-        $("#main, #newCommentModal").toggle();
+        $("#main, #newCommentModal").toggle("slow");
     }
 
     //looking for gif and showing it
