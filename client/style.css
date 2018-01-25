@@ -123,7 +123,8 @@ input[type="checkbox"]:checked {
 #fixedBottom {
   text-transform: uppercase;
   position: fixed;
-  bottom: 0px; }
+  top: 93vh;
+  left: 75.5vw; }
 
 .accessTools {
   margin-top: 100px;
