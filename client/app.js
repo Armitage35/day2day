@@ -18,38 +18,146 @@ var main = function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
     });
-    
+
+    //add the gif to userTasks
+    $("#addGif").on("click", function(event) {
+        $("#waitingGif").empty();
+        var newComment = gif;
+        addComment(newComment);
+        displayTask();
+        displayComments();
+        $("#giphyRequest").val("");
+    });
+
+    //looking for gif and showing it
+    $("#testGif").on("click", function(event) {
+        $(".testGif").remove();
+        $("#addGif").show();
+        var requestedGif = $("#message-giphy").val().split(' ').join('+');
+        var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
+        var giphyResponse = $.getJSON(giphyCall, function() {
+            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
+            $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
+        });
+    });
+
+    //handle tools
+    $(".fa-tasks").addClass("active");
+
+    //display text input on task details
+    $("#textComment").on("click", function(event) {
+        $("#message-text,#addComment").show();
+        $("#message-giphy, #testGif, #addGif").hide();
+        $(this).children().addClass("active");
+        $("#giphyComment").children().removeClass("active");
+    });
+
+    //display giphy input on task details
+    $("#giphyComment").on("click", function(event) {
+        $("#message-text,#addComment").hide();
+        $("#message-giphy, #testGif").show();
+        $(this).children().addClass("active");
+        $("#textComment").children().removeClass("active");
+    });
+
+
+    //adding textual comments
+    $("#addComment").on("click", function() {
+        let newComment = { commentContent: $("#message-text").val(), commentCreatedOn: new Date(), commentModifiedOn: new Date() };
+        if (newComment.commentContent != "" && newComment.commentContent != null && newComment.commentContent != undefined) {
+            $("#message-text").val("");
+            newComment = newComment.commentContent.replace(/\n\r?/g, '<br />'); //handling spaces
+            addComment(newComment);
+            displayTask();
+            displayComments();
+        }
+    });
+
+    //closing the comment modal
+    $("#closeNewCommentModal").on('click', function() {
+        $("#newCommentModal, #main").toggle();
+    });
+
+    //trigger task adding on button click
+    $("#plusButton").on("click", function(event) {
+        addTask();
+    });
+
+    //trigger task adding on enter key
+    $("#newTask").on("keypress", function(event) {
+        if (event.keyCode === 13) {
+            addTask();
+        }
+    });
+
     //date input show / hide
     $("#calendarButton").on("click", function(event) {
         $(".datePicker").toggle();
-        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth()+1 + "-" + new Date().getDate());
+        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate());
     });
-    
+
     //show & hide add task modal
     $('#myModal').on('shown.bs.modal', function() {
         $('#myInput').focus();
     });
-    
+
     //using the ctrl + enter keys to display the add task modal
     $(document).on("keypress", function(event) {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
             $("#fixedBottom").click();
         }
     });
-    
+
     //handle tasks selected view
     $("#today").on("click", function() {
         selectedView = 0;
-        selectedTaskViewHandler (selectedView);
+        selectedTaskViewHandler(selectedView);
     });
     $("#upcoming").on("click", function() {
         selectedView = 1;
-        selectedTaskViewHandler (selectedView);
+        selectedTaskViewHandler(selectedView);
     });
     $("#backlog").on("click", function() {
         selectedView = 2;
-        selectedTaskViewHandler (selectedView);
+        selectedTaskViewHandler(selectedView);
     });
+
+
+    //mark task complete from the details screen
+    $(".detailsCheckbox").on('click', function() {
+        $("#newCommentModal, #main").toggle();
+        var completedTaskID = selectedTask;
+        completeTask(completedTaskID);
+    });
+
+    //mark task completed from the main screen
+    $(".taskList").on('click', "input", function() {
+        $(this).parent().fadeOut();
+        var completedTaskID = $(this).parent().attr('id');
+        completeTask(completedTaskID);
+    });
+
+
+    //declaring today as being today
+    var dd = new Date().getDate(),
+        mm = new Date().getMonth() + 1, //January is 0!
+        yyyy = new Date().getFullYear(),
+        month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var now = yyyy + '-' + mm + '-' + dd;
+
+    var beginingOfDay = new Date();
+    beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
+    beginingOfDay = beginingOfDay.getTime();
+    var endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59);
+    endOfDay = endOfDay.getTime();
 
     //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) { //when id is not in a cookie
@@ -80,38 +188,19 @@ var main = function() {
             $('.userPicture').attr('src', userAvatar);
         }
     });
-    
-    function selectedTaskViewHandler (selectedView) {
+
+    function selectedTaskViewHandler(selectedView) {
         if (selectedView === 0) {
             $("#selectedTaskView").text("Today");
-        } else if (selectedView === 1) {
+        }
+        else if (selectedView === 1) {
             $("#selectedTaskView").text("Upcoming");
-        } else if (selectedView === 2) {
+        }
+        else if (selectedView === 2) {
             $("#selectedTaskView").text("Backlog");
         }
         displayTask();
     }
-
-    //declaring today as being today
-    var dd = new Date().getDate(),
-        mm = new Date().getMonth() + 1, //January is 0!
-        yyyy = new Date().getFullYear(),
-        month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    var now = yyyy + '-' + mm + '-' + dd;
-
-    var beginingOfDay = new Date();
-    beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
-    beginingOfDay = beginingOfDay.getTime();
-    var endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59);
-    endOfDay = endOfDay.getTime();
 
     //show tasks from object
     function displayTask() {
@@ -120,10 +209,7 @@ var main = function() {
         for (var i = 0; i <= userTask.length; i++) {
             var j = new Date(userTask[i].dueDate);
             j = j.getTime();
-            if (selectedView == 2) { //handle displaying the backlog
-                displayTaskDetails(i);
-            }
-            else if (selectedView == 0) {
+            if (selectedView == 0) {
                 if (j > beginingOfDay && j < endOfDay) { //handle displaying today's tasks
                     displayTaskDetails(i);
                 }
@@ -133,25 +219,23 @@ var main = function() {
                     displayTaskDetails(i);
                 }
             }
+            else if (selectedView == 2) { //handle displaying the backlog
+                displayTaskDetails(i);
+            }
         }
     }
 
     function displayTaskDetails(i) {
         if (userTask[i].complete == false) {
-            var dueDateDisplay = new Date(userTask[i].dueDate);
-            var dueDateReadable = dueDateDisplay.toDateString();
+            var dueDateReadable = new Date(userTask[i].dueDate);
+            dueDateReadable = dueDateReadable.toDateString();
             if (dueDateReadable == "Wed Dec 31 1969") {
                 dueDateReadable = "";
             }
             $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
         }
     }
-    
-    //closing the comment modal
-    $("#closeNewCommentModal").on('click', function() {
-        $("#newCommentModal, #main").toggle();
-    });
-    
+
     function displayComments() {
         $('.detailsCheckbox').prop('checked', false);
         console.log(selectedTask)
@@ -159,7 +243,7 @@ var main = function() {
         $("#main, #newCommentModal").toggle();
         $(".detailsCheckbox").attr('id', userTask[selectedTask]._id);
         $("#textComment").addClass("active");
-            let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
+        let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
         if (!!userTask[selectedTask].dueDate) {
             let dueDateDisplay = new Date(userTask[selectedTask].dueDate).toLocaleDateString();
             $(".dueFor").children("p").empty().text(dueDateDisplay);
@@ -168,13 +252,14 @@ var main = function() {
         $(".createdOn").children("p").empty().text(createdOnDisplay);
         if (userTask[selectedTask].commentNb === 0) {
             $(".commentSection").append("<p class='commentColdState'>You have no comments yet<p>");
-        } else if (userTask[selectedTask].commentNb != 0) {
+        }
+        else if (userTask[selectedTask].commentNb != 0) {
             for (var i = 0; i < userTask[selectedTask].commentNb; i++) {
-                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' +'</p> </div> </div>');
+                $(".commentSection").append('<div class="row comment"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble"> <p class="commentBody">' + userTask[selectedTask].comment[i] + '</p> </div> <p class="timeStamp">' + '</p> </div> </div>');
             }
         }
         else {
-            $(".taskComments").append("<p>No comment has been added yet</p>");
+            $(".taskComments").append("<p>No comment has been added to this task yet</p>");
         }
     }
 
@@ -186,27 +271,24 @@ var main = function() {
             $('#onboardingBttn').on("click", function(event) {
                 userTask.push({
                     title: 'Start by adding a task',
-                    commentNb: 0,
                     complete: false,
                     createdOn: new Date(),
                     dueDate: new Date(),
-                    comment: []
+                    commentNb: 0,
                 });
                 userTask.push({
                     title: 'Then complete a task by clicking in the checkbox',
                     complete: false,
-                    commentNb: 0,
                     createdOn: new Date(),
                     dueDate: new Date(),
-                    comment: []
+                    commentNb: 0,
                 });
                 userTask.push({
                     title: 'You can even add comments and Giphy gifs to your tasks',
-                    commentNb: 0,
                     complete: false,
                     createdOn: new Date(),
                     dueDate: new Date(),
-                    comment: []
+                    commentNb: 0,
                 });
                 //updateCookie();
                 displayTask();
@@ -231,22 +313,8 @@ var main = function() {
         displayTask();
     }
 
-    //mark task complete from the details screen
-    $(".detailsCheckbox").on('click', function() {
-        $("#newCommentModal, #main").toggle();
-        var completedTaskID = selectedTask;
-        completeTask(completedTaskID);
-    });
-
-    //mark task completed from the main screen
-    $(".taskList").on('click', "input", function() {
-        $(this).parent().fadeOut();
-        var completedTaskID = $(this).parent().attr('id');
-        completeTask(completedTaskID);
-    });
-
     //adding tasks function
-    var addTaskFromInputBox = function() {
+    function addTask() {
         var new_task;
         if ($("#newTask").val() !== "") {
             new_task = $("#newTask").val();
@@ -287,39 +355,7 @@ var main = function() {
             $(".datePicker").hide();
             displayTask();
         }
-        else {
-            $('#myModal').modal('hide');
-        }
-    };
-    
-    //display text input on task details
-    $("#textComment").on("click", function(event) {
-        $("#message-text,#addComment").show();
-        $("#message-giphy, #testGif, #addGif").hide();
-        $(this).children().addClass("active");
-        $("#giphyComment").children().removeClass("active");
-    });
-    
-    //display giphy input on task details
-    $("#giphyComment").on("click", function(event) {
-        $("#message-text,#addComment").hide();
-        $("#message-giphy, #testGif").show();
-        $(this).children().addClass("active");
-        $("#textComment").children().removeClass("active");
-    });
-
-
-    //adding textual comments
-    $("#addComment").on("click", function() {
-        let newComment = {commentContent: $("#message-text").val(), commentCreatedOn: new Date(), commentModifiedOn: new Date()};
-        if (newComment.commentContent != "" && newComment.commentContent != null && newComment.commentContent != undefined) {
-            $("#message-text").val("");
-            newComment = newComment.commentContent.replace(/\n\r?/g, '<br />'); //handling spaces
-            addComment(newComment);
-            displayTask();
-            displayComments();
-        }
-    });
+    }
 
     function addComment(newComment) {
         userTask[selectedTask].comment.push(newComment);
@@ -338,43 +374,6 @@ var main = function() {
         displayComments();
         $("#main, #newCommentModal").toggle();
     }
-
-    //looking for gif and showing it
-    $("#testGif").on("click", function(event) {
-        $(".testGif").remove();
-        $("#addGif").show();
-        var requestedGif = $("#message-giphy").val().split(' ').join('+');
-        var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
-        var giphyResponse = $.getJSON(giphyCall, function() {
-            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
-        $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
-        });
-    });
-
-    //add the gif to userTasks
-    $("#addGif").on("click", function(event) {
-        $("#waitingGif").empty();
-        var newComment = gif;
-        addComment(newComment);
-        displayTask();
-        displayComments();
-        $("#giphyRequest").val("");
-    });
-
-    //trigger task adding on button click
-    $("#plusButton").on("click", function(event) {
-        addTaskFromInputBox();
-    });
-
-    //trigger task adding on enter key
-    $("#newTask").on("keypress", function(event) {
-        if (event.keyCode === 13) {
-            addTaskFromInputBox();
-        }
-    });
-
-    //handle tools
-    $(".fa-tasks").addClass("active");
 
     //display new background pictures from unsplash
     function updateWallpaper() {
