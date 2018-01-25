@@ -18,6 +18,38 @@ var main = function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
     });
+    
+    //date input show / hide
+    $("#calendarButton").on("click", function(event) {
+        $(".datePicker").toggle();
+        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth()+1 + "-" + new Date().getDate());
+    });
+    
+    //show & hide add task modal
+    $('#myModal').on('shown.bs.modal', function() {
+        $('#myInput').focus();
+    });
+    
+    //using the ctrl + enter keys to display the add task modal
+    $(document).on("keypress", function(event) {
+        if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
+            $("#fixedBottom").click();
+        }
+    });
+    
+    //handle tasks selected view
+    $("#today").on("click", function() {
+        selectedView = 0;
+        selectedTaskViewHandler (selectedView);
+    });
+    $("#upcoming").on("click", function() {
+        selectedView = 1;
+        selectedTaskViewHandler (selectedView);
+    });
+    $("#backlog").on("click", function() {
+        selectedView = 2;
+        selectedTaskViewHandler (selectedView);
+    });
 
     //handling user id cookie and getting user's tasks
     if (Cookies.get('userid') == undefined) { //when id is not in a cookie
@@ -48,41 +80,22 @@ var main = function() {
             $('.userPicture').attr('src', userAvatar);
         }
     });
-
-    //handle selected view
-    $("#today").on("click", function() {
-        selectedView = 0;
-        $("#selectedTaskView").text("Today");
-        displayTask();
-    });
-    $("#upcoming").on("click", function() {
-        selectedView = 1;
-        $("#selectedTaskView").text("Upcoming");
-        displayTask();
-    });
-    $("#backlog").on("click", function() {
-        selectedView = 2;
-        $("#selectedTaskView").text("Backlog");
-        displayTask();
-    });
-
-    //show & hide add task modal
-    $('#myModal').on('shown.bs.modal', function() {
-        $('#myInput').focus();
-    });
-
-    //using the ctrl + enter keys to display the add task modal
-    $(document).on("keypress", function(event) {
-        if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
-            $("#fixedBottom").click();
+    
+    function selectedTaskViewHandler (selectedView) {
+        if (selectedView === 0) {
+            $("#selectedTaskView").text("Today");
+        } else if (selectedView === 1) {
+            $("#selectedTaskView").text("Upcoming");
+        } else if (selectedView === 2) {
+            $("#selectedTaskView").text("Backlog");
         }
-    });
+        displayTask();
+    }
 
     //declaring today as being today
-    var today = new Date(),
-        dd = today.getDate(),
-        mm = today.getMonth() + 1, //January is 0!
-        yyyy = today.getFullYear(),
+    var dd = new Date().getDate(),
+        mm = new Date().getMonth() + 1, //January is 0!
+        yyyy = new Date().getFullYear(),
         month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
     if (dd < 10) {
@@ -91,14 +104,7 @@ var main = function() {
     if (mm < 10) {
         mm = '0' + mm;
     }
-    today = dd + '/' + mm + '/' + yyyy;
     var now = yyyy + '-' + mm + '-' + dd;
-
-    //date input show / hide
-    $("#calendarButton").on("click", function(event) {
-        $(".datePicker").toggle();
-        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth()+1 + "-" + new Date().getDate());
-    });
 
     var beginingOfDay = new Date();
     beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
