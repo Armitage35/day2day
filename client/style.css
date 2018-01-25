@@ -12,11 +12,16 @@ h2 {
   color: white; }
 
 h3 {
-  padding-top: 10px;
-  padding-left: 15px; }
+  padding: 10px 15px 0px; }
 
 h5 {
   color: black; }
+
+li {
+  color: black; }
+
+ul {
+  padding-left: 0px; }
 
 ::placeholder {
   color: #999; }
@@ -24,10 +29,11 @@ h5 {
 .nav a {
   color: #1d89ff; }
 
+.text-center {
+  text-align: center; }
+
 .onboarding {
   margin-top: 30%; }
-  .onboarding .onboardingMessage {
-    text-align: center; }
 
 .branding {
   margin-top: 10px;
@@ -52,14 +58,12 @@ h5 {
 .user {
   text-align: right;
   margin-top: 10px; }
-
-.user img {
-  max-width: 33px;
-  float: right;
-  border-radius: 100%; }
+  .user img {
+    max-width: 33px;
+    float: right;
+    border-radius: 100%; }
 
 .timeDateWeather {
-  text-align: center;
   color: white;
   vertical-align: middle; }
 
@@ -74,7 +78,8 @@ h5 {
   border-radius: 5px 5px 0px 0px;
   padding-left: 0px;
   padding-top: 10px;
-  overflow-x: auto; }
+  overflow-x: auto;
+  overflow-y: hidden; }
 
 #plusButton {
   position: relative;
@@ -94,12 +99,6 @@ h5 {
   border: 1px solid #1d89ff;
   border-right-width: 0px;
   width: 75%; }
-
-li {
-  color: black; }
-
-ul {
-  padding-left: 0px; }
 
 .task {
   border-radius: 0px;
@@ -137,16 +136,8 @@ input[type="checkbox"]:checked {
 .svg-inline--fa:active {
   color: #1d89ff; }
 
-.date,
-.temperature {
+.date, .temperature {
   display: inline; }
-
-#closeNewCommentModal {
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  color: white;
-  z-index: 1; }
 
 .commentSection {
   background-color: #ecf0f1;
@@ -167,9 +158,8 @@ input[type="checkbox"]:checked {
   .details .row div svg {
     float: left;
     margin-right: 10px; }
-
-hr {
-  border: 1px solid white; }
+  .details hr {
+    border: 1px solid white; }
 
 .comment {
   margin-top: 10px;
@@ -201,10 +191,7 @@ hr {
 .picComment {
   padding: 0px;
   width: 100%; }
-
-.favicon {
-  float: left; }
-  .favicon img {
+  .picComment img {
     max-height: 100%;
     max-width: 100%;
     border-bottom-left-radius: 10px; }
@@ -263,6 +250,13 @@ hr {
 .details div h1 {
   font-size: 40px; }
 
+#closeNewCommentModal {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  color: white;
+  z-index: 1; }
+
 .signup__container {
   position: absolute;
   top: 50%;
@@ -302,9 +296,7 @@ hr {
   background-position: top center;
   background-size: cover; }
 
-.thumbnail__logo,
-.thumbnail__content,
-.thumbnail__links {
+.thumbnail__logo, .thumbnail__content, .thumbnail__links {
   position: relative;
   z-index: 2; }
 
@@ -313,7 +305,7 @@ hr {
 
 .logoText {
   display: inline-block;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 700;
   vertical-align: bottom;
   cursor: default; }
@@ -339,23 +331,20 @@ hr {
   background: #fafafa; }
 
 label {
-  font-size: .85rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   color: #1d89ff; }
 
 .form-control {
   background-color: transparent;
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
+  border: 0;
   border-radius: 0; }
 
 .form-control:focus {
   border-color: #111; }
 
-.signin__link,
-.signup__link {
-  font-size: .8rem;
+.signin__link, .signup__link {
+  font-size: 0.8rem;
   font-weight: 600;
   text-decoration: underline;
   color: #999; }

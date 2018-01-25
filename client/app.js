@@ -268,7 +268,7 @@ function displayComments() {
 //the onboarding
 function onboarding() {
     if (userTask.length === 0) {
-        var onboardingInvite = '<div class="onboarding"> <p class="onboardingMessage"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
+        var onboardingInvite = '<div class="onboarding"> <p class="text-center"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
         $(".taskList").append(onboardingInvite);
         $('#onboardingBttn').on("click", function(event) {
             userTask.push({
