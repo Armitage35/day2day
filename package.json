@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^1.0.3",
+    "compressor": "^3.10.10",
     "express": "^3.21.2",
     "express-validator": "^4.3.0",
     "gravatar": "^1.6.0",

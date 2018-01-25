@@ -9,6 +9,7 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     gravatar = require('gravatar'),
+    compressor = require('node-minify'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -16,6 +17,14 @@ app.use(express.urlencoded());
 app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUninitialize: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Using Google Closure Compiler to minigy the app.js file
+compressor.minify({
+  compressor: 'gcc',
+  input: 'client/app.js',
+  output: 'client/app-min.js',
+  callback: function (err, min) {}
+});
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
