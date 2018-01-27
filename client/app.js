@@ -9,7 +9,8 @@ var selectedTask,
     unsplashApiKey = "d9dbf001ba658ce6d8172a427b1a7a3e986aa970d038aade36ff7c54b05ffb0e",
     openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
     userAvatar,
-    userID;
+    userID,
+    selectedTool = "task";
 
 var main = function() {
 
@@ -17,6 +18,7 @@ var main = function() {
     $(".taskList").on('click', "button", function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
+        console.log(selectedTask);
     });
 
     //add the gif to userTasks
@@ -40,9 +42,6 @@ var main = function() {
             $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
         });
     });
-
-    //handle tools
-    $(".fa-tasks").addClass("active");
 
     //display text input on task details
     $("#textComment").on("click", function(event) {
@@ -136,9 +135,37 @@ var main = function() {
         var completedTaskID = $(this).parent().attr('id');
         completeTask(completedTaskID);
     });
+
+    //enabling user to only see the background picture
+    $('#backgroundTool').on('click', function(event) {
+        handleTool("background")
+    });
+
+    $('#taskTool').on('click', function(event) {
+        handleTool("task");
+    });
+    console.log(Cookies.get('selectedTool'));
+    if (Cookies.get('selectedTool') === undefined) {
+        handleTool("task");
+    } else {
+        handleTool(Cookies.get('selectedTool'));
+    }
 };
 
 $(document).ready(main);
+
+function handleTool(selectedTool) {
+    $(".accessTools").children().children().children().removeClass('active');
+    Cookies.set('selectedTool', selectedTool);
+    if (selectedTool === "background") {
+        $('.fa-camera-retro').addClass('active');
+        $(".tool").hide('slow');
+    }
+    else if (selectedTool === "task") {
+        $('.fa-tasks').addClass('active');
+        $(".tool").show('slow');
+    }
+}
 
 //declaring today as being today
 var dd = new Date().getDate(),
@@ -242,7 +269,8 @@ function displayComments() {
     $('.detailsCheckbox').prop('checked', false);
     console.log(selectedTask)
     $(".commentSection").empty();
-    $("#main, #newCommentModal").toggle();
+    $("#newCommentModal").show();
+    $("#main").hide();
     $(".detailsCheckbox").attr('id', userTask[selectedTask]._id);
     $("#textComment").addClass("active");
     let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
