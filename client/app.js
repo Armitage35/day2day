@@ -46,19 +46,26 @@ var main = function() {
     //display text input on task details
     $("#textComment").on("click", function(event) {
         $("#message-text,#addComment").show();
-        $("#message-giphy, #testGif, #addGif").hide();
+        $("#message-giphy, #testGif, #addGif, #message-file, #addFile").hide();
+        $(".commentButtons").children().children().removeClass("active");
         $(this).children().addClass("active");
-        $("#giphyComment").children().removeClass("active");
     });
 
     //display giphy input on task details
     $("#giphyComment").on("click", function(event) {
-        $("#message-text,#addComment").hide();
+        $("#message-text,#addComment, #message-file, #addFile").hide();
         $("#message-giphy, #testGif").show();
+        $(".commentButtons").children().children().removeClass("active");
         $(this).children().addClass("active");
-        $("#textComment").children().removeClass("active");
     });
 
+    //display text input on task details
+    $("#pictureComment").on("click", function(event) {
+        $("#message-file, #addFile").show();
+        $("#message-giphy, #testGif, #addGif, #message-text, #addComment").hide();
+        $(".commentButtons").children().children().removeClass("active");
+        $(this).children().addClass("active");
+    });
 
     //adding textual comments
     $("#addComment").on("click", function() {

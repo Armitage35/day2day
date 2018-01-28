@@ -21,7 +21,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <!--Cookie lib-->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script type="text/javascript" src="app-min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
     <link href="bttn.min.css" type="text/css" rel="stylesheet">
     <link href="bttn.css" type="text/css" rel="stylesheet">
     <link href="style.css" type="text/css" rel="stylesheet">
@@ -75,20 +75,30 @@
             </div>
             <!-- display tool bar -->
             <div class="col-1 accessTools">
-                <div class="shortcut">   
-                    <button type="button" class="btn btn-link" id="backgroundTool"><i class="fas fa-camera-retro fa-2x"></i></button>
+                <div class="shortcut">
+                    <button type="button" class="btn btn-link" id="backgroundTool">
+                        <i class="fas fa-camera-retro fa-2x"></i>
+                    </button>
                 </div>
                 <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="taskTool" id="taskTool"><i class="fas fa-tasks fa-2x"></i></button>
+                    <button type="button" class="btn btn-link" id="taskTool" id="taskTool">
+                        <i class="fas fa-tasks fa-2x"></i>
+                    </button>
                 </div>
                 <div class="shortcut">
-                    <i class="fas fa-sticky-note fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    <button type="button" class="btn btn-link" id="noteTool">
+                        <i class="fas fa-sticky-note fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    </button>
                 </div>
                 <div class="shortcut">
-                    <i class="fab fa-get-pocket fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    <button type="button" class="btn btn-link" id="pocketTool">
+                        <i class="fab fa-get-pocket fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    </button>
                 </div>
                 <div class="shortcut">
-                    <i class="fas fa-cog fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    <button type="button" class="btn btn-link" id="taskTool">
+                        <i class="fas fa-cog fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -105,9 +115,8 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
-                    <button
-                        class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                        <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
+                    <button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                    <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
@@ -144,13 +153,25 @@
             <div>
                 <input type="text" class="newCommentInput" id="message-text" placeholder="Type your new comment here" />
                 <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
-                <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment"><i class="fas fa-paper-plane"></i></button>
-                <button class="bttn-material-circle bttn-sm bttn-primary" id="testGif"><i class="fas fa-random"></i></button>
-                <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none"> <i class="fas fa-paper-plane"></i></button>
+                <input name="uploadFile" class="newCommentInput" id="message-file" style="display:none" type="file">
+                <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                <button class="bttn-material-circle bttn-sm bttn-primary" id="testGif">
+                    <i class="fas fa-random"></i>
+                </button>
+                <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none"> 
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </button>
             </div>
-            <button type="button" class="btn btn-link" id="textComment"><i class="fas fa-font fa-lg active"></i></button>
-            <button type="button" class="btn btn-link" id="giphyComment"><i class="fas fa-rocket fa-lg" ></i></button>
-            <button type="button" class="btn btn-link" id="pictureComment" data-toggle="modal" data-target="#comingSoon"><i class="far fa-image fa-lg" ></i></i></button>
+            <div class="commentButtons">
+                <button type="button" class="btn btn-link" id="textComment"><i class="fas fa-font fa-lg active"></i></button>
+                <button type="button" class="btn btn-link" id="giphyComment"><i class="fas fa-rocket fa-lg" ></i></button>
+                <button type="button" class="btn btn-link" id="pictureComment"><i class="far fa-image fa-lg" ></i></i></button>
+            </div>
         </div>
         <div class="row">
             <button type="button" class="btn btn-link" id="closeNewCommentModal"><i class="fas fa-times fa-lg" ></i></button>
@@ -161,10 +182,10 @@
                     <div class="col-1">
                         <img src="" class="avatarComment" />
                     </div>
-                    
+
                 </div>
             </div>
-            
+
             <!-- the details col -->
             <div class="col-4 details">
                 <div class="row">
