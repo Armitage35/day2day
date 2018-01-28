@@ -45,26 +45,17 @@ var main = function() {
 
     //display text input on task details
     $("#textComment").on("click", function(event) {
-        $("#message-text,#addComment").show();
-        $("#message-giphy, #testGif, #addGif, #message-file, #addFile").hide();
-        $(".commentButtons").children().children().removeClass("active");
-        $(this).children().addClass("active");
+        handleCommentType ("text");
     });
 
     //display giphy input on task details
     $("#giphyComment").on("click", function(event) {
-        $("#message-text,#addComment, #message-file, #addFile").hide();
-        $("#message-giphy, #testGif").show();
-        $(".commentButtons").children().children().removeClass("active");
-        $(this).children().addClass("active");
+        handleCommentType ("gif");
     });
 
     //display text input on task details
     $("#pictureComment").on("click", function(event) {
-        $("#message-file, #addFile").show();
-        $("#message-giphy, #testGif, #addGif, #message-text, #addComment").hide();
-        $(".commentButtons").children().children().removeClass("active");
-        $(this).children().addClass("active");
+        handleCommentType ("picture");
     });
 
     //adding textual comments
@@ -473,6 +464,19 @@ function handleWeather() {
         });
     }
     getIP();
+}
+
+function handleCommentType (commentType) {
+    $(".newCommentInputZone").children().hide();
+    $(".commentButtons").children().children().removeClass("active");
+    if (commentType === "text") {
+        $("#message-text, #addComment").show();
+    } else if (commentType === "gif") {
+        $("#message-giphy, #testGif").show();
+    } else if (commentType === "picture") {
+        $("#message-file, #addFile").show();
+    }
+    $(this).children().addClass("active");
 }
 
 handleWeather();
