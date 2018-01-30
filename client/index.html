@@ -153,7 +153,12 @@
             <div class="newCommentInputZone">
                 <input type="text" class="newCommentInput" id="message-text" placeholder="Type your new comment here" />
                 <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
-                <input name="uploadFile" class="newCommentInput" id="message-file" style="display:none" type="file">
+                <form method="post" enctype="multipart/formData" action="/file" id="message-file" style="display:none">
+                    <input name="uploadFile" class="newCommentInput" id="fileInput"  type="file">
+                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </button>
+                </form>
                 <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -162,9 +167,6 @@
                 </button>
                 <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none"> 
                     <i class="fas fa-paper-plane"></i>
-                </button>
-                <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none">
-                    <i class="fas fa-cloud-upload-alt"></i>
                 </button>
             </div>
             <div class="commentButtons">

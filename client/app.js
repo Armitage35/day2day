@@ -150,17 +150,6 @@ var main = function() {
         handleTool(Cookies.get('selectedTool'));
     }
 
-    $("#addFile").on('click', function(event) {
-        var file = $("#message-file").prop('files');
-        file = file[0];
-        console.log(file);
-        $.ajax({
-            url: "/file",
-            type: 'POST',
-            processData: false,
-            data: file
-        });
-    });
 };
 
 $(document).ready(main);

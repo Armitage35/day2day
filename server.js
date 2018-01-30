@@ -227,9 +227,10 @@ app.put("/todos", function(req, res) {
 
 app.post('/file', function(req, res) {
     console.log(req.body);
+    console.log(req.file);
     if (req.files){
         // var file = req.files.filename,
         // filename = req.files.filename.name;
     }
-    res.send("super");
+    res.send("recu");
 })
