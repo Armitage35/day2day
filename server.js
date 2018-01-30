@@ -10,6 +10,7 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     gravatar = require('gravatar'),
     compressor = require('node-minify'),
+    upload = require('express-fileupload'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -223,3 +224,12 @@ app.put("/todos", function(req, res) {
         });
     });
 });
+
+app.post('/file', function(req, res) {
+    console.log(req.body);
+    if (req.files){
+        // var file = req.files.filename,
+        // filename = req.files.filename.name;
+    }
+    res.send("super");
+})
