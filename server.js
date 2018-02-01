@@ -18,13 +18,14 @@ app.use(express.urlencoded());
 app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUninitialize: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(upload());
 
 // Using Google Closure Compiler to minigy the app.js file
 compressor.minify({
-  compressor: 'gcc',
-  input: 'client/app.js',
-  output: 'client/app-min.js',
-  callback: function (err, min) {}
+    compressor: 'gcc',
+    input: 'client/app.js',
+    output: 'client/app-min.js',
+    callback: function(err, min) {}
 });
 
 //connect mongoose to DB
@@ -65,14 +66,14 @@ app.post('/login', function(req, res) {
     })(req, res);
 
 
-passport.serializeUser(function(user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user._id);
     });
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
-    }); 
+    });
 });
 
 //user registration handling
@@ -83,7 +84,7 @@ app.post("/user", function(req, res) {
         username = req.body.username,
         email = req.body.email,
         password = req.body.password,
-        avatar = gravatar.url(req.body.email, {protocol: 'https'}),
+        avatar = gravatar.url(req.body.email, { protocol: 'https' }),
         passwordRepeat = req.body.passwordRepeat,
         hashedPassword = bcrypt.hashSync(password, 10); //hash password syncronously
 
@@ -125,7 +126,8 @@ app.post("/user", function(req, res) {
         }
         if (error.length > 0) {
             res.send(error);
-        } else {
+        }
+        else {
             newUser.save(function(err, result) {
                 if (err !== null) {
                     console.log(err);
@@ -226,11 +228,20 @@ app.put("/todos", function(req, res) {
 });
 
 app.post('/file', function(req, res) {
-    console.log(req.body);
-    console.log(req.file);
-    if (req.files){
-        // var file = req.files.filename,
-        // filename = req.files.filename.name;
+    console.log(req.files);
+    if (req.files) {
+        console.log("magic");
+        var file = req.files.uploadFile,
+            filename = req.files.uploadFile.name;
+        console.log(file);
+        console.log(filename);
+        file.mv("upload/" + filename, function(err){
+            if (err){
+                console.log(err);
+                res.send("error occured");
+            } else {
+                res.json(__dirname + "/index.html");
+            }
+        });
     }
-    res.send("recu");
 })

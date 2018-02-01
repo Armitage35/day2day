@@ -267,7 +267,6 @@ function displayTaskDetails(i) {
 
 function displayComments() {
     $('.detailsCheckbox').prop('checked', false);
-    console.log(selectedTask)
     $(".commentSection").empty();
     $("#newCommentModal").show();
     $("#main").hide();
