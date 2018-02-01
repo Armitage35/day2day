@@ -240,7 +240,7 @@ app.post('/file', function(req, res) {
                 console.log(err);
                 res.send("error occured");
             } else {
-                res.json(__dirname + "/index.html");
+                res.json(__dirname + filename);
             }
         });
     }
