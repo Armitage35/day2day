@@ -4,6 +4,7 @@
   "description": "Hi there!",
   "main": "server.js",
   "dependencies": {
+    "aws-sdk": "^2.188.0",
     "bcrypt": "^1.0.3",
     "compressor": "^3.10.10",
     "express": "^3.21.2",
