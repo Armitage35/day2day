@@ -404,6 +404,16 @@ function addComment(newComment) {
     $("#main, #newCommentModal").toggle();
 }
 
+//display time
+function updateClock() {
+    now = new Date;
+    $(".time").html(now.getHours() + ":" + now.getMinutes());
+    $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
+    setInterval(updateClock, 2000);
+}
+
+updateClock();
+
 //display new background pictures from unsplash
 function updateWallpaper() {
     $.ajax({
@@ -426,16 +436,6 @@ function updateWallpaper() {
 }
 
 updateWallpaper();
-
-//display time
-function updateClock() {
-    now = new Date;
-    $(".time").html(now.getHours() + ":" + now.getMinutes());
-    $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
-    setInterval(updateClock, 2000);
-}
-
-updateClock();
 
 //handle weather
 function handleWeather() {
@@ -478,6 +478,7 @@ function handleCommentType(commentType) {
     }
     else if (commentType === "picture") {
         $("#message-file, #addFile").show();
+        $("#selectedTask").hide().val(userTask[selectedTask]._id);
     }
     $(this).children().addClass("active");
 }

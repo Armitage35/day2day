@@ -35,7 +35,7 @@ mongoose.connect('mongodb://localhost/day2day');
 
 var port = process.env.PORT || 80;
 http.createServer(app).listen(port);
-console.log("app working on port " + port)
+console.log("app working on port " + port);
 
 //loading AWS config
 AWS.config.loadFromPath('./awsCredentials.json');
@@ -208,11 +208,11 @@ app.put("/todos/comment", function(req, res) {
     var taskID = req.body.id;
 
     userTasks.findById(taskID, function(err, task) {
-        if (err) return handleError(err);
+        if (err) return (err);
         task.comment.push(req.body.comment);
         task.commentNb = req.body.commentNb;
         task.save(function(err, result) {
-            if (err) return handleError(err);
+            if (err) return (err);
             res.json(result);
         });
     });
@@ -239,18 +239,19 @@ app.put("/todos", function(req, res) {
     var taskID = req.body.id;
 
     userTasks.findById(taskID, function(err, task) {
-        if (err) return handleError(err);
+        if (err) return (err);
 
         task.complete = 'true';
         task.save(function(err, result) {
-            if (err) return handleError(err);
+            if (err) return (err);
             res.json(result);
         });
     });
 });
 
 app.post('/file', function(req, res) {
-    console.log(req.files);
+    var appendFileToTask = req.body.selectedTask;
+    console.log(appendFileToTask);
     if (req.files) {
         console.log('A file has been recieved');
         var file = req.files.uploadFile,
@@ -264,7 +265,7 @@ app.post('/file', function(req, res) {
             var params = { 
                 Bucket: bucketName, 
                 Key: keyName, 
-                Body: file.data 
+                Body: file.data,
             };
             s3.putObject(params, function(err, data) {
                 if (err)
