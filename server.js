@@ -43,18 +43,18 @@ AWS.config.loadFromPath('./awsCredentials.json');
 // Create an S3 client
 var s3 = new AWS.S3();
 
-// Create a bucket and upload something into it
+// Send a log file to S3 when server started
 var bucketName = 'day2dayapp.net';
-var keyName = 'hello_world.txt';
+var keyName = 'Server Started.txt';
 
-s3.createBucket({Bucket: bucketName}, function() {
-  var params = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-  s3.putObject(params, function(err, data) {
-    if (err)
-      console.log(err)
-    else
-      console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-  });
+s3.createBucket({ Bucket: bucketName }, function() {
+    var params = { Bucket: bucketName, Key: keyName, Body: 'Server started on the ' + new Date() };
+    s3.putObject(params, function(err, data) {
+        if (err)
+            console.log(err)
+        else
+            console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
+    });
 });
 
 //passort local strategy
@@ -252,16 +252,35 @@ app.put("/todos", function(req, res) {
 app.post('/file', function(req, res) {
     console.log(req.files);
     if (req.files) {
-        console.log("magic");
+        console.log('A file has been recieved');
         var file = req.files.uploadFile,
             filename = req.files.uploadFile.name;
-        console.log(file);
         console.log(filename);
-        file.mv("upload/" + filename, function(err){
-            if (err){
+        console.log(file);
+        
+        let keyName = filename;
+
+        s3.createBucket({ Bucket: bucketName }, function() {
+            var params = { 
+                Bucket: bucketName, 
+                Key: keyName, 
+                Body: file.data 
+            };
+            s3.putObject(params, function(err, data) {
+                if (err)
+                    console.log(err);
+                else
+                    console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
+                    console.log(data);
+            });
+        });
+        
+        file.mv("upload/" + filename, function(err) {
+            if (err) {
                 console.log(err);
                 res.send("error occured");
-            } else {
+            }
+            else {
                 res.json(__dirname + filename);
             }
         });
