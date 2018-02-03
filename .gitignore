@@ -12,3 +12,4 @@ data/
 keys/
 mongod
 upload/
+awsCredentials.json
