@@ -125,6 +125,32 @@
         </div>
     </div>
 
+    <!-- Upload in progress Modal -->
+    <div class="modal fade" id="uploadInProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Your file is being uploaded</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <p>Upload in progress</p>
+                    <div class="sk-folding-cube">
+                      <div class="sk-cube1 sk-cube"></div>
+                      <div class="sk-cube2 sk-cube"></div>
+                      <div class="sk-cube4 sk-cube"></div>
+                      <div class="sk-cube3 sk-cube"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Coming soon Modal -->
     <div class="modal fade" id="comingSoon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -157,7 +183,7 @@
                 <form method="post" enctype="multipart/form-data" action="/file" id="message-file" style="display:none">
                     <input name="uploadFile" class="newCommentInput" id="fileInput"  type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB">
                     <input type="text" name="selectedTask" id="selectedTask"/>
-                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit">
+                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-target="uploadInProgress">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
                     

@@ -282,7 +282,7 @@ app.post('/file', function(req, res) {
                 res.send("error occured");
             }
             else {
-                res.json(__dirname + filename);
+                res.json("https://s3.ca-central-1.amazonaws.com/"+ filename);
             }
         });
     }
