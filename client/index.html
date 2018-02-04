@@ -189,7 +189,43 @@
             </div>
         </div>
     </div>
-    <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none">
+    
+    <!--new comment modal-->
+    <div class="container-fluid" id="newNoteModal" style="display:none">
+        <!--the new comment input zone -->
+        <div class="row">
+            <button type="button" class="btn btn-link" id="closeNewCommentModal"><i class="fas fa-times fa-lg" ></i></button>
+            <!-- the comment col -->
+            <div class="col-8 noteSection">
+                <div class="row note" id="c1">
+                </div>
+            </div>
+            
+            <!-- the details col -->
+            <div class="col-4 details">
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox" class="detailsCheckbox" id="">
+                    </div>
+                    <div class="col-11">
+                        <h1 class="commentTaskTitle"></h1>
+                        <div class="createdOn">
+                            <i class="far fa-plus-square"></i>
+                            <p></p>
+                        </div>
+                        <div class="dueFor">
+                            <i class="far fa-calendar"></i>
+                            <p>No due date</p>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <!--<i class="fas fa-trash"></i>-->
+                <!--<i class="fas fa-code"></i>-->
+            </div>
+        </div>
+    </div>
+    
 </body>
 
 </html>
