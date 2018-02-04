@@ -11,6 +11,6 @@ var NoteSchema = mongoose.Schema({
     userid: String,
 });
 
-var userNotes = mongoose.model("Task", NoteSchema);
+var userNotes = mongoose.model('Note', NoteSchema);
 
-module.exports =  mongoose.model('Task', NoteSchema);
+module.exports =  mongoose.model('Note', NoteSchema);
