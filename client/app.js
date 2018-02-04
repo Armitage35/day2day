@@ -207,6 +207,24 @@ else {
     });
 }
 
+//display time
+function updateClock() {
+    now = new Date();
+    var hh = now.getHours();
+    if (hh < 10) {
+        hh = '0' + hh;
+    }
+    var minutes = now.getMinutes();
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
+    $(".time").html(hh + ":" + minutes);
+    $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
+    setInterval(updateClock, 2000);
+}
+
+updateClock();
+
 //getting user avatar
 $.ajax({
     url: "/user",
@@ -404,15 +422,7 @@ function addComment(newComment) {
     $("#main, #newCommentModal").toggle();
 }
 
-//display time
-function updateClock() {
-    now = new Date;
-    $(".time").html(now.getHours() + ":" + now.getMinutes());
-    $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
-    setInterval(updateClock, 2000);
-}
 
-updateClock();
 
 //display new background pictures from unsplash
 function updateWallpaper() {
