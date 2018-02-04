@@ -164,6 +164,8 @@ var main = function() {
     $(".notePreview").on('click', function(event) {
         displayNoteContent(selectedNote);
     })
+    
+    $(".noteTitleInput").val("Note title");
 
 };
 
