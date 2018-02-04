@@ -3,6 +3,7 @@
 
 var selectedTask,
     userTask = [],
+    userNote = [],
     selectedView = 0,
     gif,
     giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
@@ -10,7 +11,8 @@ var selectedTask,
     openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
     userAvatar,
     userID,
-    selectedTool = "task";
+    selectedTool = "task",
+    selectedNote;
 
 var main = function() {
 
@@ -76,6 +78,11 @@ var main = function() {
     $("#closeNewCommentModal").on('click', function() {
         $("#newCommentModal, #main").toggle();
     });
+    
+    // closing the note modal
+    $("#closeNoteModal").on('click', function() {
+        $("#newNoteModal, #main").toggle();
+    });
 
     //trigger task adding on button click
     $("#plusButton").on("click", function(event) {
@@ -121,7 +128,6 @@ var main = function() {
         selectedTaskViewHandler(selectedView);
     });
 
-
     //mark task complete from the details screen
     $(".detailsCheckbox").on('click', function() {
         $("#newCommentModal, #main").toggle();
@@ -154,6 +160,11 @@ var main = function() {
     } else {
         handleTool(Cookies.get('selectedTool'));
     }
+    
+    $(".notePreview").on('click', function(event) {
+        displayNoteContent(selectedNote);
+    })
+
 };
 
 $(document).ready(main);
@@ -299,6 +310,12 @@ function displayComments() {
     else {
         $(".taskComments").append("<p>No comment has been added to this task yet</p>");
     }
+}
+
+function displayNoteContent(noteID) {
+    $("#main").hide();
+    $("#newNoteModal").show();
+    console.log("yolo");
 }
 
 //the onboarding

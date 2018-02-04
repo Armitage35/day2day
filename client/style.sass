@@ -1,6 +1,7 @@
 $fontStack: "Raleway", sans-serif
 $whiteTitles: white
 $day2dayBlue: #1d89ff
+$toolInsidePadding: 10px 15px 0px
 
 body
   font-family: $fontStack
@@ -16,7 +17,7 @@ h2
   color: $whiteTitles
 
 h3
-  padding: 10px 15px 0px
+  // padding: $toolInsidePadding
 
 h5
   color: black
@@ -109,6 +110,20 @@ ul
   border-right-width: 0px
   width: 75%
 
+.taskToolView
+  h3
+    padding: $toolInsidePadding
+
+.noteToolView
+  padding: $toolInsidePadding
+  a
+    max-height: 60px
+    overflow: hidden
+    color: #95a5a6
+    font-size: 12px
+    font-family: 'Spectral', serif
+    a:hover, a:focus
+      text-decoration: none
 
 .task
   border-radius: 0px
@@ -289,7 +304,7 @@ input[type="checkbox"]:checked
     h1
       font-size: 40px
       
-#closeNewCommentModal
+#closeNewCommentModal, #closeNoteModal
   position: fixed
   right: 10px
   top: 10px
