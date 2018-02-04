@@ -144,7 +144,11 @@ var main = function() {
     $('#taskTool').on('click', function(event) {
         handleTool("task");
     });
-    console.log(Cookies.get('selectedTool'));
+    
+    $('#noteTool').on('click', function(event) {
+        handleTool("note");
+    });
+    console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined) {
         handleTool("task");
     } else {
@@ -160,10 +164,14 @@ function handleTool(selectedTool) {
     if (selectedTool === "background") {
         $('.fa-camera-retro').addClass('active');
         $(".tool").hide('slow');
-    }
-    else if (selectedTool === "task") {
+    } else if (selectedTool === "task") {
         $('.fa-tasks').addClass('active');
-        $(".tool").show('slow');
+        $(".tool, .taskToolView").show('slow');
+        $(".noteToolView").hide();
+    } else if (selectedTool === "note") {
+        $('.fa-sticky-note').addClass('active');
+        $(".tool, .noteToolView").show('slow');
+        $(".taskToolView").hide();
     }
 }
 
