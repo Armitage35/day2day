@@ -6,6 +6,7 @@ var NoteSchema = mongoose.Schema({
     notePreview: String,
     noteTtitle: String,
     createdOn: Date,
+    lastEditedOn: Date,
     id: Number,
     title: String,
     userid: String,

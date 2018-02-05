@@ -76,7 +76,7 @@ passport.serializeUser(function(user, done) {
 });
 
 //user registration handling
-app.post("/user", function(req, res) {
+app.post('/user', function(req, res) {
     console.log(req.body);
 
     var tempID = req.body.tempUserid,
@@ -141,7 +141,7 @@ app.post("/user", function(req, res) {
     });
 });
 
-app.get("/user", function(req, res) {
+app.get('/user', function(req, res) {
     console.log(req.query);
     var userID = req.query.userID;
 
@@ -157,7 +157,7 @@ app.get("/user", function(req, res) {
 });
 
 //tasks handling
-app.post("/todos", function(req, res) {
+app.post('/todos', function(req, res) {
     console.log(req.body);
     var newTask = new userTasks({
         "comment": req.body.userTasks.comment,
@@ -179,7 +179,7 @@ app.post("/todos", function(req, res) {
     });
 });
 
-app.put("/todos/comment", function(req, res) {
+app.put('/todos/comment', function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
 
@@ -195,7 +195,7 @@ app.put("/todos/comment", function(req, res) {
 
 });
 
-app.get("/todos", function(req, res) {
+app.get('/todos', function(req, res) {
     console.log(req.query);
     var userID = req.query.userID;
 
@@ -210,17 +210,38 @@ app.get("/todos", function(req, res) {
     });
 });
 
-app.put("/todos", function(req, res) {
+app.put('/todos', function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
 
     userTasks.findById(taskID, function(err, task) {
-        if (err) return handleError(err);
+        if (err) return (err);
 
         task.complete = 'true';
         task.save(function(err, result) {
-            if (err) return handleError(err);
+            if (err) return (err);
             res.json(result);
         });
+    });
+});
+
+//notes handling
+app.post('/notes', function(req, res) {
+    console.log(req.body);
+    var newNote = new userNotes({
+        "noteBody": req.body.userTasks.comment,
+        "notePreview": req.body.userTasks.commentNb,
+        "noteTitle": req.body.userTasks.complete,
+        "createdOn": req.body.userTasks.createdOn,
+        "id": req.body.userTasks.id,
+        "userid": req.body.userTasks.userID
+    });
+
+    newNote.save(function(err, result) {
+        if (err !== null) {
+            console.log(err);
+            res.send("ERROR");
+        }
+        res.json(result);
     });
 });

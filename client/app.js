@@ -166,6 +166,10 @@ var main = function() {
     })
     
     $(".noteTitleInput").val("Note title");
+    
+    $("#saveNote").on('click', function(event) {
+        saveNote(selectedNote);
+    })
 
 };
 
@@ -317,7 +321,6 @@ function displayComments() {
 function displayNoteContent(noteID) {
     $("#main").hide();
     $("#newNoteModal").show();
-    console.log("yolo");
 }
 
 //the onboarding
@@ -498,6 +501,13 @@ function handleWeather() {
 handleWeather();
 displayTask();
 
+function saveNote (selectedNote) {
+    let noteBody = $(".noteInputZone").val();
+    let noteTitle = $(".noteTitleInput").val();
+    let notePreview = noteBody.substring(0, 115) + "...";
+    let lastEditedOn = new Date();
+    
+}
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
