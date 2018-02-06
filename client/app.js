@@ -20,7 +20,6 @@ var main = function() {
     $(".taskList").on('click', "button", function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
-        console.log(selectedTask);
     });
 
     //add the gif to userTasks
@@ -82,6 +81,7 @@ var main = function() {
     // closing the note modal
     $("#closeNoteModal").on('click', function() {
         $("#newNoteModal, #main").toggle();
+        displayNoteList();
     });
 
     //trigger task adding on button click
@@ -170,7 +170,8 @@ var main = function() {
 
     $("#saveNote").on('click', function(event) {
         saveNote(selectedNote);
-    })
+    });
+    
 };
 
 $(document).ready(main);
@@ -245,7 +246,6 @@ else {
             displayNoteList();
         }
     });
-
 }
 
 //getting user avatar
@@ -511,6 +511,7 @@ function handleWeather() {
 
 handleWeather();
 displayTask();
+displayNoteList();
 
 function saveNote(selectedNote) {
 
@@ -532,7 +533,7 @@ function saveNote(selectedNote) {
 
 function displayNoteList() {
     for (var i = 0; i <= userNote.length; i++) {
-        $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="#" id="i" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
+        $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="javascript:void(0);" onclick="displayNoteContent(this.id);" id="' + i + '" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
         console.log(userNote[i].notePreview);
     }
 }
@@ -540,6 +541,10 @@ function displayNoteList() {
 function displayNoteContent(noteID) {
     $("#main").hide();
     $("#newNoteModal").show();
+    selectedNote = noteID;
+    $('.noteInputZone').val(userNote[selectedNote].noteBody);
+    $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
+    $('.createdOn').children('p').html(new Date (userNote[selectedNote].createdOn).toDateString());
 }
 
 
