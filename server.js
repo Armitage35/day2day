@@ -229,12 +229,12 @@ app.put('/todos', function(req, res) {
 app.post('/notes', function(req, res) {
     console.log(req.body);
     var newNote = new userNotes({
-        "noteBody": req.body.userTasks.comment,
-        "notePreview": req.body.userTasks.commentNb,
-        "noteTitle": req.body.userTasks.complete,
-        "createdOn": req.body.userTasks.createdOn,
-        "id": req.body.userTasks.id,
-        "userid": req.body.userTasks.userID
+        "noteBody": req.body.noteBody,
+        "notePreview": req.body.notePreview,
+        "noteTitle": req.body.noteTitle,
+        "createdOn": req.body.noteCreatedOn,
+        // "id": req.body.userID,
+        "userid": req.body.userID
     });
 
     newNote.save(function(err, result) {

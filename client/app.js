@@ -502,10 +502,20 @@ handleWeather();
 displayTask();
 
 function saveNote (selectedNote) {
+    
     let noteBody = $(".noteInputZone").val();
     let noteTitle = $(".noteTitleInput").val();
     let notePreview = noteBody.substring(0, 115) + "...";
-    let lastEditedOn = new Date();
+    let noteLastEditedOn = new Date();
+    
+    $.ajax({
+        url: 'notes',
+        type: 'POST',
+        data: { noteBody: noteBody, noteTitle:noteTitle, notePreview:notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
+        success: function(data) {
+            console.log(data);
+        }
+    });
     
 }
 
