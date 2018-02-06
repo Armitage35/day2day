@@ -171,7 +171,6 @@ var main = function() {
     $("#saveNote").on('click', function(event) {
         saveNote(selectedNote);
     })
-
 };
 
 $(document).ready(main);
@@ -222,7 +221,7 @@ if (Cookies.get('userid') == undefined) { //when id is not in a cookie
 }
 else {
     userID = Cookies.get('userid'); //when user alerady has a cookie
-    
+
     //get user tasks
     $.ajax({
         url: 'todos',
@@ -234,7 +233,7 @@ else {
             displayTask();
         }
     });
-    
+
     //get user notes
     $.ajax({
         url: 'notes',
@@ -243,7 +242,7 @@ else {
         success: function(data) {
             userNote = data;
             console.log(userNote);
-            // displayNote();
+            displayNoteList();
         }
     });
 
@@ -333,11 +332,6 @@ function displayComments() {
     else {
         $(".taskComments").append("<p>No comment has been added to this task yet</p>");
     }
-}
-
-function displayNoteContent(noteID) {
-    $("#main").hide();
-    $("#newNoteModal").show();
 }
 
 //the onboarding
@@ -520,11 +514,11 @@ displayTask();
 
 function saveNote(selectedNote) {
 
-    let noteBody = $(".noteInputZone").val();
-    let noteTitle = $(".noteTitleInput").val();
-    let notePreview = noteBody.substring(0, 115) + "...";
-    let noteLastEditedOn = new Date();
-    console.log('user id= ' + userID);
+    let noteBody = $(".noteInputZone").val(),
+        noteTitle = $(".noteTitleInput").val(),
+        notePreview = noteBody.substring(0, 115) + "...",
+        noteLastEditedOn = new Date();
+    console.log(noteTitle);
 
     $.ajax({
         url: 'notes',
@@ -536,9 +530,18 @@ function saveNote(selectedNote) {
     });
 }
 
-function getNote(userID) {
-
+function displayNoteList() {
+    for (var i = 0; i <= userNote.length; i++) {
+        $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="#" id="i" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
+        console.log(userNote[i].notePreview);
+    }
 }
+
+function displayNoteContent(noteID) {
+    $("#main").hide();
+    $("#newNoteModal").show();
+}
+
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {

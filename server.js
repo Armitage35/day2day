@@ -235,6 +235,7 @@ app.post('/notes', function(req, res) {
         "createdOn": req.body.noteCreatedOn,
         "userid": req.body.userid
     });
+    console.log(req.body.noteTitle);
 
     newNote.save(function(err, result) {
         if (err !== null) {

@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var NoteSchema = mongoose.Schema({
     noteBody: String,
     notePreview: String,
-    noteTtitle: String,
+    noteTitle: String,
     createdOn: Date,
     lastEditedOn: Date,
     id: Number,
