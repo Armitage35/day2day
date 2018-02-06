@@ -78,7 +78,7 @@ var main = function() {
     $("#closeNewCommentModal").on('click', function() {
         $("#newCommentModal, #main").toggle();
     });
-    
+
     // closing the note modal
     $("#closeNoteModal").on('click', function() {
         $("#newNoteModal, #main").toggle();
@@ -150,23 +150,24 @@ var main = function() {
     $('#taskTool').on('click', function(event) {
         handleTool("task");
     });
-    
+
     $('#noteTool').on('click', function(event) {
         handleTool("note");
     });
     console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined) {
         handleTool("task");
-    } else {
+    }
+    else {
         handleTool(Cookies.get('selectedTool'));
     }
-    
+
     $(".notePreview").on('click', function(event) {
         displayNoteContent(selectedNote);
     })
-    
+
     $(".noteTitleInput").val("Note title");
-    
+
     $("#saveNote").on('click', function(event) {
         saveNote(selectedNote);
     })
@@ -181,11 +182,13 @@ function handleTool(selectedTool) {
     if (selectedTool === "background") {
         $('.fa-camera-retro').addClass('active');
         $(".tool").hide('slow');
-    } else if (selectedTool === "task") {
+    }
+    else if (selectedTool === "task") {
         $('.fa-tasks').addClass('active');
         $(".tool, .taskToolView").show('slow');
         $(".noteToolView").hide();
-    } else if (selectedTool === "note") {
+    }
+    else if (selectedTool === "note") {
         $('.fa-sticky-note').addClass('active');
         $(".tool, .noteToolView").show('slow');
         $(".taskToolView").hide();
@@ -219,17 +222,31 @@ if (Cookies.get('userid') == undefined) { //when id is not in a cookie
 }
 else {
     userID = Cookies.get('userid'); //when user alerady has a cookie
+    
+    //get user tasks
     $.ajax({
-        url: "todos",
+        url: 'todos',
         type: 'GET',
         data: { userID },
         success: function(data) {
-            console.log(userID);
             userTask = data;
             console.log(userTask);
             displayTask();
         }
     });
+    
+    //get user notes
+    $.ajax({
+        url: 'notes',
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userNote = data;
+            console.log(userNote);
+            // displayNote();
+        }
+    });
+
 }
 
 //getting user avatar
@@ -501,22 +518,26 @@ function handleWeather() {
 handleWeather();
 displayTask();
 
-function saveNote (selectedNote) {
-    
+function saveNote(selectedNote) {
+
     let noteBody = $(".noteInputZone").val();
     let noteTitle = $(".noteTitleInput").val();
     let notePreview = noteBody.substring(0, 115) + "...";
     let noteLastEditedOn = new Date();
-    
+    console.log('user id= ' + userID);
+
     $.ajax({
         url: 'notes',
         type: 'POST',
-        data: { noteBody: noteBody, noteTitle:noteTitle, notePreview:notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
         success: function(data) {
             console.log(data);
         }
     });
-    
+}
+
+function getNote(userID) {
+
 }
 
 //auto sign in if cookie's here

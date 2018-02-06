@@ -142,7 +142,7 @@ app.post('/user', function(req, res) {
 });
 
 app.get('/user', function(req, res) {
-    console.log(req.query);
+    // console.log(req.query);
     var userID = req.query.userID;
 
     User.findById(userID).exec(function(err, user) {
@@ -150,7 +150,7 @@ app.get('/user', function(req, res) {
             console.log("an error has occured");
         }
         else {
-            console.log(user);
+            // console.log(user);
             res.json(user);
         }
     });
@@ -184,11 +184,11 @@ app.put('/todos/comment', function(req, res) {
     var taskID = req.body.id;
 
     userTasks.findById(taskID, function(err, task) {
-        if (err) return handleError(err);
+        if (err) return (err);
         task.comment.push(req.body.comment);
         task.commentNb = req.body.commentNb;
         task.save(function(err, result) {
-            if (err) return handleError(err);
+            if (err) return (err);
             res.json(result);
         });
     });
@@ -204,7 +204,7 @@ app.get('/todos', function(req, res) {
             console.log("an error has occured");
         }
         else {
-            console.log(userTasks);
+            // console.log(userTasks);
             res.json(userTasks);
         }
     });
@@ -233,8 +233,7 @@ app.post('/notes', function(req, res) {
         "notePreview": req.body.notePreview,
         "noteTitle": req.body.noteTitle,
         "createdOn": req.body.noteCreatedOn,
-        // "id": req.body.userID,
-        "userid": req.body.userID
+        "userid": req.body.userid
     });
 
     newNote.save(function(err, result) {
@@ -243,5 +242,20 @@ app.post('/notes', function(req, res) {
             res.send("ERROR");
         }
         res.json(result);
+    });
+});
+
+app.get('/notes', function(req, res) {
+    let userID = req.query.userID;
+    console.log('val for user ID in getting notes: ' + userID)
+
+    userNotes.find({ userid: userID }).exec(function(err, userNotes) {
+        if (err) {
+            console.log("an error has occured");
+        }
+        else {
+            res.json(userNotes);
+            console.log(userNotes)
+        }
     });
 });
