@@ -1,7 +1,7 @@
 /* global $ */
 /* global Cookies */
 
-var selectedTask,
+let selectedTask,
     userTask = [],
     userNote = [],
     selectedView = 0,
@@ -11,7 +11,7 @@ var selectedTask,
     openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
     userAvatar,
     userID,
-    selectedTool = "task",
+    selectedTool = "task", //sets the default tool
     selectedNote;
 
 var main = function() {
@@ -23,7 +23,7 @@ var main = function() {
     });
 
     //add the gif to userTasks
-    $("#addGif").on("click", function(event) {
+    $("#addGif").on("click", function() {
         $("#waitingGif").empty();
         var newComment = gif;
         addComment(newComment);
@@ -33,7 +33,7 @@ var main = function() {
     });
 
     //looking for gif and showing it
-    $("#testGif").on("click", function(event) {
+    $("#testGif").on("click", function() {
         $(".testGif").remove();
         $("#addGif").show();
         var requestedGif = $("#message-giphy").val().split(' ').join('+');
@@ -45,7 +45,7 @@ var main = function() {
     });
 
     //display text input on task details
-    $("#textComment").on("click", function(event) {
+    $("#textComment").on("click", function() {
         $("#message-text,#addComment").show();
         $("#message-giphy, #testGif, #addGif").hide();
         $(this).children().addClass("active");
@@ -53,7 +53,7 @@ var main = function() {
     });
 
     //display giphy input on task details
-    $("#giphyComment").on("click", function(event) {
+    $("#giphyComment").on("click", function() {
         $("#message-text,#addComment").hide();
         $("#message-giphy, #testGif").show();
         $(this).children().addClass("active");
@@ -85,19 +85,19 @@ var main = function() {
     });
 
     //trigger task adding on button click
-    $("#plusButton").on("click", function(event) {
+    $("#plusButton").on("click", function() {
         addTask();
     });
 
     //trigger task adding on enter key
-    $("#newTask").on("keypress", function(event) {
+    $("#newTask").on("keypress", function() {
         if (event.keyCode === 13) {
             addTask();
         }
     });
 
     //date input show / hide
-    $("#calendarButton").on("click", function(event) {
+    $("#calendarButton").on("click", function() {
         $(".datePicker").toggle();
         $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate());
     });
@@ -108,9 +108,9 @@ var main = function() {
     });
 
     //using the ctrl + enter keys to display the add task modal
-    $(document).on("keypress", function(event) {
+    $(document).on("keypress", function() {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
-            $("#fixedBottom").click();
+            $(".fixedBottom").click();
         }
     });
 
@@ -143,15 +143,15 @@ var main = function() {
     });
 
     //enabling user to only see the background picture
-    $('#backgroundTool').on('click', function(event) {
+    $('#backgroundTool').on('click', function() {
         handleTool("background")
     });
 
-    $('#taskTool').on('click', function(event) {
+    $('#taskTool').on('click', function() {
         handleTool("task");
     });
 
-    $('#noteTool').on('click', function(event) {
+    $('#noteTool').on('click', function() {
         handleTool("note");
     });
     console.log("selected tool: " + Cookies.get('selectedTool'));
@@ -162,16 +162,22 @@ var main = function() {
         handleTool(Cookies.get('selectedTool'));
     }
 
-    $(".notePreview").on('click', function(event) {
+    $(".notePreview").on('click', function() {
         displayNoteContent(selectedNote);
     })
 
     $(".noteTitleInput").val("Note title");
+    
+    $('.createdOn').children('p').html(new Date().toDateString());
 
-    $("#saveNote").on('click', function(event) {
+    $("#saveNote").on('click', function() {
         saveNote(selectedNote);
     });
     
+    $('#newNoteButton').on('click', function() {
+        displayNoteContent(-1);
+        $('.noteInputZone, .noteTitleInput').val('');
+    });
 };
 
 $(document).ready(main);
@@ -339,7 +345,7 @@ function onboarding() {
     if (userTask.length === 0) {
         var onboardingInvite = '<div class="onboarding"> <p class="text-center"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
         $(".taskList").append(onboardingInvite);
-        $('#onboardingBttn').on("click", function(event) {
+        $('#onboardingBttn').on("click", function() {
             userTask.push({
                 title: 'Start by adding a task',
                 complete: false,
@@ -370,7 +376,7 @@ function onboarding() {
 }
 
 function completeTask(completedTaskID) {
-    var completedTaskMongoID = userTask[completedTaskID]._id;
+    let completedTaskMongoID = userTask[completedTaskID]._id;
     $.ajax({
         url: "todos",
         type: 'PUT',
@@ -450,7 +456,7 @@ function addComment(newComment) {
 function updateWallpaper() {
     $.ajax({
         url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=nature",
-        type: "GET",
+        type: 'GET',
         success: function(data) {
             console.log(data);
             let background;
@@ -518,23 +524,32 @@ function saveNote(selectedNote) {
     let noteBody = $(".noteInputZone").val(),
         noteTitle = $(".noteTitleInput").val(),
         notePreview = noteBody.substring(0, 115) + "...",
-        noteLastEditedOn = new Date();
-    console.log(noteTitle);
+        noteLastEditedOn = new Date(),
+        noteID = selectedNote;
 
     $.ajax({
         url: 'notes',
-        type: 'POST',
-        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
+        type: 'PUT',
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteID: noteID },
         success: function(data) {
             console.log(data);
+            console.log('you are editing note number ' + selectedNote);
+            if (selectedNote === 0) {
+                userNote.push(data);
+                selectedNote = userNote.length;
+                console.log(selectedNote);
+            } else {
+                userNote[selectedNote] = data;
+                console.log('route 2');
+            }
         }
     });
 }
 
 function displayNoteList() {
+    $('.notesList').empty();
     for (var i = 0; i <= userNote.length; i++) {
         $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="javascript:void(0);" onclick="displayNoteContent(this.id);" id="' + i + '" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
-        console.log(userNote[i].notePreview);
     }
 }
 
@@ -542,6 +557,7 @@ function displayNoteContent(noteID) {
     $("#main").hide();
     $("#newNoteModal").show();
     selectedNote = noteID;
+    console.log(selectedNote);
     $('.noteInputZone').val(userNote[selectedNote].noteBody);
     $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
     $('.createdOn').children('p').html(new Date (userNote[selectedNote].createdOn).toDateString());

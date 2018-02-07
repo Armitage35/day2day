@@ -21,10 +21,10 @@ app.use(passport.session());
 
 // Using Google Closure Compiler to minigy the app.js file
 compressor.minify({
-  compressor: 'gcc',
-  input: 'client/app.js',
-  output: 'client/app-min.js',
-  callback: function (err, min) {}
+    compressor: 'gcc',
+    input: 'client/app.js',
+    output: 'client/app-min.js',
+    callback: function(err, min) {}
 });
 
 //connect mongoose to DB
@@ -65,14 +65,14 @@ app.post('/login', function(req, res) {
     })(req, res);
 
 
-passport.serializeUser(function(user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user._id);
     });
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
-    }); 
+    });
 });
 
 //user registration handling
@@ -83,7 +83,7 @@ app.post('/user', function(req, res) {
         username = req.body.username,
         email = req.body.email,
         password = req.body.password,
-        avatar = gravatar.url(req.body.email, {protocol: 'https'}),
+        avatar = gravatar.url(req.body.email, { protocol: 'https' }),
         passwordRepeat = req.body.passwordRepeat,
         hashedPassword = bcrypt.hashSync(password, 10); //hash password syncronously
 
@@ -125,7 +125,8 @@ app.post('/user', function(req, res) {
         }
         if (error.length > 0) {
             res.send(error);
-        } else {
+        }
+        else {
             newUser.save(function(err, result) {
                 if (err !== null) {
                     console.log(err);
@@ -143,7 +144,7 @@ app.post('/user', function(req, res) {
 
 app.get('/user', function(req, res) {
     // console.log(req.query);
-    var userID = req.query.userID;
+    let userID = req.query.userID;
 
     User.findById(userID).exec(function(err, user) {
         if (err) {
@@ -159,7 +160,7 @@ app.get('/user', function(req, res) {
 //tasks handling
 app.post('/todos', function(req, res) {
     console.log(req.body);
-    var newTask = new userTasks({
+    let newTask = new userTasks({
         "comment": req.body.userTasks.comment,
         "commentNb": req.body.userTasks.commentNb,
         "complete": req.body.userTasks.complete,
@@ -226,29 +227,36 @@ app.put('/todos', function(req, res) {
 });
 
 //notes handling
-app.post('/notes', function(req, res) {
+app.put('/notes', function(req, res) {
     console.log(req.body);
     var newNote = new userNotes({
+        "archived": false,
         "noteBody": req.body.noteBody,
         "notePreview": req.body.notePreview,
         "noteTitle": req.body.noteTitle,
         "createdOn": req.body.noteCreatedOn,
-        "userid": req.body.userid
+        "userid": req.body.userid,
+        "noteID": req.body.noteID,
     });
-    console.log(req.body.noteTitle);
-
-    newNote.save(function(err, result) {
-        if (err !== null) {
-            console.log(err);
-            res.send("ERROR");
-        }
-        res.json(result);
-    });
+    
+    console.log(newNote.noteID);
+    if (newNote.noteID == undefined) {
+        newNote.save(function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send("ERROR");
+            }
+            res.json(result);
+            console.log(result);
+        });
+    } else {
+        console.log('this is not a new note');
+        res.json("this is not a new note");
+    }
 });
 
 app.get('/notes', function(req, res) {
     let userID = req.query.userID;
-    console.log('val for user ID in getting notes: ' + userID)
 
     userNotes.find({ userid: userID }).exec(function(err, userNotes) {
         if (err) {

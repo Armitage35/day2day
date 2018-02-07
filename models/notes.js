@@ -2,10 +2,11 @@ var mongoose = require("mongoose");
 
 //This is mongoose's model for todos
 var NoteSchema = mongoose.Schema({
+    archived: Boolean,
+    createdOn: Date,
     noteBody: String,
     notePreview: String,
     noteTitle: String,
-    createdOn: Date,
     lastEditedOn: Date,
     id: Number,
     title: String,
