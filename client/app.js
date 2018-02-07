@@ -1,7 +1,7 @@
 /* global $ */
 /* global Cookies */
 
-let selectedTask,
+var selectedTask,
     userTask = [],
     userNote = [],
     selectedView = 0,
@@ -530,17 +530,17 @@ function saveNote(selectedNote) {
     $.ajax({
         url: 'notes',
         type: 'PUT',
-        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteID: noteID },
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
         success: function(data) {
             console.log(data);
             console.log('you are editing note number ' + selectedNote);
-            if (selectedNote === 0) {
+            if (selectedNote === -1) {
                 userNote.push(data);
-                selectedNote = userNote.length;
-                console.log(selectedNote);
+                displayNoteContent(userNote.length - 1);
             } else {
                 userNote[selectedNote] = data;
-                console.log('route 2');
+                userNote.splice(selectedNote, 1);
+                userNote.push(data);
             }
         }
     });

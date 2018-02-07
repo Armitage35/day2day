@@ -250,6 +250,7 @@ app.put('/notes', function(req, res) {
             console.log(result);
         });
     } else {
+        newNote.update({_id: newNote._id}, newNote);
         console.log('this is not a new note');
         res.json("this is not a new note");
     }
