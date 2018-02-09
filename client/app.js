@@ -176,7 +176,7 @@ var main = function() {
     
     $('#newNoteButton').on('click', function() {
         displayNoteContent(-1);
-        $('.noteInputZone, .noteTitleInput').val('');
+        $('.noteInputZone  .noteTitleInput').val('');
     });
 };
 

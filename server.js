@@ -20,12 +20,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // // Using Google Closure Compiler to minigy the app.js file
-// compressor.minify({
-//     compressor: 'gcc',
-//     input: 'client/app.js',
-//     output: 'client/app-min.js',
-//     callback: function(err, min) {}
-// });
+compressor.minify({
+    compressor: 'gcc',
+    input: 'client/app.js',
+    output: 'client/app-min.js',
+    callback: function(err, min) {}
+});
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -251,11 +251,8 @@ app.put('/notes', function(req, res) {
         "createdOn": req.body.noteCreatedOn,
         "editedOn": req.body.noteLastEditedOn,
         "userid": req.body.userid,
-        "noteMongoID": req.body.noteMongoID,
     });
 
-    console.log('note mongo id: ' + req.body.noteMongoID);
-    console.log(req.body.noteMongoID == 0);
     if (req.body.noteMongoID == 0) {
         newNote.save(function(err, result) {
             if (err !== null) {
@@ -268,13 +265,14 @@ app.put('/notes', function(req, res) {
         });
     }
     else {
-        console.log('this is not a new note');
-        newNote.update({ _id: req.body.noteMongoID }, {$set: {noteBody: req.body.noteBody, noteTitle: req.body.noteTitle, notePreview: req.body.notePreview, lastEditedOn: req.body.noteLastEditedOn}}, function(err, records) {
+        console.log('this is not a new note: ' + req.body.noteMongoID);
+        userNotes.update({ _id: req.body.noteMongoID }, {$set: {noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn}}, function(err, result) {
             if (err !== null) {
                 console.log(err);
                 res.send('ERROR');
             } else {
-                res.json(records);
+                res.json(result);
+                console.log(result);
             }
         });
         

@@ -9,7 +9,6 @@ var NoteSchema = mongoose.Schema({
     noteTitle: String,
     lastEditedOn: Date,
     id: Number,
-    title: String,
     userid: String,
 });
 
