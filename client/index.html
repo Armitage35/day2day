@@ -14,6 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!--Font-->
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spectral" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <!--Drag & drop lib-->
     <script src="//rubaxa.github.io/Sortable/Sortable.js"></script>
@@ -59,6 +60,7 @@
             <!-- display user's content -->
             <div class="col-3">
                 <div class="tool">
+                    <div class="taskToolView">
                     <h3 id="selectedTaskView">Today</h3>
                     <nav class="nav">
                         <a class="nav-link active" href="#" id="today">Today</a>
@@ -67,11 +69,15 @@
                     </nav>
                     <ul class="taskList">
                     </ul>
-                    <button type="button" class="bttn-unite bttn-sm bttn-primary" data-toggle="modal" data-target="#myModal" id="fixedBottom">add task</button>
+                    <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" data-toggle="modal" data-target="#myModal" id="">add task</button>
                 </div>
-                <!--Task lists-->
-                <div class="task">
+                <div class="noteToolView">
+                    <h3>My Notes</h3>
+                    <div class="notesList">
+                    </div>
+                    <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
                 </div>
+            </div>
             </div>
             <!-- display tool bar -->
             <div class="col-1 accessTools">
@@ -89,6 +95,10 @@
                     <button type="button" class="btn btn-link" id="noteTool">
                         <i class="fas fa-sticky-note fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
                     </button>
+                    <button type="button" class="btn btn-link" id="taskTool"><i class="fas fa-tasks fa-2x"></i></button>
+                </div>
+                <div class="shortcut">
+                    <button type="button" class="btn btn-link" id="noteTool"><i class="fas fa-sticky-note fa-2x"></i></button>
                 </div>
                 <div class="shortcut">
                     <button type="button" class="btn btn-link" id="pocketTool">
@@ -241,7 +251,38 @@
             </div>
         </div>
     </div>
-    <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none">
+    
+    <!--new note modal-->
+    <div class="container-fluid" id="newNoteModal" style="display:none">
+        <!--the new note input zone -->
+        <div class="row">
+            <button type="button" class="btn btn-link" id="closeNoteModal"><i class="fas fa-times fa-lg" ></i></button>
+            <!-- the comment col -->
+            <div class="col-8 noteSection">
+                <div class="row note">
+                    <textarea name="note" class="noteInputZone">Your note goes here</textarea>
+                </div>
+            </div>
+            
+            <!-- the details col -->
+            <div class="col-4 details">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="noteTitleInput" placeholder="nothing... Yet!"/>
+                        <div class="createdOn">
+                            <i class="far fa-plus-square"></i>
+                            <p>No creation date</p>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
+                <!--<i class="fas fa-caret-left"></i>-->
+                <!--<i class="fas fa-caret-right"></i>-->
+            </div>
+        </div>
+    </div>
+    
 </body>
 
 </html>

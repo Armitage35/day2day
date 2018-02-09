@@ -3,8 +3,9 @@ var express = require('express'),
     mongoose = require('mongoose'),
     User = require('./models/users.js'),
     userTasks = require('./models/tasks.js'),
+    userNotes = require('./models/notes.js'),
     validator = require('validator'),
-    session = require('express-session'),
+    // session = require('express-session'),
     bcrypt = require('bcrypt'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
@@ -22,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// Using Google Closure Compiler to minigy the app.js file
+// // Using Google Closure Compiler to minigy the app.js file
 compressor.minify({
     compressor: 'gcc',
     input: 'client/app.js',
@@ -99,7 +100,7 @@ app.post('/login', function(req, res) {
 });
 
 //user registration handling
-app.post("/user", function(req, res) {
+app.post('/user', function(req, res) {
     console.log(req.body);
 
     var tempID = req.body.tempUserid,
@@ -165,25 +166,25 @@ app.post("/user", function(req, res) {
     });
 });
 
-app.get("/user", function(req, res) {
-    console.log(req.query);
-    var userID = req.query.userID;
+app.get('/user', function(req, res) {
+    // console.log(req.query);
+    let userID = req.query.userID;
 
     User.findById(userID).exec(function(err, user) {
         if (err) {
             console.log("an error has occured");
         }
         else {
-            console.log(user);
+            // console.log(user);
             res.json(user);
         }
     });
 });
 
 //tasks handling
-app.post("/todos", function(req, res) {
+app.post('/todos', function(req, res) {
     console.log(req.body);
-    var newTask = new userTasks({
+    let newTask = new userTasks({
         "comment": req.body.userTasks.comment,
         "commentNb": req.body.userTasks.commentNb,
         "complete": req.body.userTasks.complete,
@@ -203,7 +204,7 @@ app.post("/todos", function(req, res) {
     });
 });
 
-app.put("/todos/comment", function(req, res) {
+app.put('/todos/comment', function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
 
@@ -219,7 +220,7 @@ app.put("/todos/comment", function(req, res) {
 
 });
 
-app.get("/todos", function(req, res) {
+app.get('/todos', function(req, res) {
     console.log(req.query);
     var userID = req.query.userID;
 
@@ -228,13 +229,13 @@ app.get("/todos", function(req, res) {
             console.log("an error has occured");
         }
         else {
-            console.log(userTasks);
+            // console.log(userTasks);
             res.json(userTasks);
         }
     });
 });
 
-app.put("/todos", function(req, res) {
+app.put('/todos', function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
 
@@ -287,3 +288,56 @@ app.post('/file', function(req, res) {
         });
     }
 })
+
+//notes handling
+app.get('/notes', function(req, res) {
+    let userID = req.query.userID;
+
+    userNotes.find({ userid: userID }).exec(function(err, userNotes) {
+        if (err) {
+            console.log("an error has occured");
+        }
+        else {
+            res.json(userNotes);
+            console.log(userNotes)
+        }
+    });
+});
+
+app.put('/notes', function(req, res) {
+    console.log(req.body);
+    var newNote = new userNotes({
+        "archived": false,
+        "noteBody": req.body.noteBody,
+        "notePreview": req.body.notePreview,
+        "noteTitle": req.body.noteTitle,
+        "createdOn": req.body.noteCreatedOn,
+        "editedOn": req.body.noteLastEditedOn,
+        "userid": req.body.userid,
+    });
+
+    if (req.body.noteMongoID == 0) {
+        newNote.save(function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            }
+            res.json(result);
+            console.log(result);
+            console.log('saved a NEW task');
+        });
+    }
+    else {
+        console.log('this is not a new note: ' + req.body.noteMongoID);
+        userNotes.update({ _id: req.body.noteMongoID }, {$set: {noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn}}, function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            } else {
+                res.json(result);
+                console.log(result);
+            }
+        });
+        
+    }
+});

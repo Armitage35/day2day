@@ -3,6 +3,7 @@
 
 var selectedTask,
     userTask = [],
+    userNote = [],
     selectedView = 0,
     gif,
     giphyApiKey = "kSMEAA5V3mBfL5qUeC1ZleR6PdGDa1mV",
@@ -10,7 +11,8 @@ var selectedTask,
     openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
     userAvatar,
     userID,
-    selectedTool = "task";
+    selectedTool = "task", //sets the default tool
+    selectedNote;
 
 var main = function() {
 
@@ -18,11 +20,10 @@ var main = function() {
     $(".taskList").on('click', "button", function() {
         selectedTask = $(this).parent().attr('id');
         displayComments();
-        console.log(selectedTask);
     });
 
     //add the gif to userTasks
-    $("#addGif").on("click", function(event) {
+    $("#addGif").on("click", function() {
         $("#waitingGif").empty();
         var newComment = gif;
         addComment(newComment);
@@ -32,7 +33,7 @@ var main = function() {
     });
 
     //looking for gif and showing it
-    $("#testGif").on("click", function(event) {
+    $("#testGif").on("click", function() {
         $(".testGif").remove();
         $("#addGif").show();
         var requestedGif = $("#message-giphy").val().split(' ').join('+');
@@ -44,6 +45,7 @@ var main = function() {
     });
 
     //display text input on task details
+<<<<<<< HEAD
     $("#textComment").on("click", function(event) {
         handleCommentType("text");
     });
@@ -51,6 +53,21 @@ var main = function() {
     //display giphy input on task details
     $("#giphyComment").on("click", function(event) {
         handleCommentType("gif");
+=======
+    $("#textComment").on("click", function() {
+        $("#message-text,#addComment").show();
+        $("#message-giphy, #testGif, #addGif").hide();
+        $(this).children().addClass("active");
+        $("#giphyComment").children().removeClass("active");
+    });
+
+    //display giphy input on task details
+    $("#giphyComment").on("click", function() {
+        $("#message-text,#addComment").hide();
+        $("#message-giphy, #testGif").show();
+        $(this).children().addClass("active");
+        $("#textComment").children().removeClass("active");
+>>>>>>> master
     });
 
     //display text input on task details
@@ -75,20 +92,27 @@ var main = function() {
         $("#newCommentModal, #main").toggle();
     });
 
+    // closing the note modal
+    $("#closeNoteModal").on('click', function() {
+        $("#newNoteModal, #main").toggle();
+        $('.noteInputZone, .noteTitleInput').val('');
+        displayNoteList();
+    });
+
     //trigger task adding on button click
-    $("#plusButton").on("click", function(event) {
+    $("#plusButton").on("click", function() {
         addTask();
     });
 
     //trigger task adding on enter key
-    $("#newTask").on("keypress", function(event) {
+    $("#newTask").on("keypress", function() {
         if (event.keyCode === 13) {
             addTask();
         }
     });
 
     //date input show / hide
-    $("#calendarButton").on("click", function(event) {
+    $("#calendarButton").on("click", function() {
         $(".datePicker").toggle();
         $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate());
     });
@@ -99,9 +123,9 @@ var main = function() {
     });
 
     //using the ctrl + enter keys to display the add task modal
-    $(document).on("keypress", function(event) {
+    $(document).on("keypress", function() {
         if ((event.keyCode == 10 || event.keyCode == 13) && event.ctrlKey) {
-            $("#fixedBottom").click();
+            $(".fixedBottom").click();
         }
     });
 
@@ -119,7 +143,6 @@ var main = function() {
         selectedTaskViewHandler(selectedView);
     });
 
-
     //mark task complete from the details screen
     $(".detailsCheckbox").on('click', function() {
         $("#newCommentModal, #main").toggle();
@@ -135,20 +158,41 @@ var main = function() {
     });
 
     //enabling user to only see the background picture
-    $('#backgroundTool').on('click', function(event) {
+    $('#backgroundTool').on('click', function() {
         handleTool("background")
     });
 
-    $('#taskTool').on('click', function(event) {
+    $('#taskTool').on('click', function() {
         handleTool("task");
     });
-    console.log(Cookies.get('selectedTool'));
+
+    $('#noteTool').on('click', function() {
+        handleTool("note");
+    });
+    console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined) {
         handleTool("task");
     }
     else {
         handleTool(Cookies.get('selectedTool'));
     }
+
+    $(".notePreview").on('click', function() {
+        displayNoteContent(selectedNote);
+    })
+
+    $(".noteTitleInput").val("Note title");
+    
+    $('.createdOn').children('p').html(new Date().toDateString());
+
+    $("#saveNote").on('click', function() {
+        saveNote(selectedNote);
+    });
+    
+    $('#newNoteButton').on('click', function() {
+        displayNoteContent(-1);
+        $('.noteInputZone  .noteTitleInput').val('');
+    });
 
 };
 
@@ -163,7 +207,13 @@ function handleTool(selectedTool) {
     }
     else if (selectedTool === "task") {
         $('.fa-tasks').addClass('active');
-        $(".tool").show('slow');
+        $(".tool, .taskToolView").show('slow');
+        $(".noteToolView").hide();
+    }
+    else if (selectedTool === "note") {
+        $('.fa-sticky-note').addClass('active');
+        $(".tool, .noteToolView").show('slow');
+        $(".taskToolView").hide();
     }
 }
 
@@ -194,15 +244,28 @@ if (Cookies.get('userid') == undefined) { //when id is not in a cookie
 }
 else {
     userID = Cookies.get('userid'); //when user alerady has a cookie
+
+    //get user tasks
     $.ajax({
-        url: "todos",
+        url: 'todos',
         type: 'GET',
         data: { userID },
         success: function(data) {
-            console.log(userID);
             userTask = data;
             console.log(userTask);
             displayTask();
+        }
+    });
+
+    //get user notes
+    $.ajax({
+        url: 'notes',
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userNote = data;
+            console.log(userNote);
+            displayNoteList();
         }
     });
 }
@@ -315,7 +378,7 @@ function onboarding() {
     if (userTask.length === 0) {
         var onboardingInvite = '<div class="onboarding"> <p class="text-center"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
         $(".taskList").append(onboardingInvite);
-        $('#onboardingBttn').on("click", function(event) {
+        $('#onboardingBttn').on("click", function() {
             userTask.push({
                 title: 'Start by adding a task',
                 complete: false,
@@ -346,7 +409,7 @@ function onboarding() {
 }
 
 function completeTask(completedTaskID) {
-    var completedTaskMongoID = userTask[completedTaskID]._id;
+    let completedTaskMongoID = userTask[completedTaskID]._id;
     $.ajax({
         url: "todos",
         type: 'PUT',
@@ -428,7 +491,7 @@ function addComment(newComment) {
 function updateWallpaper() {
     $.ajax({
         url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=nature",
-        type: "GET",
+        type: 'GET',
         success: function(data) {
             console.log(data);
             let background;
@@ -495,6 +558,57 @@ function handleCommentType(commentType) {
 
 handleWeather();
 displayTask();
+displayNoteList();
+
+function saveNote(selectedNote) {
+
+    let noteBody = $(".noteInputZone").val(),
+        noteTitle = $(".noteTitleInput").val(),
+        notePreview = noteBody.substring(0, 115) + "...",
+        noteLastEditedOn = new Date(),
+        noteID = selectedNote,
+        noteMongoID = 0;
+    
+    if (selectedNote != -1) {
+        noteMongoID = userNote[selectedNote]._id;
+        console.log('note mongoID: ' + noteMongoID);
+    }
+
+    $.ajax({
+        url: 'notes',
+        type: 'PUT',
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID },
+        success: function(data) {
+            console.log(data);
+            console.log('you are editing note number ' + selectedNote);
+            if (selectedNote === -1) {
+                userNote.push(data);
+                displayNoteContent(userNote.length - 1);
+            } else {
+                userNote[selectedNote].noteBody = noteBody;
+                userNote[selectedNote].noteTitle = noteTitle;
+                userNote[selectedNote].notePreview = notePreview;
+            }
+        }
+    });
+}
+
+function displayNoteList() {
+    $('.notesList').empty();
+    for (var i = 0; i <= userNote.length; i++) {
+        $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="javascript:void(0);" onclick="displayNoteContent(this.id);" id="' + i + '" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
+    }
+}
+
+function displayNoteContent(noteID) {
+    $("#main").hide();
+    $("#newNoteModal").show();
+    selectedNote = noteID;
+    console.log(selectedNote);
+    $('.noteInputZone').val(userNote[selectedNote].noteBody);
+    $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
+    $('.createdOn').children('p').html(new Date (userNote[selectedNote].createdOn).toDateString());
+}
 
 
 //auto sign in if cookie's here
