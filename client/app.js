@@ -544,9 +544,9 @@ function saveNote(selectedNote) {
                 userNote.push(data);
                 displayNoteContent(userNote.length - 1);
             } else {
-                userNote[selectedNote] = data;
-                userNote.splice(selectedNote, 1);
-                userNote.push(data);
+                userNote[selectedNote].noteBody = noteBody;
+                userNote[selectedNote].noteTitle = noteTitle;
+                userNote[selectedNote].notePreview = notePreview;
             }
         }
     });
