@@ -19,13 +19,13 @@ app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUni
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Using Google Closure Compiler to minigy the app.js file
-compressor.minify({
-    compressor: 'gcc',
-    input: 'client/app.js',
-    output: 'client/app-min.js',
-    callback: function(err, min) {}
-});
+// // Using Google Closure Compiler to minigy the app.js file
+// compressor.minify({
+//     compressor: 'gcc',
+//     input: 'client/app.js',
+//     output: 'client/app-min.js',
+//     callback: function(err, min) {}
+// });
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -227,35 +227,6 @@ app.put('/todos', function(req, res) {
 });
 
 //notes handling
-app.put('/notes', function(req, res) {
-    console.log(req.body);
-    var newNote = new userNotes({
-        "archived": false,
-        "noteBody": req.body.noteBody,
-        "notePreview": req.body.notePreview,
-        "noteTitle": req.body.noteTitle,
-        "createdOn": req.body.noteCreatedOn,
-        "userid": req.body.userid,
-        "noteID": req.body.noteID,
-    });
-    
-    console.log(newNote.noteID);
-    if (newNote.noteID == undefined) {
-        newNote.save(function(err, result) {
-            if (err !== null) {
-                console.log(err);
-                res.send("ERROR");
-            }
-            res.json(result);
-            console.log(result);
-        });
-    } else {
-        newNote.update({_id: newNote._id}, newNote);
-        console.log('this is not a new note');
-        res.json("this is not a new note");
-    }
-});
-
 app.get('/notes', function(req, res) {
     let userID = req.query.userID;
 
@@ -268,4 +239,44 @@ app.get('/notes', function(req, res) {
             console.log(userNotes)
         }
     });
+});
+
+app.put('/notes', function(req, res) {
+    console.log(req.body);
+    var newNote = new userNotes({
+        "archived": false,
+        "noteBody": req.body.noteBody,
+        "notePreview": req.body.notePreview,
+        "noteTitle": req.body.noteTitle,
+        "createdOn": req.body.noteCreatedOn,
+        "editedOn": req.body.noteLastEditedOn,
+        "userid": req.body.userid,
+        "noteMongoID": req.body.noteMongoID,
+    });
+
+    console.log('note mongo id: ' + req.body.noteMongoID);
+    console.log(req.body.noteMongoID == 0);
+    if (req.body.noteMongoID == 0) {
+        newNote.save(function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            }
+            res.json(result);
+            console.log(result);
+            console.log('saved a NEW task');
+        });
+    }
+    else {
+        console.log('this is not a new note');
+        newNote.update({ _id: req.body.noteMongoID }, {$set: {noteBody: req.body.noteBody, noteTitle: req.body.noteTitle, notePreview: req.body.notePreview, lastEditedOn: req.body.noteLastEditedOn}}, function(err, records) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            } else {
+                res.json(records);
+            }
+        });
+        
+    }
 });

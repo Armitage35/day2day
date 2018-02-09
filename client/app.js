@@ -525,12 +525,18 @@ function saveNote(selectedNote) {
         noteTitle = $(".noteTitleInput").val(),
         notePreview = noteBody.substring(0, 115) + "...",
         noteLastEditedOn = new Date(),
-        noteID = selectedNote;
+        noteID = selectedNote,
+        noteMongoID = 0;
+    
+    if (selectedNote != -1) {
+        noteMongoID = userNote[selectedNote]._id;
+        console.log('note mongoID: ' + noteMongoID);
+    }
 
     $.ajax({
         url: 'notes',
         type: 'PUT',
-        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date() },
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID },
         success: function(data) {
             console.log(data);
             console.log('you are editing note number ' + selectedNote);
