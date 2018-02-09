@@ -81,6 +81,7 @@ var main = function() {
     // closing the note modal
     $("#closeNoteModal").on('click', function() {
         $("#newNoteModal, #main").toggle();
+        $('.noteInputZone, .noteTitleInput').val('');
         displayNoteList();
     });
 
