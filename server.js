@@ -24,12 +24,12 @@ app.use(passport.session());
 app.use(upload());
 
 // Using Google Closure Compiler to minigy the app.js file
-// compressor.minify({
-//     compressor: 'gcc',
-//     input: 'client/app.js',
-//     output: 'client/app-min.js',
-//     callback: function(err, min) {}
-// });
+compressor.minify({
+    compressor: 'gcc',
+    input: 'client/app.js',
+    output: 'client/app-min.js',
+    callback: function(err, min) {}
+});
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -243,11 +243,13 @@ app.post('/file', function(req, res) {
     let appendFileToTask = req.body.selectedTask,
         amountOfComments = req.body.commentNb,
         fileUploadedToS3Adress;
+    console.log(req.files);
     if (req.files) {
         var file = req.files.uploadFile,
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique
         console.log(filename);
         console.log(file);
+        
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
