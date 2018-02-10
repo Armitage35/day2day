@@ -1,0 +1,24 @@
+{
+  "name": "Day2day",
+  "homepage": "https://github.com/Armitage35/todoapp",
+  "authors": [
+    "armitage <adrien.dubois35@gmail.com>"
+  ],
+  "description": "a great home page for people who want to get shit done",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Font-Awesome": "^5.0.6",
+    "izitoast": "^1.2.0",
+    "js-cookie": "^2.2.0",
+    "jquery": "^3.3.1"
+  }
+}

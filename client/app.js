@@ -1,5 +1,6 @@
-/* global $ */
-/* global Cookies */
+/* global $
+global Cookies 
+global iziToast */
 
 var selectedTask,
     userTask = [],
@@ -177,7 +178,11 @@ var main = function() {
         displayNoteContent(-1);
         $('.noteInputZone  .noteTitleInput').val('');
     });
-
+    
+    iziToast.show({
+        title: 'Hey',
+        message: 'the DOM is loaded?'
+    });
 };
 
 $(document).ready(main);
