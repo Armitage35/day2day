@@ -167,21 +167,16 @@ var main = function() {
     })
 
     $(".noteTitleInput").val("Note title");
-    
+
     $('.createdOn').children('p').html(new Date().toDateString());
 
     $("#saveNote").on('click', function() {
         saveNote(selectedNote);
     });
-    
+
     $('#newNoteButton').on('click', function() {
         displayNoteContent(-1);
         $('.noteInputZone  .noteTitleInput').val('');
-    });
-    
-    iziToast.show({
-        title: 'Hey',
-        message: 'the DOM is loaded?'
     });
 };
 
@@ -445,6 +440,11 @@ function addTask() {
             userTask.pop(); //removing the temp object created by client to replace it with the object from mongo
             userTask.push(result);
             console.log(userTask);
+            iziToast.success({
+                title: 'Fantastic',
+                message: 'Your task has been added',
+                position: 'topRight',
+            });
         });
 
         $(".task-input input").val("");
@@ -559,7 +559,7 @@ function saveNote(selectedNote) {
         noteLastEditedOn = new Date(),
         noteID = selectedNote,
         noteMongoID = 0;
-    
+
     if (selectedNote != -1) {
         noteMongoID = userNote[selectedNote]._id;
         console.log('note mongoID: ' + noteMongoID);
@@ -575,11 +575,16 @@ function saveNote(selectedNote) {
             if (selectedNote === -1) {
                 userNote.push(data);
                 displayNoteContent(userNote.length - 1);
-            } else {
+            }
+            else {
                 userNote[selectedNote].noteBody = noteBody;
                 userNote[selectedNote].noteTitle = noteTitle;
                 userNote[selectedNote].notePreview = notePreview;
             }
+            iziToast.success({
+                title: 'WEEEE!',
+                message: 'Your note has been saved!',
+            });
         }
     });
 }
@@ -598,7 +603,7 @@ function displayNoteContent(noteID) {
     console.log(selectedNote);
     $('.noteInputZone').val(userNote[selectedNote].noteBody);
     $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
-    $('.createdOn').children('p').html(new Date (userNote[selectedNote].createdOn).toDateString());
+    $('.createdOn').children('p').html(new Date(userNote[selectedNote].createdOn).toDateString());
 }
 
 //auto sign in if cookie's here
