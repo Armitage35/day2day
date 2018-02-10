@@ -274,7 +274,7 @@ app.post('/file', function(req, res) {
                     }
                     else {
                         console.log(result);
-                        res.send(fileUploadedToS3AdressToDisplayInD2D);
+                        res.redirect('/?task=' + appendFileToTask);
                     }
                 });
             });

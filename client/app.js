@@ -596,7 +596,6 @@ function displayNoteContent(noteID) {
     $('.createdOn').children('p').html(new Date (userNote[selectedNote].createdOn).toDateString());
 }
 
-
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
     window.location = "index.html";
