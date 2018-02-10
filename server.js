@@ -23,13 +23,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// // Using Google Closure Compiler to minigy the app.js file
-compressor.minify({
-    compressor: 'gcc',
-    input: 'client/app.js',
-    output: 'client/app-min.js',
-    callback: function(err, min) {}
-});
+// Using Google Closure Compiler to minigy the app.js file
+// compressor.minify({
+//     compressor: 'gcc',
+//     input: 'client/app.js',
+//     output: 'client/app-min.js',
+//     callback: function(err, min) {}
+// });
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -46,17 +46,6 @@ var s3 = new AWS.S3();
 
 // Send a log file to S3 when server started
 var bucketName = 'day2dayapp.net';
-var keyName = 'Server Started.txt';
-
-s3.createBucket({ Bucket: bucketName }, function() {
-    var params = { Bucket: bucketName, Key: keyName, Body: 'Server started on the ' + new Date() };
-    s3.putObject(params, function(err, data) {
-        if (err)
-            console.log(err)
-        else
-            console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-    });
-});
 
 //passort local strategy
 passport.use(new LocalStrategy(
@@ -251,44 +240,47 @@ app.put('/todos', function(req, res) {
 });
 
 app.post('/file', function(req, res) {
-    var appendFileToTask = req.body.selectedTask;
-    var amountOfComments = req.body.commentNb;
-    console.log(appendFileToTask);
-    console.log('this task has ' + amountOfComments + ' comments');
+    var appendFileToTask = req.body.selectedTask,
+        amountOfComments = req.body.commentNb,
+        fileUploadedToS3Adress;
     if (req.files) {
         console.log('A file has been recieved');
         var file = req.files.uploadFile,
             filename = '' + appendFileToTask + amountOfComments + '.jpg';
         console.log(filename);
         console.log(file);
-        
+
         let keyName = filename;
 
         s3.createBucket({ Bucket: bucketName }, function() {
-            var params = { 
-                Bucket: bucketName, 
-                Key: keyName, 
+            var params = {
+                Bucket: bucketName,
+                Key: keyName,
                 Body: file.data,
                 ACL: 'public-read'
             };
+
             s3.putObject(params, function(err, data) {
                 if (err)
                     console.log(err);
                 else
-                    console.log('Successfully uploaded data to https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName);
-                    res.json('https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName);
+                    fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName;
+                console.log(fileUploadedToS3Adress);
+                userTasks.update({ _id: appendFileToTask }, {
+                    $push: { comment: fileUploadedToS3Adress },
+                    $inc: { commentNb: 1 }
+                }, function(err, result) {
+                    if (err !== null) {
+                        console.log(err);
+                        res.send('ERROR');
+                    }
+                    else {
+                        console.log(result);
+                    }
+                });
+                res.json(fileUploadedToS3Adress);
             });
         });
-        
-        // file.mv("upload/" + filename, function(err) {
-        //     if (err) {
-        //         console.log(err);
-        //         res.send("error occured");
-        //     }
-        //     else {
-        //         res.json("https://s3.ca-central-1.amazonaws.com/"+ filename);
-        //     }
-        // });
     }
 });
 
@@ -326,21 +318,18 @@ app.put('/notes', function(req, res) {
                 res.send('ERROR');
             }
             res.json(result);
-            console.log(result);
-            console.log('saved a NEW task');
         });
     }
     else {
-        console.log('this is not a new note: ' + req.body.noteMongoID);
-        userNotes.update({ _id: req.body.noteMongoID }, {$set: {noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn}}, function(err, result) {
+        userNotes.update({ _id: req.body.noteMongoID }, { $set: { noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn } }, function(err, result) {
             if (err !== null) {
                 console.log(err);
                 res.send('ERROR');
-            } else {
+            }
+            else {
                 res.json(result);
                 console.log(result);
             }
         });
-        
     }
 });
