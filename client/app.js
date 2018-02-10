@@ -45,7 +45,6 @@ var main = function() {
     });
 
     //display text input on task details
-<<<<<<< HEAD
     $("#textComment").on("click", function(event) {
         handleCommentType("text");
     });
@@ -53,21 +52,6 @@ var main = function() {
     //display giphy input on task details
     $("#giphyComment").on("click", function(event) {
         handleCommentType("gif");
-=======
-    $("#textComment").on("click", function() {
-        $("#message-text,#addComment").show();
-        $("#message-giphy, #testGif, #addGif").hide();
-        $(this).children().addClass("active");
-        $("#giphyComment").children().removeClass("active");
-    });
-
-    //display giphy input on task details
-    $("#giphyComment").on("click", function() {
-        $("#message-text,#addComment").hide();
-        $("#message-giphy, #testGif").show();
-        $(this).children().addClass("active");
-        $("#textComment").children().removeClass("active");
->>>>>>> master
     });
 
     //display text input on task details
