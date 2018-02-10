@@ -67,7 +67,7 @@ var main = function() {
             newComment = newComment.commentContent.replace(/\n\r?/g, '<br />'); //handling spaces
             addComment(newComment);
             displayTask();
-            displayComments();
+            displayComments(selectedTask);
         }
     });
 
@@ -466,7 +466,8 @@ function addComment(newComment) {
         }
     });
     displayComments();
-    $("#main, #newCommentModal").toggle();
+    $('#newCommentModal').show();
+    $('#main').hide();
 }
 
 

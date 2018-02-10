@@ -240,22 +240,19 @@ app.put('/todos', function(req, res) {
 });
 
 app.post('/file', function(req, res) {
-    var appendFileToTask = req.body.selectedTask,
+    let appendFileToTask = req.body.selectedTask,
         amountOfComments = req.body.commentNb,
         fileUploadedToS3Adress;
     if (req.files) {
-        console.log('A file has been recieved');
         var file = req.files.uploadFile,
-            filename = '' + appendFileToTask + amountOfComments + '.jpg';
+            filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique
         console.log(filename);
         console.log(file);
-
-        let keyName = filename;
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
                 Bucket: bucketName,
-                Key: keyName,
+                Key: filename,
                 Body: file.data,
                 ACL: 'public-read'
             };
@@ -264,10 +261,11 @@ app.post('/file', function(req, res) {
                 if (err)
                     console.log(err);
                 else
-                    fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName;
+                    fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + filename;
                 console.log(fileUploadedToS3Adress);
+                let fileUploadedToS3AdressToDisplayInD2D = '<img src="' + fileUploadedToS3Adress + '" />';
                 userTasks.update({ _id: appendFileToTask }, {
-                    $push: { comment: fileUploadedToS3Adress },
+                    $push: { comment: fileUploadedToS3AdressToDisplayInD2D },
                     $inc: { commentNb: 1 }
                 }, function(err, result) {
                     if (err !== null) {
@@ -276,9 +274,9 @@ app.post('/file', function(req, res) {
                     }
                     else {
                         console.log(result);
+                        res.send(fileUploadedToS3AdressToDisplayInD2D);
                     }
                 });
-                res.json(fileUploadedToS3Adress);
             });
         });
     }
