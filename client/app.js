@@ -536,6 +536,7 @@ function handleCommentType(commentType) {
     else if (commentType === "picture") {
         $("#message-file, #addFile").show();
         $("#selectedTask").hide().val(userTask[selectedTask]._id);
+        $("#commentNb").hide().val(userTask[selectedTask].commentNb);
     }
     $(this).children().addClass("active");
 }

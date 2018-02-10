@@ -252,11 +252,13 @@ app.put('/todos', function(req, res) {
 
 app.post('/file', function(req, res) {
     var appendFileToTask = req.body.selectedTask;
+    var amountOfComments = req.body.commentNb;
     console.log(appendFileToTask);
+    console.log('this task has ' + amountOfComments + ' comments');
     if (req.files) {
         console.log('A file has been recieved');
         var file = req.files.uploadFile,
-            filename = req.files.uploadFile.name;
+            filename = '' + appendFileToTask + amountOfComments + '.jpg';
         console.log(filename);
         console.log(file);
         
@@ -267,27 +269,28 @@ app.post('/file', function(req, res) {
                 Bucket: bucketName, 
                 Key: keyName, 
                 Body: file.data,
+                ACL: 'public-read'
             };
             s3.putObject(params, function(err, data) {
                 if (err)
                     console.log(err);
                 else
-                    console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-                    console.log(data);
+                    console.log('Successfully uploaded data to https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName);
+                    res.json('https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + keyName);
             });
         });
         
-        file.mv("upload/" + filename, function(err) {
-            if (err) {
-                console.log(err);
-                res.send("error occured");
-            }
-            else {
-                res.json("https://s3.ca-central-1.amazonaws.com/"+ filename);
-            }
-        });
+        // file.mv("upload/" + filename, function(err) {
+        //     if (err) {
+        //         console.log(err);
+        //         res.send("error occured");
+        //     }
+        //     else {
+        //         res.json("https://s3.ca-central-1.amazonaws.com/"+ filename);
+        //     }
+        // });
     }
-})
+});
 
 //notes handling
 app.get('/notes', function(req, res) {
