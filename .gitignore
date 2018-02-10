@@ -13,4 +13,3 @@ keys/
 mongod
 upload/
 awsCredentials.json
-client/bower_components
