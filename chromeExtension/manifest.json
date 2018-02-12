@@ -1,13 +1,15 @@
 {
     "name": "Day2Day",
     "description": "Day2Day replaces the new tab page with a productive and beautiful dashboard to help you get the most out of your day",
-    "version": "1.0",
+    "version": "0.0.0.1",
     "permissions": ["management"],
     "manifest_version": 2,
     "chrome_url_overrides": {
         "newtab": "newtab.html"
-    },
-    "icons": {
-  "48": "armitageLogoBlue.png"
-}
+    }
+    "icons": [{
+        "src": "armitageLogoBlue.png",
+        "sizes": "48x48",
+        "type": "image/png"
+    }]
 }

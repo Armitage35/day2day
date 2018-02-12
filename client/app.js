@@ -79,9 +79,7 @@ var main = function() {
 
     // closing the note modal
     $("#closeNoteModal").on('click', function() {
-        $("#newNoteModal, #main").toggle();
-        $('.noteInputZone, .noteTitleInput').val('');
-        displayNoteList();
+        closeNoteModal();
     });
 
     //trigger task adding on button click
@@ -176,11 +174,21 @@ var main = function() {
 
     $('#newNoteButton').on('click', function() {
         displayNoteContent(-1);
-        $('.noteInputZone  .noteTitleInput').val('');
+        $('.noteInputZone .noteTitleInput').val('');
+    });
+    
+    $('#archiveNote').on('click', function() {
+        archiveNote(selectedNote);
     });
 };
 
 $(document).ready(main);
+
+function closeNoteModal() {
+    $("#newNoteModal, #main").toggle();
+    $('.noteInputZone, .noteTitleInput').val('');
+    displayNoteList();
+}
 
 function handleTool(selectedTool) {
     $(".accessTools").children().children().children().removeClass('active');
@@ -551,7 +559,9 @@ handleWeather();
 displayTask();
 displayNoteList();
 
-function saveNote(selectedNote) {
+function saveNote(selectedNote, status) {
+
+    console.log('note status: ' + status);
 
     let noteBody = $(".noteInputZone").val(),
         noteTitle = $(".noteTitleInput").val(),
@@ -560,7 +570,14 @@ function saveNote(selectedNote) {
         noteID = selectedNote,
         noteMongoID = 0;
 
-    if (selectedNote != -1) {
+    if (status === 'archived') {
+        console.log('this note is ' + status);
+    } else {
+        status = 'unarchived';
+    }
+    
+    // check that note has an ID and is not new
+    if (selectedNote != -1) { 
         noteMongoID = userNote[selectedNote]._id;
         console.log('note mongoID: ' + noteMongoID);
     }
@@ -568,10 +585,9 @@ function saveNote(selectedNote) {
     $.ajax({
         url: 'notes',
         type: 'PUT',
-        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID },
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID, noteArchived: status },
         success: function(data) {
             console.log(data);
-            console.log('you are editing note number ' + selectedNote);
             if (selectedNote === -1) {
                 userNote.push(data);
                 displayNoteContent(userNote.length - 1);
@@ -584,9 +600,17 @@ function saveNote(selectedNote) {
             iziToast.success({
                 title: 'WEEEE!',
                 message: 'Your note has been saved!',
+                timeout: 1500
             });
         }
     });
+}
+
+function archiveNote (selectedNote){
+    let status = 'archived';
+    console.log('selected Note: ' + selectedNote);
+    saveNote(selectedNote, status);
+    closeNoteModal();
 }
 
 function displayNoteList() {
