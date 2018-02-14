@@ -616,6 +616,11 @@ function archiveNote(selectedNote) {
     console.log(userNote);
     closeNoteModal();
     displayNoteList();
+    iziToast.success({
+        title: 'Archived!',
+        message: 'Your note has archived!',
+        timeout: 1500
+    });
 }
 
 function displayNoteList() {

@@ -6,11 +6,11 @@
   "dependencies": {
     "aws-sdk": "^2.188.0",
     "bcrypt": "^1.0.3",
-    "compressor": "^3.10.10",
     "express": "^3.21.2",
     "express-fileupload": "^0.4.0",
     "express-validator": "^4.3.0",
     "gravatar": "^1.6.0",
+    "mailgun-js": "^0.15.0",
     "mongoose": "^4.13.9",
     "node-minify": "^2.4.1",
     "node-uuid": "^1.4.8",

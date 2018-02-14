@@ -13,8 +13,28 @@ var express = require('express'),
     compressor = require('node-minify'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
-    uuid = require('node-uuid'),
+    // uuid = require('node-uuid'),
+    mailgun = require('mailgun-js'),
     app = express();
+
+
+
+var DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org';
+var mailGunApi_key = 'key-db40263674b435d706e818462b9d8e12';
+var mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN });
+
+
+//testing mailgun upon server start
+let data = {
+    from: 'Excited User <me@samples.mailgun.org>',
+    to: 'adrien.dubois35@gmail.com, YOU@YOUR_DOMAIN_NAME',
+    subject: 'Hello',
+    text: 'Testing some Mailgun awesomness!'
+};
+
+mailgun.messages().send(data, function(error, body) {
+    console.log(body);
+});
 
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
@@ -23,7 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// Using Google Closure Compiler to minigy the app.js file
+// Using Google Closure Compiler to minify the app.js file
 compressor.minify({
     compressor: 'gcc',
     input: 'client/app.js',
