@@ -176,7 +176,7 @@ var main = function() {
         displayNoteContent(-1);
         $('.noteInputZone .noteTitleInput').val('');
     });
-    
+
     $('#archiveNote').on('click', function() {
         archiveNote(selectedNote);
     });
@@ -559,9 +559,9 @@ handleWeather();
 displayTask();
 displayNoteList();
 
-function saveNote(selectedNote, status) {
+function saveNote(selectedNote, noteArchived) {
 
-    console.log('note status: ' + status);
+    console.log('note noteArchived: ' + noteArchived);
 
     let noteBody = $(".noteInputZone").val(),
         noteTitle = $(".noteTitleInput").val(),
@@ -570,14 +570,16 @@ function saveNote(selectedNote, status) {
         noteID = selectedNote,
         noteMongoID = 0;
 
-    if (status === 'archived') {
-        console.log('this note is ' + status);
-    } else {
-        status = 'unarchived';
+    if (noteArchived === true) {
+        console.log('this note is archived: ' + noteArchived);
     }
-    
+    else {
+        noteArchived = false;
+        console.log('this note is archived: ' + noteArchived);
+    }
+
     // check that note has an ID and is not new
-    if (selectedNote != -1) { 
+    if (selectedNote != -1) {
         noteMongoID = userNote[selectedNote]._id;
         console.log('note mongoID: ' + noteMongoID);
     }
@@ -585,7 +587,7 @@ function saveNote(selectedNote, status) {
     $.ajax({
         url: 'notes',
         type: 'PUT',
-        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID, noteArchived: status },
+        data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID, noteArchived: noteArchived },
         success: function(data) {
             console.log(data);
             if (selectedNote === -1) {
@@ -606,17 +608,22 @@ function saveNote(selectedNote, status) {
     });
 }
 
-function archiveNote (selectedNote){
-    let status = 'archived';
+function archiveNote(selectedNote) {
+    let noteArchived = true;
     console.log('selected Note: ' + selectedNote);
-    saveNote(selectedNote, status);
+    saveNote(selectedNote, noteArchived);
+    userNote[selectedNote].archiveNote = true;
+    console.log(userNote);
     closeNoteModal();
+    displayNoteList();
 }
 
 function displayNoteList() {
     $('.notesList').empty();
     for (var i = 0; i <= userNote.length; i++) {
-        $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="javascript:void(0);" onclick="displayNoteContent(this.id);" id="' + i + '" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
+        if (userNote[i].archiveNote != true) {
+            $('.notesList').append('<h6>' + userNote[i].noteTitle + '</h6><a href="javascript:void(0);" onclick="displayNoteContent(this.id);" id="' + i + '" class="notePreview">' + userNote[i].notePreview + '</a><hr />');
+        }
     }
 }
 

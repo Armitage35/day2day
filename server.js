@@ -249,7 +249,7 @@ app.post('/file', function(req, res) {
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique
         console.log(filename);
         console.log(file);
-        
+
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -288,7 +288,7 @@ app.post('/file', function(req, res) {
 app.get('/notes', function(req, res) {
     let userID = req.query.userID;
 
-    userNotes.find({ userid: userID }).exec(function(err, userNotes) {
+    userNotes.find({ userid: userID, archived: null }).exec(function(err, userNotes) {
         if (err) {
             console.log("an error has occured");
         }
@@ -300,15 +300,14 @@ app.get('/notes', function(req, res) {
 });
 
 app.put('/notes', function(req, res) {
-    console.log(req.body);
     var newNote = new userNotes({
-        "archived": false,
-        "noteBody": req.body.noteBody,
-        "notePreview": req.body.notePreview,
-        "noteTitle": req.body.noteTitle,
-        "createdOn": req.body.noteCreatedOn,
-        "editedOn": req.body.noteLastEditedOn,
-        "userid": req.body.userid,
+        'archived': req.body.noteStatus,
+        'noteBody': req.body.noteBody,
+        'notePreview': req.body.notePreview,
+        'noteTitle': req.body.noteTitle,
+        'createdOn': req.body.noteCreatedOn,
+        'editedOn': req.body.noteLastEditedOn,
+        'userid': req.body.userid,
     });
 
     if (req.body.noteMongoID == 0) {
@@ -321,7 +320,7 @@ app.put('/notes', function(req, res) {
         });
     }
     else {
-        userNotes.update({ _id: req.body.noteMongoID }, { $set: { noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn } }, function(err, result) {
+        userNotes.update({ _id: req.body.noteMongoID }, { $set: { noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn, archived: newNote.archived } }, function(err, result) {
             if (err !== null) {
                 console.log(err);
                 res.send('ERROR');
