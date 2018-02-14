@@ -15,22 +15,18 @@ var express = require('express'),
     AWS = require('aws-sdk'),
     // uuid = require('node-uuid'),
     mailgun = require('mailgun-js'),
+    welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
+    DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org',
+    mailGunApi_key = 'key-db40263674b435d706e818462b9d8e12',
+    mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     app = express();
-
-
-
-var DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org';
-var mailGunApi_key = 'key-db40263674b435d706e818462b9d8e12';
-var mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN });
-
 
 //testing mailgun upon server start
 let data = {
-    from: 'Excited User <me@samples.mailgun.org>',
+    from: 'Day2Day <mail@day2dayapp.net>',
     to: 'adrien.dubois35@gmail.com, YOU@YOUR_DOMAIN_NAME',
-    subject: 'Hello',
-    text: 'Testing some Mailgun awesomness!',
-    html: '<html><div style="font-weight:bold">HTML version of the body</div></html>',
+    subject: 'Welcome to Day2Day',
+    html: welcomeEmail,
 };
 
 mailgun.messages().send(data, function(error, body) {
