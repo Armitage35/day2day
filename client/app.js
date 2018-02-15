@@ -602,7 +602,7 @@ function saveNote(selectedNote, noteArchived) {
             iziToast.success({
                 title: 'WEEEE!',
                 message: 'Your note has been saved!',
-                timeout: 1500
+                timeout: 1000
             });
         }
     });
@@ -610,7 +610,6 @@ function saveNote(selectedNote, noteArchived) {
 
 function archiveNote(selectedNote) {
     let noteArchived = true;
-    console.log('selected Note: ' + selectedNote);
     saveNote(selectedNote, noteArchived);
     userNote[selectedNote].archiveNote = true;
     console.log(userNote);
@@ -618,8 +617,8 @@ function archiveNote(selectedNote) {
     displayNoteList();
     iziToast.success({
         title: 'Archived!',
-        message: 'Your note has archived!',
-        timeout: 1500
+        message: 'Your note has been archived!',
+        timeout: 1000
     });
 }
 

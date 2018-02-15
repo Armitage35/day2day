@@ -21,18 +21,6 @@ var express = require('express'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     app = express();
 
-//testing mailgun upon server start
-let data = {
-    from: 'Day2Day <mail@day2dayapp.net>',
-    to: 'adrien.dubois35@gmail.com, YOU@YOUR_DOMAIN_NAME',
-    subject: 'Welcome to Day2Day',
-    html: welcomeEmail,
-};
-
-mailgun.messages().send(data, function(error, body) {
-    console.log(body);
-});
-
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
 app.use(express.session({ secret: 'oiuerrweioiurew', /*resave: false, */ saveUninitialize: false }));
@@ -165,6 +153,19 @@ app.post('/user', function(req, res) {
                 else {
                     console.log(result);
                     res.send(result);
+
+                    //send a nice email to our new user
+                    welcomeEmail = welcomeEmail.split('{{}}');
+                    let data = {
+                        from: 'Day2Day <mail@day2dayapp.net>',
+                        to: newUser.email,
+                        subject: 'Welcome to Day2Day',
+                        html: welcomeEmail[0] + newUser.username + welcomeEmail[1],
+                    };
+
+                    mailgun.messages().send(data, function(error, body) {
+                        console.log(body);
+                    });
                 }
             });
         }
