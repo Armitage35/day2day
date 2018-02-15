@@ -17,7 +17,7 @@ var express = require('express'),
     mailgun = require('mailgun-js'),
     welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
     DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org',
-    mailGunApi_key = 'key-db40263674b435d706e818462b9d8e12',
+    mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     app = express();
 
