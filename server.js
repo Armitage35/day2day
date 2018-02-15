@@ -14,7 +14,7 @@ var express = require('express'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
     // uuid = require('node-uuid'),
-    mailgun = require('mailgun-js'),
+    // mailgun = require('mailgun-js'),
     welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
     DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org',
     mailGunApi_key = require('./keys/mailgunCred.js'),
@@ -44,7 +44,7 @@ http.createServer(app).listen(port);
 console.log("app working on port " + port);
 
 //loading AWS config
-AWS.config.loadFromPath('./awsCredentials.json');
+AWS.config.loadFromPath('./keys/awsCredentials.json');
 
 // Create an S3 client
 var s3 = new AWS.S3();
@@ -306,7 +306,7 @@ app.post('/file', function(req, res) {
 app.get('/notes', function(req, res) {
     let userID = req.query.userID;
 
-    userNotes.find({ userid: userID, archived: null }).exec(function(err, userNotes) {
+    userNotes.find({ userid: userID, archived: false }).exec(function(err, userNotes) {
         if (err) {
             console.log("an error has occured");
         }
@@ -319,7 +319,7 @@ app.get('/notes', function(req, res) {
 
 app.put('/notes', function(req, res) {
     var newNote = new userNotes({
-        'archived': req.body.noteStatus,
+        'archived': req.body.noteArchived,
         'noteBody': req.body.noteBody,
         'notePreview': req.body.notePreview,
         'noteTitle': req.body.noteTitle,
@@ -327,6 +327,12 @@ app.put('/notes', function(req, res) {
         'editedOn': req.body.noteLastEditedOn,
         'userid': req.body.userid,
     });
+    
+    console.log(newNote.noteArchived);
+    
+    if (newNote.archived === 'true'){
+        console.log('say goodbye to this note');
+    }
 
     if (req.body.noteMongoID == 0) {
         newNote.save(function(err, result) {

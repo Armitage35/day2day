@@ -97,7 +97,7 @@ var main = function() {
     //date input show / hide
     $("#calendarButton").on("click", function() {
         $(".datePicker").toggle();
-        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate());
+        $("#dueDate").val(new Date().getFullYear() + "-" + new Date().getDate() + 1 + "-" + new Date().getMonth());
     });
 
     //show & hide add task modal
@@ -450,7 +450,7 @@ function addTask() {
             console.log(userTask);
             iziToast.success({
                 title: 'Fantastic',
-                message: 'Your task has been added',
+                message: 'Your task has been saved',
                 position: 'topRight',
             });
         });
