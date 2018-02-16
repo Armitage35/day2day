@@ -16,6 +16,7 @@ var express = require('express'),
     // uuid = require('node-uuid'),
     // mailgun = require('mailgun-js'),
     welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
+    resetEmail = require('./emailTemplates/passwordResetEmail.js'),
     DOMAIN = 'sandbox32aeb8f19ffd4fa988f23fc21f6d0ddd.mailgun.org',
     mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
@@ -379,12 +380,16 @@ app.post('/forget', function(req, res) {
                 res.send('No user match this email');
             }
             else {
-                let userToUpdate = user._id;
-                console.log(userToUpdate);
-                User.update({ _id: userToUpdate }, {
+                let userToUpdateID = user._id,
+                    userToUpdateEmail = user.email,
+                    userToUpdateresetPasswordExpires = Date.now() + 3600000,
+                    userToUpdateresetPasswordToken = Math.floor(Math.random() * 1000000000),
+                    emailLink = 'day2dayapp.net/reset?token=' + userToUpdateresetPasswordToken + '&userID=' + userToUpdateID;
+                console.log(userToUpdateID);
+                User.update({ _id: userToUpdateID }, {
                     $set: {
-                        resetPasswordExpires: Date.now() + 3600000,
-                        resetPasswordToken: Math.floor(Math.random() * 1000000000)
+                        resetPasswordExpires:userToUpdateresetPasswordExpires,
+                        resetPasswordToken: userToUpdateresetPasswordToken
                     }
                 }, function(err, result) {
                     if (err !== null) {
@@ -394,6 +399,19 @@ app.post('/forget', function(req, res) {
                     else {
                         res.json('succes');
                         console.log(result);
+
+                        //send the email to the user who lost his password
+                        resetEmail = resetEmail.split('{{}}');
+                        let data = {
+                            from: 'Day2Day <mail@day2dayapp.net>',
+                            to: userToUpdateEmail,
+                            subject: 'Reset your password',
+                            html: resetEmail[0] + emailLink + resetEmail[1],
+                        };
+
+                        mailgun.messages().send(data, function(error, body) {
+                            console.log(body);
+                        });
                     }
                 });
             }
