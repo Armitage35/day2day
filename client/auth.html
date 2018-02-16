@@ -1,24 +1,23 @@
 <!doctype html>
 <html>
+
 <head>
     <title>Auth | Day2Day</title>
     <meta charset="utf-8">
     <link rel="icon" href="favicon.ico">
     <!--Bootstrap CSS lib-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <!--JQuery lib-->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!--Bootstrap JS lib-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!--Font-->
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://use.fontawesome.com/d931389769.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.min.js"></script>
     <!--Cookie lib-->
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="bower_components/js-cookie/src/js.cookie.js"></script>
     <link href="style.css" type="text/css" rel="stylesheet">
-    <!--<link href="authStyle.css" type="text/css" rel="stylesheet">-->
     <link href="bttn.css" type="text/css" rel="stylesheet">
     <link rel="manifest" href="/manifest.json">
     <script type="text/javascript" src="auth.js"></script>
@@ -36,13 +35,13 @@
                 <h2 class="heading--secondary">Your new home page</h2>
             </div>
             <div class="thumbnail__links">
-                <ul class="list-inline m-b-0 text-center">
+                <ul class="list-inline m-b-0 text-center networks">
                     <li>
                         <a href="https://www.linkedin.com/in/adrien-dubois-ahlqvist-4179b33b/" target="_blank">
-                            <fa class="fa fa-linkedin"></fa>
+                            <i class="fab fa-linkedin"></i>
                         </a>
                     </li>
-                    <li><a href="https://github.com/Armitage35" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://github.com/Armitage35" target="_blank"><i class="fab fa-github"></i></a></li>
                 </ul>
             </div>
             <div class="signup__overlay"></div>
@@ -88,10 +87,16 @@
                     <input class="form-control" type="password" name="password" id="passwordLogIn" placeholder="********" required />
                 </div>
                 <div class="m-t-lg">
-                    <ul class="list-inline">
+                    <ul class="list-inline signInActionZone">
                         <li>
                             <input class="bttn-unite bttn-sm bttn-primary" type="button" id="login" value="Log in" />
                         </li>
+                        <li>or</li>
+                        <li>
+                            <input class="bttn-unite bttn-sm bttn-primary" type="button" id="forgotPassword" value="Reset your password" />
+                        </li>
+                    </ul>
+                    <ul class="list-inline">
                         <li id="signin">
                             <a class="signup__link" href="#">I don't have an accout</a>
                         </li>
