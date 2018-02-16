@@ -90,13 +90,44 @@ var main = function() {
     });
 
     $('#sendResetEmail').on('click', function() {
-        resetPassword();
+        resetPasswordRequest();
     });
+
+    $('#updatePassword').on('click', function() {
+        let newPassword = $('#password').val();
+        resetPassword(newPassword)
+    })
+
 };
 
 $(document).ready(main);
 
-function resetPassword() {
+function resetPassword(newPassword) {
+    if (newPassword != $('#passwordRepeat').val()) {
+        iziToast.error({
+            title: 'Password do not match!',
+            message: 'Please try again',
+        });
+    }
+    else if (newPassword === '') {
+        iziToast.error({
+            title: 'You need to choose a password!'
+        });
+    }
+    else if (newPassword.length < 5) {
+        iziToast.warning({
+            message: 'Your password needs to be at least 5 character long',
+        });
+    } else {
+        console.log(window.location.search.split(/\?|&|=/));
+        let token = window.location.search.split('\?|&'),
+        userid;
+    }
+
+}
+
+
+function resetPasswordRequest() {
     console.log('super');
     let passwordToResetForEmail = $("#passwordToReset").val();
     $.ajax({

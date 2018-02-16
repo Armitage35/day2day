@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Auth | Day2Day</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="favicon.ico">
+    <script src="bower_components/izitoast/dist/js/iziToast.min.js"></script>
+    <link rel="stylesheet" href="bower_components/izitoast/dist/css/iziToast.min.css">
+    <!--Bootstrap CSS lib-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!--JQuery lib-->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!--Bootstrap JS lib-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!--Font-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.min.js"></script>
+    <!--Cookie lib-->
+    <script src="bower_components/js-cookie/src/js.cookie.js"></script>
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="bttn.css" type="text/css" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+    <script type="text/javascript" src="auth.js"></script>
+</head>
+
+<body>
+    <div class="signup__container">
+        <div class="container__child signup__thumbnail">
+            <div class="thumbnail__logo">
+                <h1 class="logoText">Day2Day</h1>
+            </div>
+            <div class="thumbnail__content text-center">
+                <h1 class="heading--primary">Welcome to Day2Day</h1>
+                <h2 class="heading--secondary">Your new home page</h2>
+            </div>
+            <div class="thumbnail__links">
+                <ul class="list-inline m-b-0 text-center networks">
+                    <li>
+                        <a href="https://www.linkedin.com/in/adrien-dubois-ahlqvist-4179b33b/" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </li>
+                    <li><a href="https://github.com/Armitage35" target="_blank"><i class="fab fa-github"></i></a></li>
+                </ul>
+            </div>
+            <div class="signup__overlay"></div>
+        </div>
+        <div class="container__child signup__form" id="signUp">
+            <form method="post">
+                <div class="form-group">
+                    <label for="password">Your new Password</label>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="********" required />
+                </div>
+                <div class="form-group">
+                    <label for="passwordRepeat">Repeat Password</label>
+                    <input class="form-control" type="password" name="passwordRepeat" id="passwordRepeat" placeholder="********" required />
+                </div>
+                <div class="m-t-lg">
+                    <ul class="list-inline">
+                        <li>
+                            <input class="bttn-unite bttn-sm bttn-primary" type="button" id="updatePassword" value="Update my password" />
+                        </li>
+                        <li id="signin">
+                            <a class="signin__link" href="auth.html">I want to log in instead</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
