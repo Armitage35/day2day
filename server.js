@@ -344,7 +344,15 @@ app.put('/notes', function(req, res) {
         });
     }
     else {
-        userNotes.update({ _id: req.body.noteMongoID }, { $set: { noteBody: newNote.noteBody, notePreview: newNote.notePreview, noteTitle: newNote.noteTitle, lastEditedOn: newNote.editedOn, archived: newNote.archived } }, function(err, result) {
+        userNotes.update({ _id: req.body.noteMongoID }, {
+            $set: {
+                noteBody: newNote.noteBody,
+                notePreview: newNote.notePreview,
+                noteTitle: newNote.noteTitle,
+                lastEditedOn: newNote.editedOn,
+                archived: newNote.archived
+            }
+        }, function(err, result) {
             if (err !== null) {
                 console.log(err);
                 res.send('ERROR');
@@ -373,13 +381,18 @@ app.post('/forget', function(req, res) {
             else {
                 let userToUpdate = user._id;
                 console.log(userToUpdate);
-                User.update({ _id: userToUpdate }, { $set: { resetPasswordExpires: Date.now() + 3600000, resetPasswordToken: Math.floor(Math.random() * 1000000000) } }, function(err, result) {
+                User.update({ _id: userToUpdate }, {
+                    $set: {
+                        resetPasswordExpires: Date.now() + 3600000,
+                        resetPasswordToken: Math.floor(Math.random() * 1000000000)
+                    }
+                }, function(err, result) {
                     if (err !== null) {
                         console.log(err);
                         res.send('ERROR');
                     }
                     else {
-                        res.json(result);
+                        res.json('succes');
                         console.log(result);
                     }
                 });
