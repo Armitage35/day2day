@@ -28,13 +28,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// Using Google Closure Compiler to minify the app.js file
-compressor.minify({
-    compressor: 'gcc',
-    input: 'client/app.js',
-    output: 'client/app-min.js',
-    callback: function(err, min) {}
-});
+// // Using Google Closure Compiler to minify the app.js file
+// compressor.minify({
+//     compressor: 'gcc',
+//     input: 'client/app.js',
+//     output: 'client/app-min.js',
+//     callback: function(err, min) {}
+// });
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -327,10 +327,10 @@ app.put('/notes', function(req, res) {
         'editedOn': req.body.noteLastEditedOn,
         'userid': req.body.userid,
     });
-    
+
     console.log(newNote.noteArchived);
-    
-    if (newNote.archived === 'true'){
+
+    if (newNote.archived === 'true') {
         console.log('say goodbye to this note');
     }
 
@@ -354,5 +354,37 @@ app.put('/notes', function(req, res) {
                 console.log(result);
             }
         });
+    }
+});
+
+app.post('/forget', function(req, res) {
+    console.log(req.body);
+    let emailToResetPasswordFor = req.body.passwordToResetForEmail;
+    if (validator.isEmail(emailToResetPasswordFor) === false) {
+        res.send('not an email');
+    }
+    else {
+        console.log('this is an email');
+        User.findOne({ email: emailToResetPasswordFor }, function(err, user) {
+            if (err) { return (err); }
+            if (!user) {
+                res.send('No user match this email');
+            }
+            else {
+                let userToUpdate = user._id;
+                console.log(userToUpdate);
+                User.update({ _id: userToUpdate }, { $set: { resetPasswordExpires: Date.now() + 3600000, resetPasswordToken: Math.floor(Math.random() * 1000000000) } }, function(err, result) {
+                    if (err !== null) {
+                        console.log(err);
+                        res.send('ERROR');
+                    }
+                    else {
+                        res.json(result);
+                        console.log(result);
+                    }
+                });
+            }
+        });
+        // res.send(emailToResetPasswordFor);
     }
 });

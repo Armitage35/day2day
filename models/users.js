@@ -9,9 +9,11 @@ var UserSchema = mongoose.Schema({
     username: String,
     city: String,
     avatar: String,
-    tempID: Number
+    tempID: Number,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 var User = mongoose.model("User", UserSchema);
 
-module.exports =  mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
