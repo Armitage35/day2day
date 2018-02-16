@@ -6,11 +6,6 @@ var main = function() {
     var userID,
         avatar;
 
-    //auto sign in if cookie's here
-    if (Cookies.get('userid') !== undefined && window.location.pathname === "/auth.html") {
-        window.location = "index.html";
-    }
-
     //posting auth info from auth.html
     $("#createAccount").on("click", function() {
         $.ajax({
@@ -50,20 +45,27 @@ var main = function() {
                 if (data.includes('E4') === true) {
                     console.log('email taken');
                     $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Email alerady used</div>');
-                } else {
+                }
+                else {
                     window.location = "/index.html";
                 }
             }
         });
     });
 
-    //togelling between sign in and sign up
-    $(".signin__link, .signup__link").on('click', function() {
-        $("#signUp").toggle();
-        $("#signIn").toggle();
+    $('.signin__link').on('click', function() {
+        handleShow('signIn')
     });
 
-    //request to login
+    $(".signup__link").on('click', function() {
+        handleShow('signUp')
+    });
+
+    $('#forgotPassword').on('click', function() {
+        handleShow('forgotPassword');
+    });
+
+    // request to login
     $("#login").on("click", function() {
         $.ajax({
             url: "/login",
@@ -85,6 +87,47 @@ var main = function() {
             }
         });
     });
+
+    $('#sendResetEmail').on('click', function() {
+        resetPassword();
+    });
 };
 
 $(document).ready(main);
+
+function resetPassword() {
+    console.log('super');
+    let passwordToResetForEmail = $("#passwordToReset").val();
+    $.ajax({
+        url: "/forget",
+        type: 'POST',
+        data: {
+            passwordToResetForEmail
+        },
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}
+
+//auto sign in if cookie's here
+if (Cookies.get('userid') !== undefined && window.location.pathname === "/auth.html") {
+    window.location = "index.html";
+}
+
+// handling what to display
+function handleShow(section) {
+    console.log(section);
+    if (section === 'forgotPassword') {
+        $('#signUp, #signIn').hide();
+        $('#resetPassword').show();
+    }
+    else if (section === 'signUp') {
+        $('#resetPassword, #signIn').hide();
+        $('#signUp').show();
+    }
+    else if (section === 'signIn') {
+        $('#resetPassword, #signUp').hide();
+        $('#signIn').show();
+    }
+}

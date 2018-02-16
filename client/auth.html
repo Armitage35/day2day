@@ -91,16 +91,26 @@
                         <li>
                             <input class="bttn-unite bttn-sm bttn-primary" type="button" id="login" value="Log in" />
                         </li>
-                        <li>or</li>
+                    </ul>
+                    <button class="bttn-minimal bttn-sm bttn-primary" id="forgotPassword">I forgot my password</button>
+                    <a class="signup__link" href="#" id="signin">I don't have an accout</a>
+                </div>
+            </form>
+        </div>
+        <div class="container__child signup__form" id="resetPassword">
+            <form method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="text" name="email" id="passwordToReset" placeholder="bbaggins@shire.com" required />
+                </div>
+                <div class="m-t-lg">
+                    <ul class="list-inline signInActionZone">
                         <li>
-                            <input class="bttn-unite bttn-sm bttn-primary" type="button" id="forgotPassword" value="Reset your password" />
+                            <input class="bttn-unite bttn-sm bttn-primary" type="button" id="sendResetEmail" value="Reset my password" />
                         </li>
                     </ul>
-                    <ul class="list-inline">
-                        <li id="signin">
-                            <a class="signup__link" href="#">I don't have an accout</a>
-                        </li>
-                    </ul>
+                    <a class="signup__link" href="#" id="signup">I don't have an accout</a>
+                    <a class="signup__link" href="#" id="signin">I suddently remember my password</a>
                 </div>
             </form>
         </div>
