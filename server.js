@@ -14,6 +14,7 @@ var express = require('express'),
     AWS = require('aws-sdk'),
     welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
     resetEmail = require('./emailTemplates/passwordResetEmail.js'),
+    resetEmailSuccess = require('./emailTemplates/passwordResetSuccess.js'),
     DOMAIN = 'mail.day2dayapp.net',
     mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
@@ -435,9 +436,8 @@ app.put('/resetpassword', function(req, res) {
                 console.log('wrong token');
                 res.send('wrong token');
             }
-
             // checking if the token is overdue
-            if (new Date(user.resetPasswordExpires).getTime() < Date.now()) {
+            else if (new Date(user.resetPasswordExpires).getTime() < Date.now()) {
                 res.send('token overdue');
             }
             else {
@@ -451,6 +451,16 @@ app.put('/resetpassword', function(req, res) {
                     }
                     else {
                         res.json('password updated');
+                        //send the email to the user who lost his password
+                        let data = {
+                            from: 'Day2Day <mail@day2dayapp.net>',
+                            to: user.email,
+                            subject: 'Your email has been updated',
+                            html: resetEmailSuccess,
+                        };
+                        mailgun.messages().send(data, function(error, body) {
+                            console.log(body);
+                        });
                     }
                 });
             }
