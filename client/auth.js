@@ -118,10 +118,23 @@ function resetPassword(newPassword) {
         iziToast.warning({
             message: 'Your password needs to be at least 5 character long',
         });
-    } else {
-        console.log(window.location.search.split(/\?|&|=/));
-        let token = window.location.search.split('\?|&'),
-        userid;
+    }
+    else {
+        let resetPwdToken = window.location.search.split(/\?|&|=/)[2],
+            userid = window.location.search.split(/\?|&|=/)[4];
+        $.ajax({
+            url: "/resetpassword",
+            type: 'PUT',
+            data: {
+                resetPwdToken: resetPwdToken,
+                userid: userid,
+                newPassword: newPassword
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
+
     }
 
 }

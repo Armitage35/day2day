@@ -385,7 +385,7 @@ app.post('/forget', function(req, res) {
                 console.log(userToUpdateID);
                 User.update({ _id: userToUpdateID }, {
                     $set: {
-                        resetPasswordExpires:userToUpdateresetPasswordExpires,
+                        resetPasswordExpires: userToUpdateresetPasswordExpires,
                         resetPasswordToken: userToUpdateresetPasswordToken
                     }
                 }, function(err, result) {
@@ -413,6 +413,47 @@ app.post('/forget', function(req, res) {
                 });
             }
         });
-        // res.send(emailToResetPasswordFor);
     }
+});
+
+app.put('/resetpassword', function(req, res) {
+    let userID = req.body.userid,
+        resetPwdToken = req.body.resetPwdToken,
+        newPassword = req.body.newPassword,
+        newCryptedPassword = bcrypt.hashSync(newPassword, 10);
+
+    User.findOne({ _id: userID }, function(err, user) {
+        if (err) { console.log(err); }
+        if (!user) {
+            console.log("No user match this id");
+        }
+        else {
+            console.log(user);
+
+            // cheking the token
+            if (resetPwdToken != user.resetPasswordToken) {
+                console.log('wrong token');
+                res.send('wrong token');
+            }
+
+            // checking if the token is overdue
+            if (new Date(user.resetPasswordExpires).getTime() < Date.now()) {
+                res.send('token overdue');
+            }
+            else {
+                // update the password and reset the user's allowance to update his email
+                User.update({ _id: userID }, {
+                    $set: { password: newCryptedPassword, resetPasswordExpires: 0 }
+                }, function(err) {
+                    if (err !== null) {
+                        console.log(err);
+                        res.send('ERROR');
+                    }
+                    else {
+                        res.json('password updated');
+                    }
+                });
+            }
+        }
+    });
 });
