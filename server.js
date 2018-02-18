@@ -12,12 +12,10 @@ var express = require('express'),
     compressor = require('node-minify'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
-    welcomeEmail = require('./emailTemplates/welcomeEmail.js'),
-    resetEmail = require('./emailTemplates/passwordResetEmail.js'),
-    resetEmailSuccess = require('./emailTemplates/passwordResetSuccess.js'),
     DOMAIN = 'mail.day2dayapp.net',
     mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
+    pug = require('pug'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -34,8 +32,6 @@ app.use(upload());
 //     output: 'client/app-min.js',
 //     callback: function(err, min) {}
 // });
-
-console.log(resetEmail);
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -156,12 +152,13 @@ app.post('/user', function(req, res) {
                     res.send(result);
 
                     //send a nice email to our new user
-                    welcomeEmail = welcomeEmail.split('{{}}');
                     let data = {
                         from: 'Day2Day <mail@day2dayapp.net>',
                         to: newUser.email,
                         subject: 'Welcome to Day2Day',
-                        html: welcomeEmail[0] + newUser.username + welcomeEmail[1],
+                        html: pug.renderFile('./emailTemplates/welcomeEmail.pug', {
+                                userName: newUser.username
+                            }),
                     };
 
                     mailgun.messages().send(data, function(error, body) {
@@ -401,12 +398,13 @@ app.post('/forget', function(req, res) {
                         console.log(result);
 
                         //send the email to the user who lost his password
-                        resetEmail = resetEmail({name: 'Timothy'});
                         let data = {
                             from: 'Day2Day <mail@day2dayapp.net>',
                             to: userToUpdateEmail,
                             subject: 'Reset your password',
-                            html: resetEmail,
+                            html: pug.renderFile('./emailTemplates/passwordResetEmail.pug', {
+                                url: emailLink,
+                            }),
                         };
 
                         mailgun.messages().send(data, function(error, body) {
@@ -458,7 +456,7 @@ app.put('/resetpassword', function(req, res) {
                             from: 'Day2Day <mail@day2dayapp.net>',
                             to: user.email,
                             subject: 'Your password has been updated',
-                            html: resetEmailSuccess,
+                            html: pug.renderFile('./emailTemplates/passwordResetEmailSuccess.pug'),
                         };
                         mailgun.messages().send(data, function(error, body) {
                             console.log(body);
