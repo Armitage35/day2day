@@ -27,13 +27,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// // Using Google Closure Compiler to minify the app.js file
+// Using Google Closure Compiler to minify the app.js file
 // compressor.minify({
 //     compressor: 'gcc',
 //     input: 'client/app.js',
 //     output: 'client/app-min.js',
 //     callback: function(err, min) {}
 // });
+
+console.log(resetEmail);
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -399,12 +401,12 @@ app.post('/forget', function(req, res) {
                         console.log(result);
 
                         //send the email to the user who lost his password
-                        resetEmail = resetEmail.split('{{}}');
+                        resetEmail = resetEmail({name: 'Timothy'});
                         let data = {
                             from: 'Day2Day <mail@day2dayapp.net>',
                             to: userToUpdateEmail,
                             subject: 'Reset your password',
-                            html: resetEmail[0] + emailLink + resetEmail[1],
+                            html: resetEmail,
                         };
 
                         mailgun.messages().send(data, function(error, body) {
