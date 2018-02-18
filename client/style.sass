@@ -3,6 +3,13 @@ $whiteTitles: white
 $day2dayBlue: #1d89ff
 $toolInsidePadding: 10px 15px 0px
 
+%grey-link
+  font-size: .8rem
+  font-weight: 600
+  text-decoration: underline
+  color: #999
+  display: block
+
 body
   font-family: $fontStack
   background-repeat: no-repeat
@@ -426,11 +433,7 @@ label
   border-color: #111
 
 .signin__link, .signup__link
-  font-size: .8rem
-  font-weight: 600
-  text-decoration: underline
-  color: #999
-  display: block
+  @extend %grey-link
 
 #signIn
   display: none
@@ -445,6 +448,10 @@ label
   margin-top: 10px
   display: block
   padding-left: 0px
+  @extend %grey-link
+  
+#resetToAuth
+  @extend %grey-link
 
 .sk-folding-cube
   margin: 20px auto

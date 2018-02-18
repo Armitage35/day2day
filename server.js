@@ -191,14 +191,14 @@ app.get('/user', function(req, res) {
 app.post('/todos', function(req, res) {
     console.log(req.body);
     let newTask = new userTasks({
-        "comment": req.body.userTasks.comment,
-        "commentNb": req.body.userTasks.commentNb,
-        "complete": req.body.userTasks.complete,
-        "createdOn": req.body.userTasks.createdOn,
-        "dueDate": req.body.userTasks.dueDate,
-        "id": req.body.userTasks.id,
-        "title": req.body.userTasks.title,
-        "userid": req.body.userTasks.userID
+        'comment': req.body.userTasks.comment,
+        'commentNb': req.body.userTasks.commentNb,
+        'complete': req.body.userTasks.complete,
+        'createdOn': req.body.userTasks.createdOn,
+        'dueDate': req.body.userTasks.dueDate,
+        'id': req.body.userTasks.id,
+        'title': req.body.userTasks.title,
+        'userid': req.body.userTasks.userID
     });
 
     newTask.save(function(err, result) {
@@ -280,7 +280,7 @@ app.post('/file', function(req, res) {
                 if (err)
                     console.log(err);
                 else
-                    fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + "/" + filename;
+                    fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + '/' + filename;
                 console.log(fileUploadedToS3Adress);
                 let fileUploadedToS3AdressToDisplayInD2D = '<img src="' + fileUploadedToS3Adress + '" />';
                 userTasks.update({ _id: appendFileToTask }, {
@@ -382,7 +382,7 @@ app.post('/forget', function(req, res) {
                     userToUpdateEmail = user.email,
                     userToUpdateresetPasswordExpires = Date.now() + 3600000,
                     userToUpdateresetPasswordToken = Math.floor(Math.random() * 1000000000),
-                    emailLink = 'day2dayapp.net/reset?token=' + userToUpdateresetPasswordToken + '&userID=' + userToUpdateID;
+                    emailLink = 'day2dayapp.net/reset.html?token=' + userToUpdateresetPasswordToken + '&userID=' + userToUpdateID;
                 console.log(userToUpdateID);
                 User.update({ _id: userToUpdateID }, {
                     $set: {
@@ -426,7 +426,7 @@ app.put('/resetpassword', function(req, res) {
     User.findOne({ _id: userID }, function(err, user) {
         if (err) { console.log(err); }
         if (!user) {
-            console.log("No user match this id");
+            res.send('No user match this id');
         }
         else {
             console.log(user);
@@ -455,7 +455,7 @@ app.put('/resetpassword', function(req, res) {
                         let data = {
                             from: 'Day2Day <mail@day2dayapp.net>',
                             to: user.email,
-                            subject: 'Your email has been updated',
+                            subject: 'Your password has been updated',
                             html: resetEmailSuccess,
                         };
                         mailgun.messages().send(data, function(error, body) {

@@ -20,7 +20,6 @@ var main = function() {
             },
             success: function(data) {
                 userID = data._id;
-                console.log(userID);
                 avatar = data.avatar;
                 console.log("id: " + userID + " avatar: " + avatar);
 
@@ -132,16 +131,49 @@ function resetPassword(newPassword) {
             },
             success: function(data) {
                 console.log(data);
+                if (data === 'No user match this id') {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'No user match this id',
+                    });
+                }
+                else if (data === 'wrong token') {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'This token does not belong to this user',
+                    });
+                }
+                else if (data === 'token overdue') {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'This token has expired. Please make another request to get a new password',
+                    });
+                }
+                else if (data === 'error') {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'Something went wrong... No one knows what yet...',
+                    });
+                }
+                else if (data === 'password updated') {
+                    iziToast.success({
+                        title: 'Congrats',
+                        message: 'Your password has been updated. Click here to go back to sign in',
+                        timeout: 50000,
+                        buttons: [
+                            ['<button type="button" href="http://day2dayapp.net/auth.html">Go to signin page</button>', function(instance, toast) {
+                                window.location.replace('http://day2dayapp.net/auth.html');
+                            }, true], // true to focus
+                        ],
+                    });
+                }
             }
         });
-
     }
-
 }
 
 
 function resetPasswordRequest() {
-    console.log('super');
     let passwordToResetForEmail = $("#passwordToReset").val();
     $.ajax({
         url: "/forget",
@@ -150,7 +182,6 @@ function resetPasswordRequest() {
             passwordToResetForEmail
         },
         success: function(data) {
-            console.log(data);
             if (data === 'succes') {
                 iziToast.success({
                     title: 'Found You!',
@@ -180,7 +211,6 @@ if (Cookies.get('userid') !== undefined && window.location.pathname === "/auth.h
 
 // handling what to display
 function handleShow(section) {
-    console.log(section);
     if (section === 'forgotPassword') {
         $('#signUp, #signIn').hide();
         $('#resetPassword').show();
