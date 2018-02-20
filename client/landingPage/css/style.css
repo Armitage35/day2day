@@ -5,7 +5,7 @@ body {
 }
 
 .logo {
-	max-width: 148px;
+	max-width: 38px;
 }
 
 a{
@@ -34,7 +34,7 @@ a{
 /* HELPER CLASSES */
 .section {
   padding-top: 100px;
-  padding-bottom: 100px;
+  padding-bottom: 0px;
 }
 
 .section-md {
@@ -163,7 +163,7 @@ a{
 /* Home */
 .home {
 	background-color: #f2f6fa;
-	padding-bottom: 150px;
+	padding-bottom: 0px;
 }
 
 .home-alt h1 {
@@ -241,7 +241,6 @@ a{
 /* Footer */
 .footer {
 	padding: 20px 0px;
-	border-top: 1px solid #3B3B40;
 }
 .copyright {
 	color: #a0a0a0;
