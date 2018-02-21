@@ -224,7 +224,9 @@ app.put('/todos/comment', function(req, res) {
         task.commentNb = req.body.commentNb;
         console.log(req.body.comment);
         task.save(function(err, result) {
-            if (err) return (err);
+            if (err) {
+                console.log(err);
+            }
             console.log(result);
             res.json(result);
         });
