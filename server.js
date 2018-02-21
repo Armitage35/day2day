@@ -68,6 +68,11 @@ passport.use(new LocalStrategy(
     }
 ));
 
+// sending to landing page
+app.get('/landing', function(req, res) {
+    res.redirect('https://armitage35.github.io/day2day/client/landingPage/landing.html');
+})
+
 //user login
 app.post('/login', function(req, res) {
     passport.authenticate('local', { session: true }, function(err, user, info) {
