@@ -18,7 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!--Font-->
     <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
-    <script type="text/javascript" src="app-min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
     <link href="bttn.min.css" type="text/css" rel="stylesheet">
     <link href="bttn.css" type="text/css" rel="stylesheet">
     <link href="style.css" type="text/css" rel="stylesheet">
@@ -57,23 +57,23 @@
             <div class="col-3">
                 <div class="tool">
                     <div class="taskToolView">
-                    <h3 id="selectedTaskView">Today</h3>
-                    <nav class="nav">
-                        <a class="nav-link active" href="#" id="today">Today</a>
-                        <a class="nav-link" href="#" id="upcoming">Upcoming</a>
-                        <a class="nav-link" href="#" id="backlog">Backlog</a>
-                    </nav>
-                    <ul class="taskList">
-                    </ul>
-                    <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" data-toggle="modal" data-target="#myModal" id="">add task</button>
-                </div>
-                <div class="noteToolView">
-                    <h3>My Notes</h3>
-                    <div class="notesList">
+                        <h3 id="selectedTaskView">Today</h3>
+                        <nav class="nav">
+                            <a class="nav-link active" href="#" id="today">Today</a>
+                            <a class="nav-link" href="#" id="upcoming">Upcoming</a>
+                            <a class="nav-link" href="#" id="backlog">Backlog</a>
+                        </nav>
+                        <ul class="taskList">
+                        </ul>
+                        <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" data-toggle="modal" data-target="#myModal" id="">add task</button>
                     </div>
-                    <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
+                    <div class="noteToolView">
+                        <h3>My Notes</h3>
+                        <div class="notesList">
+                        </div>
+                        <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
+                    </div>
                 </div>
-            </div>
             </div>
             <!-- display tool bar -->
             <div class="col-1 accessTools">
@@ -90,7 +90,7 @@
                 </div>
                 <div class="shortcut">
                     <button type="button" class="btn btn-link" id="pocketTool">
-                        <i class="fab fa-get-pocket fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                        <i class="fab fa-get-pocket fa-2x" data-toggle="modal" data-target="#pocketLogin"></i>
                     </button>
                 </div>
                 <div class="shortcut">
@@ -136,10 +136,10 @@
                 <div class="modal-body">
                     <p>Upload in progress</p>
                     <div class="sk-folding-cube">
-                      <div class="sk-cube1 sk-cube"></div>
-                      <div class="sk-cube2 sk-cube"></div>
-                      <div class="sk-cube4 sk-cube"></div>
-                      <div class="sk-cube3 sk-cube"></div>
+                        <div class="sk-cube1 sk-cube"></div>
+                        <div class="sk-cube2 sk-cube"></div>
+                        <div class="sk-cube4 sk-cube"></div>
+                        <div class="sk-cube3 sk-cube"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -169,7 +169,6 @@
         </div>
     </div>
 
-
     <!--new comment modal-->
     <div class="container-fluid" id="newCommentModal" style="display:none">
         <!--the new comment input zone -->
@@ -179,9 +178,9 @@
                 <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
                 <!--submit picture-->
                 <form method="post" enctype="multipart/form-data" action="/file" id="message-file" style="display:none">
-                    <input name="uploadFile" class="newCommentInput" id="fileInput"  type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB">
-                    <input type="text" name="selectedTask" id="selectedTask"/>
-                    <input type="text" name="commentNb" id="commentNb"/>
+                    <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB">
+                    <input type="text" name="selectedTask" id="selectedTask" />
+                    <input type="text" name="commentNb" id="commentNb" />
                     <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
@@ -240,7 +239,7 @@
             </div>
         </div>
     </div>
-    
+
     <!--new note modal-->
     <div class="container-fluid" id="newNoteModal" style="display:none">
         <!--the new note input zone -->
@@ -252,12 +251,12 @@
                     <textarea name="note" class="noteInputZone">Your note goes here</textarea>
                 </div>
             </div>
-            
+
             <!-- the details col -->
             <div class="col-4 details">
                 <div class="row">
                     <div class="col-12">
-                        <input type="text" class="noteTitleInput" placeholder="nothing... Yet!"/>
+                        <input type="text" class="noteTitleInput" placeholder="nothing... Yet!" />
                         <div class="createdOn">
                             <i class="far fa-plus-square"></i>
                             <p>No creation date</p>
@@ -265,14 +264,48 @@
                     </div>
                 </div>
                 <hr />
-            <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
-            <button type="button" class="btn btn-link" id="archiveNote" style="color:white"><i class="fas fa-archive"></i></button>
+                <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
+                <button type="button" class="btn btn-link" id="archiveNote" style="color:white"><i class="fas fa-archive"></i></button>
                 <!--<i class="fas fa-caret-left"></i>-->
                 <!--<i class="fas fa-caret-right"></i>-->
             </div>
         </div>
     </div>
-    
+
+    <!-- Log into Pocket modal -->
+    <div class="modal fade" id="pocketLogin" tabindex="-1" role="dialog" aria-labelledby="pocketLogin" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Connect to your Pocket account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="email">Your Pocket email login</label>
+                            <input class="form-control" type="text" name="pocketEmail" id="pocketEmail" placeholder="bbaggins@shire.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Your Pocket password</label>
+                            <input class="form-control" type="password" name="pocketPassword" id="pocketPassword" placeholder="********" required />
+                        </div>
+                        <div class="m-t-lg">
+                            <ul class="list-inline signInActionZone">
+                                <li>
+                                    <input class="bttn-unite bttn-sm bttn-primary" type="button" id="login" value="Connect to Pocket" />
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
