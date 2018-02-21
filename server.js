@@ -70,7 +70,7 @@ passport.use(new LocalStrategy(
 
 // sending to landing page
 app.get('/landing', function(req, res) {
-    res.redirect('https://armitage35.github.io/day2day/client/landingPage/landing.html');
+    res.redirect('landingPage/landing.html');
 })
 
 //user login
@@ -222,8 +222,10 @@ app.put('/todos/comment', function(req, res) {
         if (err) return (err);
         task.comment.push(req.body.comment);
         task.commentNb = req.body.commentNb;
+        console.log(req.body.comment);
         task.save(function(err, result) {
             if (err) return (err);
+            console.log(result);
             res.json(result);
         });
     });
@@ -231,7 +233,6 @@ app.put('/todos/comment', function(req, res) {
 });
 
 app.get('/todos', function(req, res) {
-    console.log(req.query);
     var userID = req.query.userID;
 
     userTasks.find({ userid: userID, complete: false }).exec(function(err, userTasks) {
@@ -239,7 +240,6 @@ app.get('/todos', function(req, res) {
             console.log("an error has occured");
         }
         else {
-            // console.log(userTasks);
             res.json(userTasks);
         }
     });
