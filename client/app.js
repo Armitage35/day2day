@@ -312,7 +312,7 @@ function displayTask() {
         var j = new Date(userTask[i].dueDate);
         j = j.getTime();
         if (selectedView == 0) {
-            if (j > beginingOfDay && j < endOfDay) { //handle displaying today's tasks
+            if (j < endOfDay) { //handle displaying today's and late tasks
                 displayTaskDetails(i);
             }
         }
@@ -334,7 +334,17 @@ function displayTaskDetails(i) {
         if (dueDateReadable == "Wed Dec 31 1969") {
             dueDateReadable = "";
         }
-        $(".taskList").append("<li class='task list-group-item' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+        
+        let taskClass;
+        
+        // checking if task is en retard
+        if (new Date(userTask[i].dueDate) < beginingOfDay) {
+            taskClass = 'task list-group-item lateTask';
+        } else {
+            taskClass = 'task list-group-item';
+        }
+        
+        $(".taskList").append("<li class='" + taskClass +"' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
     }
 }
 
