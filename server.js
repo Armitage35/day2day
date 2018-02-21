@@ -162,8 +162,8 @@ app.post('/user', function(req, res) {
                         to: newUser.email,
                         subject: 'Welcome to Day2Day',
                         html: pug.renderFile('./emailTemplates/welcomeEmail.pug', {
-                                userName: newUser.username
-                            }),
+                            userName: newUser.username
+                        }),
                     };
 
                     mailgun.messages().send(data, function(error, body) {
@@ -218,20 +218,35 @@ app.put('/todos/comment', function(req, res) {
     console.log(req.body);
     var taskID = req.body.id;
 
-    userTasks.findById(taskID, function(err, task) {
-        if (err) return (err);
-        task.comment.push(req.body.comment);
-        task.commentNb = req.body.commentNb;
-        console.log(req.body.comment);
-        task.save(function(err, result) {
-            if (err) {
-                console.log(err);
-            }
+    userTasks.update({ _id: taskID }, {
+        $push: { comment: req.body.comment },
+        $inc: { commentNb: 1 }
+    }, function(err, result) {
+        if (err !== null) {
+            console.log(err);
+            res.send('ERROR');
+        }
+        else {
             console.log(result);
             res.json(result);
-        });
-    });
+        }
+    })
 
+    // userTasks.findById(taskID, function(err, task) {
+    //     if (err) return (err);
+    //     task.comment.push(req.body.comment);
+    //     task.commentNb = req.body.commentNb;
+
+    //     console.log(req.body.comment);
+    //     task.save(function(err, result) {
+    //         if (err) {
+    //             console.log(err);
+    //             res.json(err);
+    //         }
+    //         console.log(result);
+    //         res.json(result);
+    //     });
+    // });
 });
 
 app.get('/todos', function(req, res) {
@@ -317,7 +332,6 @@ app.get('/notes', function(req, res) {
         }
         else {
             res.json(userNotes);
-            console.log(userNotes)
         }
     });
 });
