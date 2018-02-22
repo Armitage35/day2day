@@ -13,6 +13,7 @@ var express = require('express'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
     DOMAIN = 'mail.day2dayapp.net',
+    pocketAPIKey = require('./keys/pocketAPIKey.js'),
     mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     pug = require('pug'),
@@ -71,6 +72,11 @@ passport.use(new LocalStrategy(
 // sending to landing page
 app.get('/landing', function(req, res) {
     res.redirect('landingPage/landing.html');
+});
+
+// sending pocket's API key over to client
+app.get('/pocketKey', function(req, res) {
+    res.send(pocketAPIKey);
 })
 
 //user login

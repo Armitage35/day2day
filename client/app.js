@@ -180,6 +180,18 @@ var main = function() {
     $('#archiveNote').on('click', function() {
         archiveNote(selectedNote);
     });
+
+    $('#connectPocket').on('click', function() {
+        $.ajax({
+            url: 'pocketKey',
+            type: 'GET',
+            data: {},
+            success: function(data) {
+                console.log(data);
+                console.log('https://getpocket.com/auth/authorize?request_token='+ data +'&redirect_uri=http://day2dayapp.net')
+            }
+        });
+    });
 };
 
 $(document).ready(main);
@@ -334,17 +346,18 @@ function displayTaskDetails(i) {
         if (dueDateReadable == "Wed Dec 31 1969") {
             dueDateReadable = "";
         }
-        
+
         let taskClass;
-        
+
         // checking if task is en retard
         if (new Date(userTask[i].dueDate) < beginingOfDay) {
             taskClass = 'task list-group-item lateTask';
-        } else {
+        }
+        else {
             taskClass = 'task list-group-item';
         }
-        
-        $(".taskList").append("<li class='" + taskClass +"' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+
+        $(".taskList").append("<li class='" + taskClass + "' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
     }
 }
 
