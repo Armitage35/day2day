@@ -502,4 +502,34 @@ app.get('/pocketKey', function(req, res) {
 
         res.send(pocketRequestCode[1]);
     });
+});
+
+// converting Pocket request token into an access token
+app.get('/pocketKeyConfirm', function(req, res) {
+
+    let pocketRequestCode = req.query.pocketRequestCode;
+
+    var options = {
+        method: 'POST',
+        url: 'https://getpocket.com/v3/oauth/request',
+        headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        },
+        formData: {
+            consumer_key: '73836-378d0dc93d98dab369f1a431',
+            code: pocketRequestCode
+        }
+    };
+
+    request(options, function(error, response, body) {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        };
+
+        console.log(body);
+
+        res.send(200);
+    });
 })

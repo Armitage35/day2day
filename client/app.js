@@ -189,10 +189,24 @@ var main = function() {
             data: {},
             success: function(data) {
                 Cookies.set('pocketRequestCode', data);
-                window.location.replace('https://getpocket.com/auth/authorize?request_token='+ data + '&redirect_uri=http://day2dayapp.net?ref=pocketOAuth');
+                window.location.replace('https://getpocket.com/auth/authorize?request_token=' + data + '&redirect_uri=https://learning-web-app-dev-armitage.c9users.io?ref=pocketOAuth');
             }
         });
     });
+
+    if (location.search === '?ref=pocketOAuth') {
+        console.log('ok, go');
+        
+        let pocketRequestCode = Cookies.get('pocketRequestCode');
+        Cookies.remove('pocketRequestCode');
+
+        $.ajax({
+            url: 'pocketKeyConfirm',
+            type: 'GET',
+            data: {pocketRequestCode : pocketRequestCode} ,
+            success: function(data) { console.log(data) }
+        });
+    }
 };
 
 $(document).ready(main);
@@ -668,9 +682,4 @@ function displayNoteContent(noteID) {
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
     window.location = "index.html";
-}
-
-if (location.search === 'ref=pocketOAuth') {
-    let pocketRequestCode = Cookies.get('pocketRequestCode');
-    Cookies.remove('pocketRequestCode');
 }
