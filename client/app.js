@@ -1,6 +1,7 @@
 /* global $
 global Cookies 
-global iziToast */
+global iziToast
+global location */
 
 var selectedTask,
     userTask = [],
@@ -187,7 +188,8 @@ var main = function() {
             type: 'GET',
             data: {},
             success: function(data) {
-                console.log('https://getpocket.com/auth/authorize?request_token='+ data.name +'&redirect_uri=http://day2dayapp.net')
+                Cookies.set('pocketRequestCode', data);
+                window.location.replace('https://getpocket.com/auth/authorize?request_token='+ data + '&redirect_uri=http://day2dayapp.net?ref=pocketOAuth');
             }
         });
     });
@@ -666,4 +668,9 @@ function displayNoteContent(noteID) {
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
     window.location = "index.html";
+}
+
+if (location.search === 'ref=pocketOAuth') {
+    let pocketRequestCode = Cookies.get('pocketRequestCode');
+    Cookies.remove('pocketRequestCode');
 }

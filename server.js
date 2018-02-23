@@ -13,10 +13,10 @@ var express = require('express'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
     DOMAIN = 'mail.day2dayapp.net',
-    pocketAPIKey = require('./keys/pocketAPIKey.js'),
     mailGunApi_key = require('./keys/mailgunCred.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     pug = require('pug'),
+    request = require('request'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -73,11 +73,6 @@ passport.use(new LocalStrategy(
 app.get('/landing', function(req, res) {
     res.redirect('landingPage/landing.html');
 });
-
-// sending pocket's API key over to client
-app.get('/pocketKey', function(req, res) {
-    res.send(pocketAPIKey);
-})
 
 //user login
 app.post('/login', function(req, res) {
@@ -478,3 +473,33 @@ app.put('/resetpassword', function(req, res) {
         }
     });
 });
+
+// sending pocket's API key over to client
+app.get('/pocketKey', function(req, res) {
+
+    let pocketRequestCode;
+
+    var options = {
+        method: 'POST',
+        url: 'https://getpocket.com/v3/oauth/request',
+        headers: {
+            'cache-control': 'no-cache',
+            'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        },
+        formData: {
+            consumer_key: '73836-378d0dc93d98dab369f1a431',
+            redirect_uri: 'http://day2dayapp.net?ref=pocket'
+        }
+    };
+
+    request(options, function(error, response, body) {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        };
+
+        pocketRequestCode = body.split('=');
+
+        res.send(pocketRequestCode[1]);
+    });
+})
