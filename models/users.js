@@ -11,7 +11,17 @@ var UserSchema = mongoose.Schema({
     avatar: String,
     tempID: Number,
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    integrations: {
+        pocket: {
+            connected: Boolean,
+            token: String
+        },
+        googleCal: {
+            connected: Boolean,
+            token: String
+        }
+    }
 });
 
 var User = mongoose.model("User", UserSchema);

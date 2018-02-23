@@ -187,8 +187,7 @@ var main = function() {
             type: 'GET',
             data: {},
             success: function(data) {
-                console.log(data);
-                console.log('https://getpocket.com/auth/authorize?request_token='+ data +'&redirect_uri=http://day2dayapp.net')
+                console.log('https://getpocket.com/auth/authorize?request_token='+ data.name +'&redirect_uri=http://day2dayapp.net')
             }
         });
     });
