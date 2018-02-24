@@ -81,7 +81,6 @@ app.post('/login', function(req, res) {
         if (err) { return err; }
         if (!user) { return res.send('not found'); }
         req.logIn(user, function(err) {
-            console.log("user am logging in " + user);
             return res.json(user._id);
         });
     })(req, res);
@@ -99,8 +98,6 @@ app.post('/login', function(req, res) {
 
 //user registration handling
 app.post('/user', function(req, res) {
-    console.log(req.body);
-
     var tempID = req.body.tempUserid,
         username = req.body.username,
         email = req.body.email,
@@ -129,7 +126,6 @@ app.post('/user', function(req, res) {
     var emailTaken;
     emailTakenPromise.then(function() {
         emailTaken = email === emailTakenPromise;
-        console.log("email taken " + emailTaken);
 
         //making checks on user info
         var error = [];
@@ -155,10 +151,9 @@ app.post('/user', function(req, res) {
                     res.send("ERROR");
                 }
                 else {
-                    console.log(result);
                     res.send(result);
 
-                    //send a nice email to our new user
+                    //send a nice welcome email to our new user
                     let data = {
                         from: 'Day2Day <mail@day2dayapp.net>',
                         to: newUser.email,
@@ -179,7 +174,6 @@ app.post('/user', function(req, res) {
 });
 
 app.get('/user', function(req, res) {
-    // console.log(req.query);
     let userID = req.query.userID;
 
     User.findById(userID).exec(function(err, user) {
@@ -194,7 +188,6 @@ app.get('/user', function(req, res) {
 
 //tasks handling
 app.post('/todos', function(req, res) {
-    console.log(req.body);
     let newTask = new userTasks({
         'comment': req.body.userTasks.comment,
         'commentNb': req.body.userTasks.commentNb,
@@ -216,7 +209,6 @@ app.post('/todos', function(req, res) {
 });
 
 app.put('/todos/comment', function(req, res) {
-    console.log(req.body);
     var taskID = req.body.id;
 
     userTasks.update({ _id: taskID }, {
@@ -239,7 +231,7 @@ app.get('/todos', function(req, res) {
 
     userTasks.find({ userid: userID, complete: false }).exec(function(err, userTasks) {
         if (err) {
-            console.log("an error has occured");
+            console.log(err);
         }
         else {
             res.json(userTasks);
@@ -248,7 +240,6 @@ app.get('/todos', function(req, res) {
 });
 
 app.put('/todos', function(req, res) {
-    console.log(req.body);
     var taskID = req.body.id;
 
     userTasks.findById(taskID, function(err, task) {
@@ -266,13 +257,9 @@ app.post('/file', function(req, res) {
     let appendFileToTask = req.body.selectedTask,
         amountOfComments = req.body.commentNb,
         fileUploadedToS3Adress;
-    console.log(req.files);
     if (req.files) {
         var file = req.files.uploadFile,
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique
-        console.log(filename);
-        console.log(file);
-
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -287,7 +274,6 @@ app.post('/file', function(req, res) {
                     console.log(err);
                 else
                     fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + '/' + filename;
-                console.log(fileUploadedToS3Adress);
                 let fileUploadedToS3AdressToDisplayInD2D = '<img src="' + fileUploadedToS3Adress + '" />';
                 userTasks.update({ _id: appendFileToTask }, {
                     $push: { comment: fileUploadedToS3AdressToDisplayInD2D },
@@ -313,7 +299,7 @@ app.get('/notes', function(req, res) {
 
     userNotes.find({ userid: userID, archived: false }).exec(function(err, userNotes) {
         if (err) {
-            console.log("an error has occured");
+            console.log(err);
         }
         else {
             res.json(userNotes);
@@ -331,12 +317,6 @@ app.put('/notes', function(req, res) {
         'editedOn': req.body.noteLastEditedOn,
         'userid': req.body.userid,
     });
-
-    console.log(newNote.noteArchived);
-
-    if (newNote.archived === 'true') {
-        console.log('say goodbye to this note');
-    }
 
     if (req.body.noteMongoID == 0) {
         newNote.save(function(err, result) {
@@ -370,13 +350,11 @@ app.put('/notes', function(req, res) {
 });
 
 app.post('/forget', function(req, res) {
-    console.log(req.body);
     let emailToResetPasswordFor = req.body.passwordToResetForEmail;
     if (validator.isEmail(emailToResetPasswordFor) === false) {
         res.send('not an email');
     }
     else {
-        console.log('this is an email');
         User.findOne({ email: emailToResetPasswordFor }, function(err, user) {
             if (err) { return (err); }
             if (!user) {
@@ -388,7 +366,6 @@ app.post('/forget', function(req, res) {
                     userToUpdateresetPasswordExpires = Date.now() + 3600000,
                     userToUpdateresetPasswordToken = Math.floor(Math.random() * 1000000000),
                     emailLink = 'day2dayapp.net/reset.html?token=' + userToUpdateresetPasswordToken + '&userID=' + userToUpdateID;
-                console.log(userToUpdateID);
                 User.update({ _id: userToUpdateID }, {
                     $set: {
                         resetPasswordExpires: userToUpdateresetPasswordExpires,
@@ -401,7 +378,6 @@ app.post('/forget', function(req, res) {
                     }
                     else {
                         res.json('succes');
-                        console.log(result);
 
                         //send the email to the user who lost his password
                         let data = {
@@ -435,11 +411,9 @@ app.put('/resetpassword', function(req, res) {
             res.send('No user match this id');
         }
         else {
-            console.log(user);
-
             // cheking the token
             if (resetPwdToken != user.resetPasswordToken) {
-                console.log('wrong token');
+                console.log('wrong token, password will not be reset');
                 res.send('wrong token');
             }
             // checking if the token is overdue
@@ -528,6 +502,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
             console.log(error);
         }
         else {
+            // add the token to the user's account 
             User.update({ _id: userID }, {
                 $set: {
                     integrations: {
@@ -551,17 +526,14 @@ app.get('/pocketKeyConfirm', function(req, res) {
     });
 })
 
+// getting the user's reading list
 app.get('/getUsersPocketReadList', function(req, res) {
-    console.log(req.query.userID);
     User.findById(req.query.userID, function(err, user) {
         if (err) {
             console.log(err);
+            res.send(err);
         }
         else {
-            console.log(user);
-            let userPocketToken = user.integrations.pocket.token;
-            console.log(userPocketToken);
-            
             var options = {
                 method: 'POST',
                 url: 'https://getpocket.com/v3/get',

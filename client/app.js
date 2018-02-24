@@ -196,6 +196,7 @@ var main = function() {
         });
     });
 
+    // checking when the user comes back from Pocket's auth. If so, handle his token
     if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
         let pocketRequestCode = Cookies.get('pocketRequestCode');
         Cookies.remove('pocketRequestCode');
@@ -210,32 +211,46 @@ var main = function() {
             }
         });
     }
+    
+    // handling user's access to Pocket
+    $('#pocketTool').on('click', function() {
+        if (user.integrations.pocket.token != undefined) {
+            $('#pocketLogin').empty();
+            $('#pocketTool').children('svg').removeAttr('data-toggle');
+            getPocketUnreadElements();
+            handleTool('pocket');
+        }
+    });
 };
 
 $(document).ready(main);
 
 function closeNoteModal() {
-    $("#newNoteModal, #main").toggle();
+    $('#newNoteModal, #main').toggle();
     $('.noteInputZone, .noteTitleInput').val('');
     displayNoteList();
 }
 
 function handleTool(selectedTool) {
-    $(".accessTools").children().children().children().removeClass('active');
+    $('.accessTools').children().children().children().removeClass('active');
     Cookies.set('selectedTool', selectedTool);
-    if (selectedTool === "background") {
+    if (selectedTool === 'background') {
         $('.fa-camera-retro').addClass('active');
-        $(".tool").hide('slow');
+        $('.tool').hide('slow');
     }
-    else if (selectedTool === "task") {
+    else if (selectedTool === 'task') {
         $('.fa-tasks').addClass('active');
-        $(".tool, .taskToolView").show('slow');
-        $(".noteToolView").hide();
+        $('.tool, .taskToolView').show('slow');
+        $('.noteToolView, .pocketToolView').hide();
     }
-    else if (selectedTool === "note") {
+    else if (selectedTool === 'note') {
         $('.fa-sticky-note').addClass('active');
-        $(".tool, .noteToolView").show('slow');
-        $(".taskToolView").hide();
+        $('.tool, .noteToolView').show('slow');
+        $('.taskToolView, .pocketToolView').hide();
+    } else if (selectedTool === 'pocket'){
+        $('.fa-get-pocket').addClass('active');
+        $('.tool, .pocketToolView').show('slow');
+        $('.taskToolView, .noteToolView').hide();
     }
 }
 
@@ -321,7 +336,6 @@ function getUser() {
             user = data;
             $('.userPicture').attr('src', userAvatar);
             console.log(user);
-            getPocketUnreadElements();
         }
     });
 }
