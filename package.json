@@ -27,6 +27,7 @@
     "validator": "^9.2.0"
   },
   "devDependencies": {
+    "grunt-contrib-pug": "^1.0.0",
     "grunt-sass": "^2.1.0"
   },
   "bin": {

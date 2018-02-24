@@ -16,3 +16,4 @@ awsCredentials.json
 client/bower_components
 node_modules
 package-lock.json
+emailTemplates/htmlRender
