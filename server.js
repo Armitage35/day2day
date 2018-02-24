@@ -186,7 +186,6 @@ app.get('/user', function(req, res) {
             console.log("an error has occured");
         }
         else {
-            // console.log(user);
             res.json(user);
         }
     });
@@ -537,13 +536,14 @@ app.get('/pocketKeyConfirm', function(req, res) {
                         }
                     }
                 }
-            }, function(err, result) {
+            }, function(err, User) {
                 if (err !== null) {
                     console.log(err);
                     res.send('ERROR');
                 }
                 else {
-                    res.json(result);
+                    console.log(User);
+                    res.json(User);
                 }
             });
         }

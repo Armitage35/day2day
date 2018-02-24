@@ -14,7 +14,8 @@ var selectedTask,
     userAvatar,
     userID,
     selectedTool = "task", //sets the default tool
-    selectedNote;
+    selectedNote,
+    user;
 
 var main = function() {
 
@@ -201,8 +202,11 @@ var main = function() {
         $.ajax({
             url: 'pocketKeyConfirm',
             type: 'GET',
-            data: {pocketRequestCode : pocketRequestCode, userID: userID} ,
-            success: function(data) { console.log(data) }
+            data: { pocketRequestCode: pocketRequestCode, userID: userID },
+            success: function() {
+                getUser();
+                console.log(user);
+            }
         });
     }
 };
@@ -306,15 +310,20 @@ function updateClock() {
 updateClock();
 
 //getting user avatar
-$.ajax({
-    url: "/user",
-    type: 'GET',
-    data: { userID },
-    success: function(data) {
-        userAvatar = data.avatar;
-        $('.userPicture').attr('src', userAvatar);
-    }
-});
+function getUser() {
+    $.ajax({
+        url: "/user",
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userAvatar = data.avatar;
+            user = data;
+            $('.userPicture').attr('src', userAvatar);
+        }
+    });
+}
+
+getUser();
 
 function selectedTaskViewHandler(selectedView) {
     if (selectedView === 0) {
