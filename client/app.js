@@ -195,15 +195,13 @@ var main = function() {
     });
 
     if (location.search === '?ref=pocketOAuth') {
-        console.log('ok, go');
-        
         let pocketRequestCode = Cookies.get('pocketRequestCode');
         Cookies.remove('pocketRequestCode');
 
         $.ajax({
             url: 'pocketKeyConfirm',
             type: 'GET',
-            data: {pocketRequestCode : pocketRequestCode} ,
+            data: {pocketRequestCode : pocketRequestCode, userID: userID} ,
             success: function(data) { console.log(data) }
         });
     }

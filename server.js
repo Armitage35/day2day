@@ -507,29 +507,45 @@ app.get('/pocketKey', function(req, res) {
 // converting Pocket request token into an access token
 app.get('/pocketKeyConfirm', function(req, res) {
 
-    let pocketRequestCode = req.query.pocketRequestCode;
+    let pocketRequestCode = req.query.pocketRequestCode,
+        userID = req.query.userID;
 
     var options = {
         method: 'POST',
-        url: 'https://getpocket.com/v3/oauth/request',
+        url: 'https://getpocket.com/v3/oauth/authorize',
         headers: {
             'cache-control': 'no-cache',
-            'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+            'content-type': 'application/x-www-form-urlencoded',
         },
-        formData: {
-            consumer_key: '73836-378d0dc93d98dab369f1a431',
-            code: pocketRequestCode
+        form: {
+            'consumer_key': '73836-378d0dc93d98dab369f1a431',
+            'code': pocketRequestCode
         }
     };
 
     request(options, function(error, response, body) {
         if (error) {
             console.log(error);
-            res.send(error);
-        };
-
-        console.log(body);
-
-        res.send(200);
+        }
+        else {
+            User.update({ _id: userID }, {
+                $set: {
+                    integrations: {
+                        pocket: {
+                            connected: true,
+                            token: body.split(/=|&/)[1]
+                        }
+                    }
+                }
+            }, function(err, result) {
+                if (err !== null) {
+                    console.log(err);
+                    res.send('ERROR');
+                }
+                else {
+                    res.json(result);
+                }
+            });
+        }
     });
 })
