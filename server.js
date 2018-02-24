@@ -14,6 +14,7 @@ var express = require('express'),
     AWS = require('aws-sdk'),
     DOMAIN = 'mail.day2dayapp.net',
     mailGunApi_key = require('./keys/mailgunCred.js'),
+    pocketConsumerKey = require('./keys/pocketConsumerKey.js'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     pug = require('pug'),
     request = require('request'),
@@ -486,7 +487,7 @@ app.get('/pocketKey', function(req, res) {
             'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
         },
         formData: {
-            consumer_key: '73836-378d0dc93d98dab369f1a431',
+            consumer_key: pocketConsumerKey,
             redirect_uri: 'http://day2dayapp.net?ref=pocket'
         }
     };
@@ -517,7 +518,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
             'content-type': 'application/x-www-form-urlencoded',
         },
         form: {
-            'consumer_key': '73836-378d0dc93d98dab369f1a431',
+            'consumer_key': pocketConsumerKey,
             'code': pocketRequestCode
         }
     };
@@ -545,6 +546,41 @@ app.get('/pocketKeyConfirm', function(req, res) {
                     console.log(User);
                     res.json(User);
                 }
+            });
+        }
+    });
+})
+
+app.get('/getUsersPocketReadList', function(req, res) {
+    console.log(req.query.userID);
+    User.findById(req.query.userID, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(user);
+            let userPocketToken = user.integrations.pocket.token;
+            console.log(userPocketToken);
+            
+            var options = {
+                method: 'POST',
+                url: 'https://getpocket.com/v3/get',
+                qs: {
+                    consumer_key: pocketConsumerKey,
+                    access_token: user.integrations.pocket.token,
+                    state: 'unread',
+                    sort: 'newest',
+                    detailType: 'complete',
+                    count: '10'
+                },
+                headers: {
+                    'cache-control': 'no-cache'
+                }
+            };
+
+            request(options, function(error, response, body) {
+                if (error) throw new Error(error);
+                res.send(body);
             });
         }
     });

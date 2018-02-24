@@ -15,7 +15,8 @@ var selectedTask,
     userID,
     selectedTool = "task", //sets the default tool
     selectedNote,
-    user;
+    user,
+    userPocketReadingList;
 
 var main = function() {
 
@@ -195,7 +196,7 @@ var main = function() {
         });
     });
 
-    if (location.search === '?ref=pocketOAuth') {
+    if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
         let pocketRequestCode = Cookies.get('pocketRequestCode');
         Cookies.remove('pocketRequestCode');
 
@@ -319,6 +320,8 @@ function getUser() {
             userAvatar = data.avatar;
             user = data;
             $('.userPicture').attr('src', userAvatar);
+            console.log(user);
+            getPocketUnreadElements();
         }
     });
 }
@@ -684,6 +687,18 @@ function displayNoteContent(noteID) {
     $('.noteInputZone').val(userNote[selectedNote].noteBody);
     $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
     $('.createdOn').children('p').html(new Date(userNote[selectedNote].createdOn).toDateString());
+}
+
+function getPocketUnreadElements() {
+    $.ajax({
+        url: 'getUsersPocketReadList',
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userPocketReadingList = JSON.parse(data).list;
+            console.log(userPocketReadingList);
+        }
+    });
 }
 
 //auto sign in if cookie's here
