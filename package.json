@@ -10,9 +10,15 @@
     "express-fileupload": "^0.4.0",
     "express-validator": "^4.3.0",
     "gravatar": "^1.6.0",
+    "grunt": "^1.0.2",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "load-grunt-tasks": "^3.5.2",
     "mailgun-js": "^0.15.0",
     "mongoose": "^4.13.9",
     "node-minify": "^2.4.1",
+    "node-sass": "^4.7.2",
     "node-uuid": "^1.4.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
@@ -20,7 +26,9 @@
     "pug": "^2.0.0-rc.4",
     "validator": "^9.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-sass": "^2.1.0"
+  },
   "bin": {
     "module-name": "./bin"
   },
