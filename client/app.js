@@ -1,7 +1,8 @@
 /* global $
 global Cookies 
 global iziToast
-global location */
+global location
+global i*/
 
 var selectedTask,
     userTask = [],
@@ -211,7 +212,7 @@ var main = function() {
             }
         });
     }
-    
+
     // handling user's access to Pocket
     $('#pocketTool').on('click', function() {
         if (user.integrations.pocket.token != undefined) {
@@ -247,10 +248,12 @@ function handleTool(selectedTool) {
         $('.fa-sticky-note').addClass('active');
         $('.tool, .noteToolView').show('slow');
         $('.taskToolView, .pocketToolView').hide();
-    } else if (selectedTool === 'pocket'){
+    }
+    else if (selectedTool === 'pocket') {
         $('.fa-get-pocket').addClass('active');
         $('.tool, .pocketToolView').show('slow');
         $('.taskToolView, .noteToolView').hide();
+        getPocketUnreadElements();
     }
 }
 
@@ -710,9 +713,23 @@ function getPocketUnreadElements() {
         data: { userID },
         success: function(data) {
             userPocketReadingList = JSON.parse(data).list;
-            console.log(userPocketReadingList);
+            displayPocketUnreadElements(userPocketReadingList);
         }
     });
+}
+
+function displayPocketUnreadElements(userPocketReadingList) {
+    userPocketReadingList = Object.values(userPocketReadingList);
+
+    for (let i = 0; i < userPocketReadingList.length; i++) {
+        let pocketArticleBody = userPocketReadingList[i].excerpt;
+        if (pocketArticleBody != ""){
+            pocketArticleBody = userPocketReadingList[i].excerpt.substring(0, 115) + '...';
+        }
+        
+        let pocketArticleHTML = '<a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" id="' + userPocketReadingList[i].item_id + '" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small></div><p class="mb-1">' + pocketArticleBody + '</p></a>';
+        $('.readingList').append(pocketArticleHTML);
+    }
 }
 
 //auto sign in if cookie's here

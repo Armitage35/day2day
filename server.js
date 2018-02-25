@@ -543,7 +543,7 @@ app.get('/getUsersPocketReadList', function(req, res) {
                     state: 'unread',
                     sort: 'newest',
                     detailType: 'complete',
-                    count: '10'
+                    // count: '10'
                 },
                 headers: {
                     'cache-control': 'no-cache'
