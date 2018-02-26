@@ -219,6 +219,19 @@ var main = function() {
         markArticleRead(pocketArticleRead);
     });
 
+    $('#addNewPocketLink').on('click', function() {
+        $.ajax({
+            url: 'addnewpocketarticle',
+            type: 'POST',
+            data: { url: $('#newPocketArticleLink').val(), pocketToken: user.integrations.pocket.token},
+            success: function(data) {
+                $('#newPocketArticleLink').val('');
+                $('#pocketNewArticle').modal('hide');
+                console.log(data);
+            }
+        });
+    });
+
 };
 
 $(document).ready(main);

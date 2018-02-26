@@ -472,7 +472,7 @@ app.get('/pocketKey', function(req, res) {
         if (error) {
             console.log(error);
             res.send(error);
-        };
+        }
 
         pocketRequestCode = body.split('=');
 
@@ -526,7 +526,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
             });
         }
     });
-})
+});
 
 // getting the user's reading list
 app.get('/getUsersPocketReadList', function(req, res) {
@@ -558,18 +558,18 @@ app.get('/getUsersPocketReadList', function(req, res) {
             });
         }
     });
-})
+});
 
 app.post('/markArticleRead', function(req, res) {
     console.log(req.body);
-    
+
     var options = {
         method: 'GET',
         url: 'https://getpocket.com/v3/send',
         qs: {
             consumer_key: pocketConsumerKey,
             access_token: req.body.pocketToken,
-            actions: '[{"action":"archive","time":1348853312,"item_id":"' + req.body.pocketArticleRead + '"}]'
+            actions: '[{"action":"archive", "item_id":"' + req.body.pocketArticleRead + '"}]'
         },
     };
 
@@ -578,4 +578,27 @@ app.post('/markArticleRead', function(req, res) {
 
         res.send(body);
     });
-})
+});
+
+app.post('/addnewpocketarticle', function(req, res) {
+    console.log(req.body);
+
+    var request = require("request");
+
+    var options = {
+        method: 'GET',
+        url: 'https://getpocket.com/v3/add',
+        qs: {
+            consumer_key: pocketConsumerKey,
+            access_token: req.body.pocketToken,
+            url: req.body.url
+        },
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+        res.send(body);
+        console.log(body);
+    });
+
+});
