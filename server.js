@@ -28,12 +28,12 @@ app.use(passport.session());
 app.use(upload());
 
 // Using Google Closure Compiler to minify the app.js file
-compressor.minify({
-    compressor: 'gcc',
-    input: 'client/app.js',
-    output: 'client/app-min.js',
-    callback: function(err, min) {}
-});
+// compressor.minify({
+//     compressor: 'gcc',
+//     input: 'client/app.js',
+//     output: 'client/app-min.js',
+//     callback: function(err, min) {}
+// });
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -452,7 +452,7 @@ app.put('/resetpassword', function(req, res) {
 app.get('/pocketKey', function(req, res) {
 
     let pocketRequestCode;
-    
+
     console.log(req.body);
 
     var options = {
@@ -554,8 +554,30 @@ app.get('/getUsersPocketReadList', function(req, res) {
 
             request(options, function(error, response, body) {
                 if (error) throw new Error(error);
+                console.log(body);
                 res.send(body);
             });
         }
+    });
+})
+
+app.post('/markArticleRead', function(req, res) {
+    console.log(req.body);
+    
+    var options = {
+        method: 'GET',
+        url: 'https://getpocket.com/v3/send',
+        qs: {
+            consumer_key: pocketConsumerKey,
+            access_token: req.body.pocketToken,
+            actions: '[{"action":"archive","time":1348853312,"item_id":"+ req.body.pocketItemID +"}]'
+        },
+        body: '[\n    {\n        "action" : "archive",\n        "item_id" : "11983484",\n    }\n]'
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
     });
 })

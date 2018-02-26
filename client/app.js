@@ -200,7 +200,6 @@ var main = function() {
             data: { pocketRequestCode: pocketRequestCode, userID: userID },
             success: function() {
                 getUser();
-                console.log(user);
             }
         });
     }
@@ -214,6 +213,12 @@ var main = function() {
             handleTool('pocket');
         }
     });
+    
+    $('.markRead').on('click', function() {
+        let pocketArticleRead = 
+        markArticleRead(pocketArticleRead);
+    })
+    
 };
 
 $(document).ready(main);
@@ -284,7 +289,6 @@ else {
         data: { userID },
         success: function(data) {
             userTask = data;
-            console.log(userTask);
             displayTask();
         }
     });
@@ -296,7 +300,6 @@ else {
         data: { userID },
         success: function(data) {
             userNote = data;
-            console.log(userNote);
             displayNoteList();
         }
     });
@@ -330,7 +333,6 @@ function getUser() {
             userAvatar = data.avatar;
             user = data;
             $('.userPicture').attr('src', userAvatar);
-            console.log(user);
         }
     });
 }
@@ -449,9 +451,7 @@ function onboarding() {
                 dueDate: new Date(),
                 commentNb: 0,
             });
-            //updateCookie();
             displayTask();
-            console.log(userTask);
             $(".onboarding").hide();
         });
     }
@@ -464,7 +464,6 @@ function completeTask(completedTaskID) {
         type: 'PUT',
         data: { id: completedTaskMongoID },
         success: function(data) {
-            console.log("Task completed");
             console.log(data);
         }
     });
@@ -501,10 +500,8 @@ function addTask() {
             'userTasks': task
         }, function(result) {
             //this callback is called with the server response
-            console.log(result);
             userTask.pop(); //removing the temp object created by client to replace it with the object from mongo
             userTask.push(result);
-            console.log(userTask);
             iziToast.success({
                 title: 'Fantastic',
                 message: 'Your task has been saved',
@@ -531,7 +528,6 @@ function addComment(newComment) {
         type: 'PUT',
         data: { id: userTask[selectedTask]._id, comment: newComment, commentNb: userTask[selectedTask].commentNb },
         success: function(data) {
-            console.log("comment added to the task");
             console.log(data);
         }
     });
@@ -548,7 +544,6 @@ function updateWallpaper() {
         url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=nature",
         type: 'GET',
         success: function(data) {
-            console.log(data);
             let background;
             if (window.screen.width >= 2000) {
                 background = 'url("' + data.urls.full + '")';
@@ -617,9 +612,6 @@ displayTask();
 displayNoteList();
 
 function saveNote(selectedNote, noteArchived) {
-
-    console.log('note noteArchived: ' + noteArchived);
-
     let noteBody = $(".noteInputZone").val(),
         noteTitle = $(".noteTitleInput").val(),
         notePreview = noteBody.substring(0, 115) + "...",
@@ -638,7 +630,6 @@ function saveNote(selectedNote, noteArchived) {
     // check that note has an ID and is not new
     if (selectedNote != -1) {
         noteMongoID = userNote[selectedNote]._id;
-        console.log('note mongoID: ' + noteMongoID);
     }
 
     $.ajax({
@@ -646,7 +637,6 @@ function saveNote(selectedNote, noteArchived) {
         type: 'PUT',
         data: { noteBody: noteBody, noteTitle: noteTitle, notePreview: notePreview, noteLastEditedOn: noteLastEditedOn, userid: userID, noteCreatedOn: new Date(), noteMongoID: noteMongoID, noteArchived: noteArchived },
         success: function(data) {
-            console.log(data);
             if (selectedNote === -1) {
                 userNote.push(data);
                 displayNoteContent(userNote.length - 1);
@@ -669,7 +659,6 @@ function archiveNote(selectedNote) {
     let noteArchived = true;
     saveNote(selectedNote, noteArchived);
     userNote[selectedNote].archiveNote = true;
-    console.log(userNote);
     closeNoteModal();
     displayNoteList();
     iziToast.success({
@@ -692,7 +681,6 @@ function displayNoteContent(noteID) {
     $("#main").hide();
     $("#newNoteModal").show();
     selectedNote = noteID;
-    console.log(selectedNote);
     $('.noteInputZone').val(userNote[selectedNote].noteBody);
     $('.noteTitleInput').val(userNote[selectedNote].noteTitle);
     $('.createdOn').children('p').html(new Date(userNote[selectedNote].createdOn).toDateString());
@@ -702,10 +690,10 @@ function connectToPocket() {
     $.ajax({
         url: 'pocketKey',
         type: 'GET',
-        data: {userID: userID},
+        data: { userID: userID },
         success: function(data) {
             Cookies.set('pocketRequestCode', data);
-            window.location.replace('https://getpocket.com/auth/authorize?request_token=' + data + '&redirect_uri=http://' + window.location.hostname +'?ref=pocketOAuth');
+            window.location.replace('https://getpocket.com/auth/authorize?request_token=' + data + '&redirect_uri=http://' + window.location.hostname + '?ref=pocketOAuth');
         }
     });
 }
@@ -717,7 +705,6 @@ function getPocketUnreadElements() {
         data: { userID },
         success: function(data) {
             if (data === '401 Unauthorized') {
-                console.log('pocket deserialized');
                 $('.pocketToolView').html('<h4 style="color:black; padding-left:10px; padding-right:10px">Your Pocket account has been deserialized</h4><p style="color:black; padding-left:10px; padding-right:10px">Click here to reconnect your account</p><input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket"style="margin-left:10px" onclick="connectToPocket()"/>');
             }
             else {
@@ -737,9 +724,13 @@ function displayPocketUnreadElements(userPocketReadingList) {
             pocketArticleBody = userPocketReadingList[i].excerpt.substring(0, 115) + '...';
         }
 
-        let pocketArticleHTML = '<a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" id="' + userPocketReadingList[i].item_id + '" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small></div><p class="mb-1">' + pocketArticleBody + '</p></a>';
+        let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small><i class="far fa-newspaper"></i></small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '"><i class="fas fa-check"></i> Mark as read</button></small></div>';
         $('.readingList').append(pocketArticleHTML);
     }
+}
+
+function markArticleRead (pocketArticleRead) {
+    
 }
 
 //auto sign in if cookie's here

@@ -8,7 +8,8 @@
 body {
   font-family: "Raleway", sans-serif;
   background-repeat: no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  outline: none; }
 
 h1 {
   font-size: 6.5rem;
@@ -181,6 +182,25 @@ input[type="checkbox"]:checked {
 
 .date, .temperature {
   display: inline; }
+
+.list-group-item {
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-left-width: 0px;
+  padding-bottom: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  margin-top: 10px;
+  border-top-right-radius: 0rem;
+  border-top-left-radius: 0rem;
+  border-left-style: none;
+  border-right-style: none; }
+
+.pocketToolTitle {
+  margin-bottom: 0px;
+  padding-top: 5px; }
+
+.markRead {
+  margin-left: 20px; }
 
 .commentSection, .noteSection {
   overflow: auto;
