@@ -28,12 +28,12 @@ app.use(passport.session());
 app.use(upload());
 
 // Using Google Closure Compiler to minify the app.js file
-// compressor.minify({
-//     compressor: 'gcc',
-//     input: 'client/app.js',
-//     output: 'client/app-min.js',
-//     callback: function(err, min) {}
-// });
+compressor.minify({
+    compressor: 'gcc',
+    input: 'client/app.js',
+    output: 'client/app-min.js',
+    callback: function(err, min) {}
+});
 
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
@@ -452,6 +452,8 @@ app.put('/resetpassword', function(req, res) {
 app.get('/pocketKey', function(req, res) {
 
     let pocketRequestCode;
+    
+    console.log(req.body);
 
     var options = {
         method: 'POST',

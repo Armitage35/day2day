@@ -186,15 +186,7 @@ var main = function() {
     });
 
     $('#connectPocket').on('click', function() {
-        $.ajax({
-            url: 'pocketKey',
-            type: 'GET',
-            data: {},
-            success: function(data) {
-                Cookies.set('pocketRequestCode', data);
-                window.location.replace('https://getpocket.com/auth/authorize?request_token=' + data + '&redirect_uri=https://learning-web-app-dev-armitage.c9users.io?ref=pocketOAuth');
-            }
-        });
+        connectToPocket();
     });
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
@@ -706,14 +698,32 @@ function displayNoteContent(noteID) {
     $('.createdOn').children('p').html(new Date(userNote[selectedNote].createdOn).toDateString());
 }
 
+function connectToPocket() {
+    $.ajax({
+        url: 'pocketKey',
+        type: 'GET',
+        data: {userID: userID},
+        success: function(data) {
+            Cookies.set('pocketRequestCode', data);
+            window.location.replace('https://getpocket.com/auth/authorize?request_token=' + data + '&redirect_uri=http://' + window.location.hostname +'?ref=pocketOAuth');
+        }
+    });
+}
+
 function getPocketUnreadElements() {
     $.ajax({
         url: 'getUsersPocketReadList',
         type: 'GET',
         data: { userID },
         success: function(data) {
-            userPocketReadingList = JSON.parse(data).list;
-            displayPocketUnreadElements(userPocketReadingList);
+            if (data === '401 Unauthorized') {
+                console.log('pocket deserialized');
+                $('.pocketToolView').html('<h4 style="color:black; padding-left:10px; padding-right:10px">Your Pocket account has been deserialized</h4><p style="color:black; padding-left:10px; padding-right:10px">Click here to reconnect your account</p><input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket"style="margin-left:10px" onclick="connectToPocket()"/>');
+            }
+            else {
+                userPocketReadingList = JSON.parse(data).list;
+                displayPocketUnreadElements(userPocketReadingList);
+            }
         }
     });
 }
@@ -723,10 +733,10 @@ function displayPocketUnreadElements(userPocketReadingList) {
 
     for (let i = 0; i < userPocketReadingList.length; i++) {
         let pocketArticleBody = userPocketReadingList[i].excerpt;
-        if (pocketArticleBody != ""){
+        if (pocketArticleBody != "") {
             pocketArticleBody = userPocketReadingList[i].excerpt.substring(0, 115) + '...';
         }
-        
+
         let pocketArticleHTML = '<a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" id="' + userPocketReadingList[i].item_id + '" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small></div><p class="mb-1">' + pocketArticleBody + '</p></a>';
         $('.readingList').append(pocketArticleHTML);
     }
