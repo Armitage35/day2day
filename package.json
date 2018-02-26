@@ -12,7 +12,6 @@
     "gravatar": "^1.6.0",
     "grunt": "^1.0.2",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^3.3.0",
     "grunt-contrib-watch": "^1.0.0",
     "load-grunt-tasks": "^3.5.2",
     "mailgun-js": "^0.15.0",
@@ -22,7 +21,6 @@
     "node-uuid": "^1.4.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-pocket": "^1.0.0",
     "pug": "^2.0.0-rc.4",
     "validator": "^9.2.0"
   },

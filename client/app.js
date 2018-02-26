@@ -213,12 +213,12 @@ var main = function() {
             handleTool('pocket');
         }
     });
-    
+
     $('.markRead').on('click', function() {
-        let pocketArticleRead = 
+        let pocketArticleRead = $(this).attr('id');
         markArticleRead(pocketArticleRead);
-    })
-    
+    });
+
 };
 
 $(document).ready(main);
@@ -724,13 +724,36 @@ function displayPocketUnreadElements(userPocketReadingList) {
             pocketArticleBody = userPocketReadingList[i].excerpt.substring(0, 115) + '...';
         }
 
-        let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small><i class="far fa-newspaper"></i></small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '"><i class="fas fa-check"></i> Mark as read</button></small></div>';
+        let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small><i class="far fa-newspaper"></i></small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '" onclick="markArticleRead(' + userPocketReadingList[i].item_id + ')"><i class="fas fa-check"></i> Mark as read</button></small></div>';
         $('.readingList').append(pocketArticleHTML);
     }
 }
 
-function markArticleRead (pocketArticleRead) {
-    
+function markArticleRead(pocketArticleRead) {
+    console.log(pocketArticleRead);
+    $.ajax({
+        url: 'markArticleRead',
+        type: 'POST',
+        data: { pocketArticleRead: pocketArticleRead, pocketToken: user.integrations.pocket.token },
+        success: function(data) {
+            console.log(data);
+            if (data === '{"action_results":[true],"status":1}') {
+                iziToast.success({
+                    title: 'Duely noted',
+                    message: 'This item has been archived',
+                    position: 'topRight',
+                });
+                pocketArticleRead = '#' + pocketArticleRead;
+                $(pocketArticleRead).parent().parent().fadeOut();
+            }
+            else {
+                iziToast.error({
+                    title: 'Error',
+                    message: 'Something went wrong...',
+                });
+            }
+        }
+    });
 }
 
 //auto sign in if cookie's here

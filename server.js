@@ -554,7 +554,6 @@ app.get('/getUsersPocketReadList', function(req, res) {
 
             request(options, function(error, response, body) {
                 if (error) throw new Error(error);
-                console.log(body);
                 res.send(body);
             });
         }
@@ -570,14 +569,13 @@ app.post('/markArticleRead', function(req, res) {
         qs: {
             consumer_key: pocketConsumerKey,
             access_token: req.body.pocketToken,
-            actions: '[{"action":"archive","time":1348853312,"item_id":"+ req.body.pocketItemID +"}]'
+            actions: '[{"action":"archive","time":1348853312,"item_id":"' + req.body.pocketArticleRead + '"}]'
         },
-        body: '[\n    {\n        "action" : "archive",\n        "item_id" : "11983484",\n    }\n]'
     };
 
     request(options, function(error, response, body) {
         if (error) throw new Error(error);
 
-        console.log(body);
+        res.send(body);
     });
 })
