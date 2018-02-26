@@ -583,22 +583,26 @@ app.post('/markArticleRead', function(req, res) {
 app.post('/addnewpocketarticle', function(req, res) {
     console.log(req.body);
 
-    var request = require("request");
+    console.log(validator.isURL(req.body.url));
 
-    var options = {
-        method: 'GET',
-        url: 'https://getpocket.com/v3/add',
-        qs: {
-            consumer_key: pocketConsumerKey,
-            access_token: req.body.pocketToken,
-            url: req.body.url
-        },
-    };
+    if (validator.isURL(req.body.url) === true) {
+        var options = {
+            method: 'GET',
+            url: 'https://getpocket.com/v3/add',
+            qs: {
+                consumer_key: pocketConsumerKey,
+                access_token: req.body.pocketToken,
+                url: req.body.url
+            },
+        };
 
-    request(options, function(error, response, body) {
-        if (error) throw new Error(error);
-        res.send(body);
-        console.log(body);
-    });
+        request(options, function(error, response, body) {
+            if (error) throw new Error(error);
+            res.send(body);
+            console.log(body);
+        });
+    } else {
+        res.send('not a link');
+    }
 
 });

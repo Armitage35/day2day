@@ -223,11 +223,21 @@ var main = function() {
         $.ajax({
             url: 'addnewpocketarticle',
             type: 'POST',
-            data: { url: $('#newPocketArticleLink').val(), pocketToken: user.integrations.pocket.token},
+            data: { url: $('#newPocketArticleLink').val(), pocketToken: user.integrations.pocket.token },
             success: function(data) {
-                $('#newPocketArticleLink').val('');
-                $('#pocketNewArticle').modal('hide');
                 console.log(data);
+                if (data != 'not a link') {
+                    $('#newPocketArticleLink').val('');
+                    $('#pocketNewArticle').modal('hide');
+                    getPocketUnreadElements();
+                    displayPocketUnreadElements();
+                }
+                else {
+                    iziToast.error({
+                        title: 'Error',
+                        message: 'Please submit a valid URL',
+                    });
+                }
             }
         });
     });
