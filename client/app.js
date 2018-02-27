@@ -226,7 +226,7 @@ var main = function() {
             data: { url: $('#newPocketArticleLink').val(), pocketToken: user.integrations.pocket.token },
             success: function(data) {
                 console.log(data);
-                if (data != 'not a link') {
+                if (data != 'not a link' || data != '400 Bad Request') {
                     $('#newPocketArticleLink').val('');
                     $('#pocketNewArticle').modal('hide');
                     getPocketUnreadElements();
@@ -739,15 +739,33 @@ function getPocketUnreadElements() {
 }
 
 function displayPocketUnreadElements(userPocketReadingList) {
+    $('.readingList').empty();
     userPocketReadingList = Object.values(userPocketReadingList);
 
     for (let i = 0; i < userPocketReadingList.length; i++) {
-        let pocketArticleBody = userPocketReadingList[i].excerpt;
+        let pocketArticleBody = userPocketReadingList[i].excerpt,
+            pocketArticleTitle = userPocketReadingList[i].resolved_title,
+            pocketArticleContentType;
+
         if (pocketArticleBody != "") {
             pocketArticleBody = userPocketReadingList[i].excerpt.substring(0, 115) + '...';
         }
 
-        let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + userPocketReadingList[i].resolved_title + '</h5> <small><i class="far fa-newspaper"></i></small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '" onclick="markArticleRead(' + userPocketReadingList[i].item_id + ')"><i class="fas fa-check"></i> Mark as read</button></small></div>';
+        if (userPocketReadingList[i].resolved_title.length > 50) {
+            pocketArticleTitle = userPocketReadingList[i].resolved_title.substring(0, 75) + '...';
+        }
+
+        // handling article content type
+        if (userPocketReadingList[i].is_article === "1") {
+            pocketArticleContentType = '<i class="fas fa-newspaper"></i>';
+        }
+        else if (userPocketReadingList[i].has_video > "0") {
+            pocketArticleContentType = '<i class="fab fa-youtube"></i>';
+        } else {
+            pocketArticleContentType = "";
+        }
+
+        let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + pocketArticleTitle + '</h5> <small>' + pocketArticleContentType + '</small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '" onclick="markArticleRead(' + userPocketReadingList[i].item_id + ')"><i class="fas fa-check"></i> Mark as read</button></small></div>';
         $('.readingList').append(pocketArticleHTML);
     }
 }
