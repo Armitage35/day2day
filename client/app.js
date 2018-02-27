@@ -482,6 +482,7 @@ function onboarding() {
 
 function completeTask(completedTaskID) {
     let completedTaskMongoID = userTask[completedTaskID]._id;
+    $(this).fadeOut();
     $.ajax({
         url: "todos",
         type: 'PUT',
@@ -761,7 +762,8 @@ function displayPocketUnreadElements(userPocketReadingList) {
         }
         else if (userPocketReadingList[i].has_video > "0") {
             pocketArticleContentType = '<i class="fab fa-youtube"></i>';
-        } else {
+        }
+        else {
             pocketArticleContentType = "";
         }
 
