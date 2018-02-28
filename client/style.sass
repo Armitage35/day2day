@@ -1,8 +1,24 @@
+// variables
 $fontStack: "Raleway", sans-serif
 $whiteTitles: white
 $day2dayBlue: #1d89ff
 $toolInsidePadding: 10px 15px 0px
 
+// mixins
+=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius:    $radius
+  -ms-border-radius:     $radius
+  border-radius:         $radius
+
+=filter($filter-type,$filter-amount)
+  -webkit-filter: $filter-type+unquote('(#{$filter-amount})')
+  -moz-filter: $filter-type+unquote('(#{$filter-amount})')
+  -ms-filter: $filter-type+unquote('(#{$filter-amount})')
+  -o-filter: $filter-type+unquote('(#{$filter-amount})')
+  filter: $filter-type+unquote('(#{$filter-amount})')
+
+// classes to extend
 %grey-link
   font-size: .8rem
   font-weight: 600
@@ -79,7 +95,7 @@ ul
   img
     max-width: 33px
     float: right
-    border-radius: 100%
+    +border-radius(100%)
 
 .timeDateWeather
   color: white
@@ -146,16 +162,22 @@ ul
     background-color: $day2dayBlue
     height: 100px
     background-size: cover
-    img
-      border-radius: 100%
-      height: 60px
-      width: 60px
-      margin-left: auto
-      margin-right: auto
-      display: block
+    +filter(blur, 3px)
+  #settingAvatar
+    +border-radius(100%)
+    height: 60px
+    width: 60px
+    margin-left: auto
+    margin-right: auto
+    display: block
+    position: relative
+    top: -88px
+  .settingsContent
+    position: relative
+    top: -55px
 
 .task
-  border-radius: 0px
+  +border-radius(0px)
   border-width: 0px 0px 1px
   
 .lateTask
@@ -184,7 +206,7 @@ input[type="checkbox"]
   width: 1.3em
   height: 1.3em
   background-color: white
-  border-radius: 50%
+  +border-radius(50%)
   vertical-align: middle
   border: 3px solid $day2dayBlue
   -webkit-appearance: none
@@ -276,7 +298,7 @@ input[type="checkbox"]:checked
 
 .avatarComment
   width: 75%
-  border-radius: 100%
+  +border-radius(100%)
 
 .commentBody
   margin-bottom: 0px
@@ -287,7 +309,7 @@ input[type="checkbox"]:checked
 
 .bubble
   background-color: white
-  border-radius: 10px
+  +border-radius(10px)
 
   p
     padding: 15px
@@ -295,7 +317,7 @@ input[type="checkbox"]:checked
 
   img
     padding: 0
-    border-radius: 10px
+    +border-radius(10px)
     min-with: 125px
     max-width: 100%
 
@@ -400,7 +422,7 @@ input[type="checkbox"]:checked
   justify-content: center
   width: 50rem
   height: 33rem
-  border-radius: 0.1875rem
+  +border-radius(0.1875rem)
   box-shadow: 0px 0.1875rem 0.4375rem rgba(0, 0, 0, 0.25)
 
   .container__child
@@ -470,7 +492,7 @@ label
 .form-control
   background-color: white
   border: 0
-  border-radius: 0
+  +border-radius(0)
 
 .form-control:focus
   border-color: #111

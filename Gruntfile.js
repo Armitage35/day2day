@@ -2,6 +2,9 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         sass: {
+            option: {
+                sourceMap: true
+            },
             dist: {
                 files: {
                     'client/style.css': 'client/style.sass'
@@ -17,9 +20,9 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
-                  'emailTemplates/htmlRender/welcomeEmail.html': 'emailTemplates/welcomeEmail.pug',
-                  'emailTemplates/htmlRender/passwordResetEmail.html': 'emailTemplates/passwordResetEmail.pug',
-                  'emailTemplates/htmlRender/passwordResetSuccess.html': 'emailTemplates/passwordResetSuccess.pug',
+                    'emailTemplates/htmlRender/welcomeEmail.html': 'emailTemplates/welcomeEmail.pug',
+                    'emailTemplates/htmlRender/passwordResetEmail.html': 'emailTemplates/passwordResetEmail.pug',
+                    'emailTemplates/htmlRender/passwordResetSuccess.html': 'emailTemplates/passwordResetSuccess.pug',
                 }
             }
         },

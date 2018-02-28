@@ -367,7 +367,8 @@ function getUser() {
             user = data;
             let userAvatarForBackground = 'url("' + data.avatar + '")';
             $('.userPicture').attr('src', userAvatar);
-            $('.avatar').css('background-picture', userAvatarForBackground).children('img').attr('src', userAvatar);
+            $('.avatar').css('background-image', userAvatarForBackground).children('img');
+            $('#settingAvatar').attr('src', userAvatar).css('filter', 'none');
         }
     });
 }
