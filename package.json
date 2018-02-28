@@ -6,6 +6,7 @@
   "dependencies": {
     "aws-sdk": "^2.188.0",
     "bcrypt": "^1.0.3",
+    "bootstrap": "^4.0.0-alpha.6",
     "express": "^3.21.2",
     "express-fileupload": "^0.4.0",
     "express-validator": "^4.3.0",

@@ -154,19 +154,23 @@ ul {
 .settingsToolView .settingsContent {
   position: relative;
   top: -55px; }
+  .settingsToolView .settingsContent #editSettings {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 15px; }
 .settingsToolView .settingsBlock {
   background-color: #ecf0f1;
   padding: 10px;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  word-wrap: break-word; }
   .settingsToolView .settingsBlock .settingTitle {
     margin-bottom: 0px;
     font-size: 11px; }
   .settingsToolView .settingsBlock .settingValue {
     font-size: 14px; }
-    .settingsToolView .settingsBlock .settingValue .settingsIntegration {
-      margin-bottom: 0px; }
-      .settingsToolView .settingsBlock .settingValue .settingsIntegration button {
-        margin-bottom: 16px; }
+    .settingsToolView .settingsBlock .settingValue .settingsIntegration button {
+      margin-bottom: 16px; }
 .settingsToolView .settingsBlockTitle {
   text-align: center;
   margin-bottom: 5px; }
