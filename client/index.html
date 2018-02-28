@@ -86,24 +86,23 @@
                         <img src="" id="settingAvatar" />
                         <div class="settingsContent">
                             <h3 class="settingsToolTitle">My settings</h3>
-                            <p>Personal informations</p>
-                            <button class="bttn-material-flat bttn-xs bttn-primary">edit</button>
+                            <p class="settingsBlockTitle">Personal informations<i class="fas fa-edit fa-2x" id="settingsEdit"></i></p>
+                            <button class="bttn-material-flat bttn-xs bttn-primary">Edit settings</button>
                             <div class="settingsBlock">
                                 <p class="settingTitle">Name</p>
                                 <p class="settingValue" id="userName">Adrien Dubois Ahlqvist</p>
                                 <p class="settingTitle">Email</p>
                                 <p class="settingValue" id="userEmail">adrien.dubois35@gmail.com</p>
                                 <p class="settingTitle">Password</p>
-                                <button class="bttn-bordered bttn-sm bttn-primary">Change password</button>
-                            </div>
+                                <button class="bttn-material-flat bttn-xs bttn-primary">Change password</button> </div>
+                            <p class="settingsBlockTitle">Connected apps</p>
                             <div class="settingsBlock">
-                                <p class="integrationName">Pocket</p>
-                                <i class="far fa-check-circle"></i>
-                                <p>Connected</p>
+                                <p class="settingTitle">Pocket</p>
+                                <p class="settingValue settingsIntegration"><i class="far fa-check-circle"></i> Connected</p>
                                 <button class="bttn-minimal bttn-xs bttn-primary">Disconnect</button>
-                                <p class="integrationName">Google</p>
-                                <i class="far fa-times-circle"></i>
-                                <p>Not connected</p>
+                                <p class="settingTitle">Google</p>
+
+                                <p class="settingValue settingsIntegration"><i class="far fa-times-circle"></i> Not connected</p>
                                 <button class="bttn-minimal bttn-xs bttn-primary">Connect</button> </div>
                         </div>
                     </div>
