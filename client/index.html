@@ -80,6 +80,31 @@
                         </div>
                         <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newPocketButton" data-toggle="modal" data-target="#pocketNewArticle">new link</button>
                     </div>
+                    <div class="settingsToolView">
+                        <div class="avatar">
+                            <img src="" />
+                        </div>
+                        <h3 class="settingsToolTitle">My settings</h3>
+                        <p>Personal informations</p>
+                        <button class="bttn-material-flat bttn-xs bttn-primary">edit</button>
+                        <div class="settingsBlock">
+                            <p class="settingTitle">Name</p>
+                            <p class="settingValue" id="userName">Adrien Dubois Ahlqvist</p>
+                            <p class="settingTitle">Email</p>
+                            <p class="settingValue" id="userEmail">adrien.dubois35@gmail.com</p>
+                            <p class="settingTitle">Password</p>
+                            <button class="bttn-bordered bttn-sm bttn-primary">Change password</button>
+                        </div>
+                        <div class="settingsBlock">
+                            <p class="integrationName">Pocket</p>
+                            <i class="far fa-check-circle"></i>
+                            <p>Connected</p>
+                            <button class="bttn-minimal bttn-xs bttn-primary">Disconnect</button>
+                            <p class="integrationName">Google</p>
+                            <i class="far fa-times-circle"></i>
+                            <p>Not connected</p>
+                            <button class="bttn-minimal bttn-xs bttn-primary">Connect</button> </div>
+                    </div>
                 </div>
             </div>
             <!-- display tool bar -->
@@ -101,8 +126,8 @@
                     </button>
                 </div>
                 <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="taskTool">
-                        <i class="fas fa-cog fa-2x" data-toggle="modal" data-target="#comingSoon"></i>
+                    <button type="button" class="btn btn-link" id="settingTool">
+                        <i class="fas fa-cog fa-2x"></i>
                     </button>
                 </div>
             </div>
@@ -136,9 +161,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Your file is being uploaded</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                    <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <p>Upload in progress</p>
@@ -148,9 +172,6 @@
                         <div class="sk-cube4 sk-cube"></div>
                         <div class="sk-cube3 sk-cube"></div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

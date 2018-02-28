@@ -146,16 +146,20 @@ var main = function() {
 
     //enabling user to only see the background picture
     $('#backgroundTool').on('click', function() {
-        handleTool("background")
+        handleTool('background');
     });
 
     $('#taskTool').on('click', function() {
-        handleTool("task");
+        handleTool('task');
     });
 
     $('#noteTool').on('click', function() {
-        handleTool("note");
+        handleTool('note');
     });
+    $('#settingTool').on('click', function() {
+        handleTool('settings');
+    });
+    
     console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined) {
         handleTool("task");
@@ -262,18 +266,24 @@ function handleTool(selectedTool) {
     else if (selectedTool === 'task') {
         $('.fa-tasks').addClass('active');
         $('.tool, .taskToolView').show('slow');
-        $('.noteToolView, .pocketToolView').hide();
+        $('.noteToolView, .pocketToolView, .settingsToolView').hide();
     }
     else if (selectedTool === 'note') {
         $('.fa-sticky-note').addClass('active');
         $('.tool, .noteToolView').show('slow');
-        $('.taskToolView, .pocketToolView').hide();
+        $('.taskToolView, .pocketToolView, .settingsToolView').hide();
     }
     else if (selectedTool === 'pocket') {
         $('.fa-get-pocket').addClass('active');
         $('.tool, .pocketToolView').show('slow');
-        $('.taskToolView, .noteToolView').hide();
+        $('.taskToolView, .noteToolView, .settingsToolView').hide();
         getPocketUnreadElements();
+    }
+    else if (selectedTool === 'settings') {
+        $('.fa-cog').addClass('active');
+        $('.tool, .settingsToolView').show('slow');
+        $('.taskToolView, .noteToolView, .pocketToolView').hide();
+        displayUserSettings();
     }
 }
 
@@ -355,7 +365,9 @@ function getUser() {
         success: function(data) {
             userAvatar = data.avatar;
             user = data;
+            let userAvatarForBackground = 'url("' + data.avatar + '")';
             $('.userPicture').attr('src', userAvatar);
+            $('.avatar').css('background-picture', userAvatarForBackground).children('img').attr('src', userAvatar);
         }
     });
 }
@@ -797,6 +809,9 @@ function markArticleRead(pocketArticleRead) {
             }
         }
     });
+}
+
+function displayUserSettings() {
 }
 
 //auto sign in if cookie's here
