@@ -21,6 +21,10 @@ var UserSchema = mongoose.Schema({
             connected: Boolean,
             token: String
         }
+    },
+    settings: {
+        temperatureUnit: String,
+        background: String
     }
 });
 

@@ -159,18 +159,19 @@ var main = function() {
     $('#settingTool').on('click', function() {
         handleTool('settings');
     });
-    
+
     console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined) {
         handleTool("task");
     }
     else {
         handleTool(Cookies.get('selectedTool'));
+        console.log('super');
     }
 
     $(".notePreview").on('click', function() {
         displayNoteContent(selectedNote);
-    })
+    });
 
     $(".noteTitleInput").val("Note title");
 
@@ -813,6 +814,36 @@ function markArticleRead(pocketArticleRead) {
 }
 
 function displayUserSettings() {
+    let integrationNotConnected = '<i class="far fa-times-circle"></i> Not connected</p>',
+        integrationConnected = '<i class="far fa-check-circle"></i> Connected</p>';
+
+    $('#userName').text(user.username);
+    $('#userEmail').text(user.email);
+
+    // handle user general preferences
+    if (user.hasOwnProperty('temperatureUnit')) {
+        if (user.settings.temperatureUnit === 'celsius') {
+            $('#settingsTemperaturePref').text('Celsius (default)');
+        }
+        else if (user.settings.temperatureUnit === 'farenheit') {
+            $('#settingsTemperaturePref').text('Fahrenheit');
+        }
+    }
+    else {
+        $('#settingsTemperaturePref').text('Celsius (default)');
+    }
+
+
+    // handle pocket integration and buttons
+    if (user.integrations.pocket.connected === !true) {
+        $('#settingsPocketStatus').html(integrationNotConnected);
+        $('#settingPocketAction').text('Connect').attr('onclick', 'connectToPocket()');
+    }
+    else {
+        $('#settingsPocketStatus').html(integrationConnected);
+        $('#settingPocketAction').text('Disconnect');
+    }
+
 }
 
 //auto sign in if cookie's here
