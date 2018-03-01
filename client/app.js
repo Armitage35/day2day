@@ -22,6 +22,8 @@ var selectedTask,
 
 var main = function() {
 
+    updateClock();
+
     //getting the task's ID and displaying comments in the modal
     $(".taskList").on('click', "button", function() {
         selectedTask = $(this).parent().attr('id');
@@ -342,7 +344,7 @@ else {
 
 //display time
 function updateClock() {
-    now = new Date();
+    var now = new Date();
     var hh = now.getHours();
     if (hh < 10) {
         hh = '0' + hh;
@@ -353,7 +355,7 @@ function updateClock() {
     }
     $(".time").html(hh + ":" + minutes);
     $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
-    setInterval(updateClock, 1500);
+    setInterval(updateClock, 36000);
 }
 
 //getting user avatar
@@ -890,7 +892,6 @@ function initliazeDay2Day() {
     getUser();
     updateWallpaper();
     handleWeather();
-    updateClock();
     displayTask();
     displayNoteList();
 }
