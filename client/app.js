@@ -344,17 +344,22 @@ else {
 
 //display time
 function updateClock() {
-    var now = new Date();
-    var hh = now.getHours();
+    var now = new Date(),
+        hh = now.getHours();
+
     if (hh < 10) {
         hh = '0' + hh;
     }
+
     var minutes = now.getMinutes();
+
     if (minutes < 10) {
         minutes = '0' + minutes;
     }
+
     $(".time").html(hh + ":" + minutes);
     $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
+
     setInterval(updateClock, 36000);
 }
 
@@ -629,9 +634,9 @@ function handleWeather() {
             openWeatherMapUnit = 'metric';
             openWeatherMapUnitShort = "°C";
         }
-        
+
         let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=" + openWeatherMapUnit + "&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
-        
+
         $.get(openWeatherMapReq, function(data) {
             $(".temperature").text(" | " + Math.ceil(data.main.temp) + openWeatherMapUnitShort);
         });
