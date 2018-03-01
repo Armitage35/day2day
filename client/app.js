@@ -17,7 +17,9 @@ var selectedTask,
     selectedTool = "task", //sets the default tool
     selectedNote,
     user,
-    userPocketReadingList;
+    userPocketReadingList,
+    temperatureUnit,
+    backgroundTheme;
 
 var main = function() {
 
@@ -300,12 +302,12 @@ if (dd < 10) {
 if (mm < 10) {
     mm = '0' + mm;
 }
-var now = yyyy + '-' + mm + '-' + dd;
 
-var beginingOfDay = new Date();
+let now = yyyy + '-' + mm + '-' + dd,
+    beginingOfDay = new Date(),
+    endOfDay = new Date();
 beginingOfDay.getTime(beginingOfDay.setHours(0, 0, 0));
 beginingOfDay = beginingOfDay.getTime();
-var endOfDay = new Date();
 endOfDay.setHours(23, 59, 59);
 endOfDay = endOfDay.getTime();
 
@@ -355,8 +357,6 @@ function updateClock() {
     setInterval(updateClock, 2000);
 }
 
-updateClock();
-
 //getting user avatar
 function getUser() {
     $.ajax({
@@ -373,8 +373,6 @@ function getUser() {
         }
     });
 }
-
-getUser();
 
 function selectedTaskViewHandler(selectedView) {
     if (selectedView === 0) {
@@ -435,11 +433,10 @@ function displayTaskDetails(i) {
 }
 
 function displayComments() {
-    $('.detailsCheckbox').prop('checked', false);
+    $('.detailsCheckbox').prop('checked', false).attr('id', userTask[selectedTask]._id);
     $(".commentSection").empty();
     $("#newCommentModal").show();
     $("#main").hide();
-    $(".detailsCheckbox").attr('id', userTask[selectedTask]._id);
     $("#textComment").addClass("active");
     let createdOnDisplay = new Date(userTask[selectedTask].createdOn).toLocaleDateString();
     if (!!userTask[selectedTask].dueDate) {
@@ -465,7 +462,7 @@ function displayComments() {
 function onboarding() {
     if (userTask.length === 0) {
         var onboardingInvite = '<div class="onboarding"> <p class="text-center"> Is this your first time? </p><div class="row justify-content-center"> <button type="button" class="bttn-unite bttn-sm bttn-primary" id="onboardingBttn">Show me around</button> </div> </div>';
-        $(".taskList").append(onboardingInvite);
+        $('.taskList').append(onboardingInvite);
         $('#onboardingBttn').on("click", function() {
             userTask.push({
                 title: 'Start by adding a task',
@@ -596,7 +593,6 @@ function updateWallpaper() {
     setInterval(updateWallpaper, 180000); //refresh every 3 minutes
 }
 
-updateWallpaper();
 
 //handle weather
 function handleWeather() {
@@ -645,16 +641,11 @@ function handleCommentType(commentType) {
     $(this).children().addClass("active");
 }
 
-handleWeather();
-displayTask();
-displayNoteList();
-
 function saveNote(selectedNote, noteArchived) {
     let noteBody = $(".noteInputZone").val(),
         noteTitle = $(".noteTitleInput").val(),
         notePreview = noteBody.substring(0, 115) + "...",
         noteLastEditedOn = new Date(),
-        noteID = selectedNote,
         noteMongoID = 0;
 
     if (noteArchived === true) {
@@ -801,7 +792,7 @@ function markArticleRead(pocketArticleRead) {
                     position: 'topRight',
                 });
                 pocketArticleRead = '#' + pocketArticleRead;
-                $(pocketArticleRead).parent().parent().fadeOut();
+                $(pocketArticleRead).parent().parent().fadeOut('slow');
             }
             else {
                 iziToast.error({
@@ -820,7 +811,7 @@ function displayUserSettings() {
     $('#userName').text(user.username);
     $('#userEmail').text(user.email);
 
-    // handle user general preferences
+    // handle user pref
     if (user.hasOwnProperty('temperatureUnit')) {
         if (user.settings.temperatureUnit === 'celsius') {
             $('#settingsTemperaturePref').text('Celsius (default)');
@@ -833,6 +824,14 @@ function displayUserSettings() {
         $('#settingsTemperaturePref').text('Celsius (default)');
     }
 
+    
+    // handling user's pref for bakground
+    if (user.hasOwnProperty('backgroundPicture')) {
+        $('#settingsBackgroundPref').text(user.preferences.backgroundPicture);
+    }
+    else {
+        $('#settingsBackgroundPref').text('Nature (Default)');
+    }
 
     // handle pocket integration and buttons
     if (user.integrations.pocket.connected === !true) {
@@ -843,8 +842,28 @@ function displayUserSettings() {
         $('#settingsPocketStatus').html(integrationConnected);
         $('#settingPocketAction').text('Disconnect');
     }
-
+    
+    // handle google integration and buttons
+    if (user.hasOwnProperty('google') === false) {
+        $('#settingsGoogleStatus').html(integrationNotConnected);
+        $('#settingGoogleAction').text('');
+    }
+    else {
+        $('#settingsGoogleStatus').html(integrationConnected);
+        $('#settingGoogleAction').text('Disconnect');
+    }
 }
+
+function initliazeDay2Day() {
+    getUser();
+    updateWallpaper();
+    handleWeather();
+    updateClock();
+    displayTask();
+    displayNoteList();
+}
+
+initliazeDay2Day();
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
