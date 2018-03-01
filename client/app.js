@@ -1,8 +1,7 @@
 /* global $
 global Cookies 
 global iziToast
-global location
-global i*/
+global location*/
 
 var selectedTask,
     userTask = [],
@@ -43,12 +42,12 @@ var main = function() {
     $("#testGif").on("click", function() {
         $(".testGif").remove();
         $("#addGif").show();
-        var requestedGif = $("#message-giphy").val().split(' ').join('+');
-        var giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1";
-        var giphyResponse = $.getJSON(giphyCall, function() {
-            gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
-            $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
-        });
+        let requestedGif = $("#message-giphy").val().split(' ').join('+'),
+            giphyCall = "https://api.giphy.com/v1/gifs/search?q=" + requestedGif + "&api_key=" + giphyApiKey + "&limit=1",
+            giphyResponse = $.getJSON(giphyCall, function() {
+                gif = '<img src="' + giphyResponse.responseJSON.data[0].images.preview_gif.url + '" class="gif';
+                $(".commentSection").append('<div class="row comment testGif"> <div class="col-1"> <img src=' + userAvatar + ' class="avatarComment"> </div> <div class="col-11"> <div class="bubble">' + gif + '" > </div><p class="timeStamp ">6th january, 15h28</p></div></div>');
+            });
     });
 
     //display text input on task details
@@ -354,7 +353,7 @@ function updateClock() {
     }
     $(".time").html(hh + ":" + minutes);
     $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
-    setInterval(updateClock, 2000);
+    setInterval(updateClock, 1500);
 }
 
 //getting user avatar
@@ -370,6 +369,8 @@ function getUser() {
             $('.userPicture').attr('src', userAvatar);
             $('.avatar').css('background-image', userAvatarForBackground).children('img');
             $('#settingAvatar').attr('src', userAvatar).css('filter', 'none');
+            // once we have the user, we can set default values here and there
+            setDefaultValues();
         }
     });
 }
@@ -545,9 +546,6 @@ function addTask() {
         });
 
         $(".task-input input").val("");
-        //send the new object to cookie  file
-        //updateCookie();
-        //updateCookie();
         $(".datePicker").hide();
         displayTask();
     }
@@ -575,8 +573,15 @@ function addComment(newComment) {
 
 //display new background pictures from unsplash
 function updateWallpaper() {
+    // first we want to check if the user alerady has predefined values for his background. Since waiting for the getUser is too long, we try and check the cookie
+    if (Cookies.get('backgroundTheme') != undefined) {
+        backgroundTheme = Cookies.get('backgroundTheme');
+    }
+    else {
+        backgroundTheme = "nature";
+    }
     $.ajax({
-        url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=nature",
+        url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=" + backgroundTheme,
         type: 'GET',
         success: function(data) {
             let background;
@@ -590,7 +595,7 @@ function updateWallpaper() {
             $(".thanks").html('<a href="' + data.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + ' | Unsplash </a>');
         }
     });
-    setInterval(updateWallpaper, 180000); //refresh every 3 minutes
+    setInterval(updateWallpaper, 350000); //refresh every 3 minutes
 }
 
 
@@ -616,9 +621,17 @@ function handleWeather() {
     }
 
     function getLocalWeather() { // we then get the user's loc based on his IP
-        let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=metric&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
+        let openWeatherMapUnit,
+            openWeatherMapUnitShort;
+        if (temperatureUnit === 'celsius' || temperatureUnit == undefined) {
+            openWeatherMapUnit = 'metric';
+            openWeatherMapUnitShort = "°C";
+        }
+        
+        let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=" + openWeatherMapUnit + "&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
+        
         $.get(openWeatherMapReq, function(data) {
-            $(".temperature").text(" | " + Math.ceil(data.main.temp) + " °C");
+            $(".temperature").text(" | " + Math.ceil(data.main.temp) + openWeatherMapUnitShort);
         });
     }
     getIP();
@@ -811,7 +824,7 @@ function displayUserSettings() {
     $('#userName').text(user.username);
     $('#userEmail').text(user.email);
 
-    // handle user pref
+    // handle user pref for weather and wallpaper
     if (user.hasOwnProperty('temperatureUnit')) {
         if (user.settings.temperatureUnit === 'celsius') {
             $('#settingsTemperaturePref').text('Celsius (default)');
@@ -824,10 +837,10 @@ function displayUserSettings() {
         $('#settingsTemperaturePref').text('Celsius (default)');
     }
 
-    
+
     // handling user's pref for bakground
     if (user.hasOwnProperty('backgroundPicture')) {
-        $('#settingsBackgroundPref').text(user.preferences.backgroundPicture);
+        $('#settingsBackgroundPref').text(backgroundTheme);
     }
     else {
         $('#settingsBackgroundPref').text('Nature (Default)');
@@ -842,7 +855,7 @@ function displayUserSettings() {
         $('#settingsPocketStatus').html(integrationConnected);
         $('#settingPocketAction').text('Disconnect');
     }
-    
+
     // handle google integration and buttons
     if (user.hasOwnProperty('google') === false) {
         $('#settingsGoogleStatus').html(integrationNotConnected);
@@ -852,6 +865,25 @@ function displayUserSettings() {
         $('#settingsGoogleStatus').html(integrationConnected);
         $('#settingGoogleAction').text('Disconnect');
     }
+}
+
+// if user has not set his own values, use default
+function setDefaultValues() {
+    if (user.hasOwnProperty('temperatureUnit') == false) {
+        temperatureUnit = 'celsius';
+    }
+    else {
+        temperatureUnit = user.settings.temperatureUnit;
+    }
+
+    if (user.hasOwnProperty('backgroundPicture') === false) {
+        backgroundTheme = 'nature';
+    }
+    else {
+        backgroundTheme = user.settings.backgroundPicture;
+        // if (backgroundTheme)
+    }
+    Cookies.set('backgroundTheme', backgroundTheme);
 }
 
 function initliazeDay2Day() {
