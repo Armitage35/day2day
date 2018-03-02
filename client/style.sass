@@ -25,6 +25,11 @@ $toolInsidePadding: 20px 15px 0px
 	text-decoration: underline
 	color: #999
 	display: block
+	
+%horizontal-align
+	margin-left: auto
+	margin-right: auto
+	display: block
 
 body
 	font-family: $fontStack
@@ -182,10 +187,11 @@ ul
 	.settingsContent
 		position: relative
 		top: -55px
-		#editSettings
-			margin-left: auto
-			margin-right: auto
-			display: block
+		#editSettings 
+			@extend %horizontal-align
+			margin-bottom: 15px
+		#saveSettings
+			@extend %horizontal-align
 			margin-bottom: 15px
 	.settingsBlock
 		background-color: #ecf0f1
@@ -197,6 +203,7 @@ ul
 			font-size: 11px
 		.settingValue
 			font-size: 14px
+			margin-bottom: 14px
 			.settingsIntegration
 				button
 					margin-bottom: 16px

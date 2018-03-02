@@ -22,7 +22,7 @@ var selectedTask,
 
 var main = function() {
 
-    updateClock();
+    updateClock(); // leave here as this should not execute before DOM is ready 
 
     //getting the task's ID and displaying comments in the modal
     $(".taskList").on('click', "button", function() {
@@ -164,7 +164,7 @@ var main = function() {
     });
 
     console.log("selected tool: " + Cookies.get('selectedTool'));
-    if (Cookies.get('selectedTool') === undefined) {
+    if (Cookies.get('selectedTool') === undefined || Cookies.get('selectedTool') === 'settings') {
         handleTool("task");
     }
     else {
@@ -195,6 +195,16 @@ var main = function() {
 
     $('#connectPocket').on('click', function() {
         connectToPocket();
+    });
+    
+    $('#editSettings').on('click', function() {
+        $('.settingsEdit, .settingsView').toggle();
+        editSettingsView();
+
+    });
+    
+    $('#saveSettings').on('click', function() {
+        $('.settingsEdit, .settingsView').toggle();
     });
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
@@ -633,6 +643,9 @@ function handleWeather() {
         if (temperatureUnit === 'celsius' || temperatureUnit == undefined) {
             openWeatherMapUnit = 'metric';
             openWeatherMapUnitShort = "°C";
+        } else {
+            openWeatherMapUnit = ''; // if empty, openWeather expects Farenheit
+            openWeatherMapUnitShort = "°F";
         }
 
         let openWeatherMapReq = "https://api.openweathermap.org/data/2.5/weather?units=" + openWeatherMapUnit + "&lat=" + userIP.latitude + "&lon=" + userIP.longitude + "&appid=" + openWeatherMapApiKey;
@@ -893,7 +906,7 @@ function setDefaultValues() {
     Cookies.set('backgroundTheme', backgroundTheme);
 }
 
-function initliazeDay2Day() {
+function initializeDay2Day() {
     getUser();
     updateWallpaper();
     handleWeather();
@@ -901,7 +914,11 @@ function initliazeDay2Day() {
     displayNoteList();
 }
 
-initliazeDay2Day();
+function editSettingsView(){
+    
+}
+
+initializeDay2Day();
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {

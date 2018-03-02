@@ -5,6 +5,11 @@
   color: #999;
   display: block; }
 
+.settingsToolView .settingsContent #editSettings, .settingsToolView .settingsContent #saveSettings {
+  margin-left: auto;
+  margin-right: auto;
+  display: block; }
+
 body {
   font-family: "Raleway", sans-serif;
   background-repeat: no-repeat;
@@ -158,9 +163,8 @@ ul {
   position: relative;
   top: -55px; }
   .settingsToolView .settingsContent #editSettings {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    margin-bottom: 15px; }
+  .settingsToolView .settingsContent #saveSettings {
     margin-bottom: 15px; }
 .settingsToolView .settingsBlock {
   background-color: #ecf0f1;
@@ -171,7 +175,8 @@ ul {
     margin-bottom: 0px;
     font-size: 11px; }
   .settingsToolView .settingsBlock .settingValue {
-    font-size: 14px; }
+    font-size: 14px;
+    margin-bottom: 14px; }
     .settingsToolView .settingsBlock .settingValue .settingsIntegration button {
       margin-bottom: 16px; }
 .settingsToolView .settingsBlockTitle {

@@ -84,7 +84,7 @@
                         <div class="avatar">
                         </div>
                         <img src="" id="settingAvatar" />
-                        <div class="settingsContent">
+                        <div class="settingsContent settingsView">
                             <h3 class="settingsToolTitle">Settings</h3>
                             <div class="settingsDisplay">
                                 <button class="bttn-material-flat bttn-xs bttn-primary" id="editSettings">Edit settings</button>
@@ -111,7 +111,35 @@
                                     <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingPocketAction"></button>
                                     <p class="settingTitle">Google</p>
                                     <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsGoogleStatus">
-                                    <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingGoogleAction"> TEST </button>
+                                        <!--<button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingGoogleAction"> TEST </button>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settingsContent settingsEdit" style='display: none'>
+                            <h3 class="settingsToolTitle">Settings</h3>
+                            <div class="settingsDisplay">
+                                <button class="bttn-material-flat bttn-xs bttn-primary" id="saveSettings">Save settings</button>
+                                <p class="settingsBlockTitle">Personal information</p>
+                                <div class="settingsBlock">
+                                    <p class="settingTitle">Name</p>
+                                    <input class="settingValue" id="userNameNewValue">
+                                    <p class="settingTitle">Email</p>
+                                    <input class="settingValue" id="userEmailNewValue">
+                                    <p class="settingTitle">Password</p>
+                                    <button class="bttn-material-flat bttn-xs bttn-primary">Reset password</button>
+                                </div>
+                                <p class="settingsBlockTitle">General settings</p>
+                                <div class="settingsBlock">
+                                    <p class="settingTitle">Background picture</p>
+                                    <input class="settingValue" id="settingsBackgroundPrefNewValue">
+                                    <p class="settingTitle">Temperature unit</p>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose your unit</button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Celsius</a>
+                                            <a class="dropdown-item" href="#">Farenheit</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +183,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button><button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
+                    <button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                     <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
                 </div>
                 <div class="modal-footer">
