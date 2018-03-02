@@ -136,8 +136,8 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose your unit</button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Celsius</a>
-                                            <a class="dropdown-item" href="#">Farenheit</a>
+                                            <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueCelsius">Celsius</a>
+                                            <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueFarenheit">Farenheit</a>
                                         </div>
                                     </div>
                                 </div>
@@ -373,6 +373,27 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- confirmation modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModal">Please confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    You have changed your settings, those will be activated as soon as you validate. Do you still want to proceed ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="settingsConfirmationModalCancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="settingsConfirmChanges">Save changes</button>
                 </div>
             </div>
         </div>

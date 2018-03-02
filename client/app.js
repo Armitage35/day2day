@@ -196,15 +196,24 @@ var main = function() {
     $('#connectPocket').on('click', function() {
         connectToPocket();
     });
-    
+
     $('#editSettings').on('click', function() {
         $('.settingsEdit, .settingsView').toggle();
         editSettingsView();
 
     });
-    
+
     $('#saveSettings').on('click', function() {
+        // $('.settingsEdit, .settingsView').toggle();
+        $('#confirmationModal').modal('toggle');
+    });
+
+    $('#settingsConfirmationModalCancel').on('click', function() {
         $('.settingsEdit, .settingsView').toggle();
+    });
+
+    $('#settingsConfirmChanges').on('click', function() {
+        saveSettingsChanges();
     });
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
@@ -643,7 +652,8 @@ function handleWeather() {
         if (temperatureUnit === 'celsius' || temperatureUnit == undefined) {
             openWeatherMapUnit = 'metric';
             openWeatherMapUnitShort = "°C";
-        } else {
+        }
+        else {
             openWeatherMapUnit = ''; // if empty, openWeather expects Farenheit
             openWeatherMapUnitShort = "°F";
         }
@@ -914,8 +924,29 @@ function initializeDay2Day() {
     displayNoteList();
 }
 
-function editSettingsView(){
-    
+function editSettingsView() {
+    setDefaultValues();
+    $('#userNameNewValue').val(user.username);
+    $('#userEmailNewValue').val(user.email);
+    $('#settingsBackgroundPrefNewValue').val(backgroundTheme);
+
+    if (temperatureUnit === 'celsius' || user.settings.temperatureUnit === undefined) {
+        $('#settingsTemperaturePrefNewValueCelsius').addClass('active');
+    }
+    else if (temperatureUnit === 'farenheit') {
+        $('#settingsTemperaturePrefNewValueFarenheit').addClass('active');
+    }
+}
+
+function saveSettingsChanges() {
+    $('.settingsEdit, .settingsView').toggle();
+    $('#confirmationModal').modal('hide');
+    iziToast.success({
+        title: 'Changes saved',
+        message: 'Your changes have been saved',
+        position: 'topRight',
+    });
+    displayUserSettings();
 }
 
 initializeDay2Day();
