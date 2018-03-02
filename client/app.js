@@ -215,6 +215,10 @@ var main = function() {
     $('#settingsConfirmChanges').on('click', function() {
         saveSettingsChanges();
     });
+    
+    $('#settingPasswordReset').on('click', function() {
+        resetPasswordRequest();
+    });
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
     if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
@@ -947,6 +951,37 @@ function saveSettingsChanges() {
         position: 'topRight',
     });
     displayUserSettings();
+}
+
+function resetPasswordRequest() {
+    let passwordToResetForEmail = user.email;
+    $.ajax({
+        url: "/forget",
+        type: 'POST',
+        data: {
+            passwordToResetForEmail
+        },
+        success: function(data) {
+            if (data === 'succes') {
+                iziToast.success({
+                    title: 'Found You!',
+                    message: 'We sent an email to your inbox. Use it to reset your password',
+                });
+            }
+            else if (data === 'not an email') {
+                iziToast.error({
+                    title: 'Careful!',
+                    message: 'This doesn\'t seem like it\'s an email...',
+                });
+            }
+            else if (data === 'No user match this email') {
+                iziToast.warning({
+                    title: 'No account linked to this email',
+                    message: 'You first need to create an account.',
+                });
+            }
+        }
+    });
 }
 
 initializeDay2Day();
