@@ -69,7 +69,8 @@ ul {
   text-align: right;
   margin-top: 10px; }
   .user img {
-    max-width: 33px;
+    width: 33px;
+    height: 33px;
     float: right;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
@@ -139,7 +140,6 @@ ul {
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 10px;
-  background-color: #1d89ff;
   height: 100px;
   background-size: cover;
   -webkit-filter: blur(3px);

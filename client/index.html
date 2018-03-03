@@ -111,10 +111,20 @@
                                     <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingPocketAction"></button>
                                     <p class="settingTitle">Google</p>
                                     <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsGoogleStatus">
-                                        <!--<button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingGoogleAction"> TEST </button>-->
+                                </div>
+                                <p class="settingsBlockTitle">Avatar</p>
+                                <div class="settingsBlock">
+                                    <p class="settingTitle">Avatar</p>
+                                    <form method="post" enctype="multipart/form-data" action="/file">
+                                        <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" size="2MB" style="font-size:12px">
+                                        <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
+                                        <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
+                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress">Upload new avatar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                        <!-- the settings edit view -->
                         <div class="settingsContent settingsEdit" style='display: none'>
                             <h3 class="settingsToolTitle">Settings</h3>
                             <div class="settingsDisplay">

@@ -112,6 +112,10 @@ app.post('/user', function(req, res) {
         "email": email,
         "password": hashedPassword,
         "avatar": avatar,
+        "settings": {
+            "temperatureUnit": "celsius",
+            "backgroundPicture": "nature"
+        }
     });
 
     //making the promise
@@ -193,34 +197,26 @@ app.put('/user', function(req, res) {
         temperatureUnit = req.body.temperatureUnit,
         userID = req.body.userID;
 
-    if (validator.isEmpty(updatedName) === true) {
-        res.send('updated name is empty');
-    }
-    else if (validator.isEmpty(backgroundTheme) === true) {
-        res.send('backgroundTheme is empty');
-    }
-    else if (validator.isEmpty(temperatureUnit) === true) {
-        res.send('temp unit is empty');
-    }
-    else {
-        User.update({ _id: userID }, {
-            username: updatedName,
-            settings: {
-                temperatureUnit: temperatureUnit,
-                backgroundPicture: backgroundTheme
-            }
-        }, function(err, result) {
-            if (err !== null) {
-                console.log(err);
-                res.send('ERROR');
-            }
-            else {
-                console.log(result);
-                res.send(result);
-            }
-        });
-    }
+    User.update({ _id: userID }, {
+        username: updatedName,
+        settings: {
+            temperatureUnit: temperatureUnit,
+            backgroundPicture: backgroundTheme
+        }
+    }, function(err, result) {
+        if (err !== null) {
+            console.log(err);
+            res.send('ERROR');
+        }
+        else {
+            console.log(result);
+            res.send(result);
+        }
+    });
 });
+
+// new avatar acceptance
+
 
 //tasks handling
 app.post('/todos', function(req, res) {
@@ -259,7 +255,7 @@ app.put('/todos/comment', function(req, res) {
             console.log(result);
             res.json(result);
         }
-    })
+    });
 });
 
 app.get('/todos', function(req, res) {
@@ -292,10 +288,27 @@ app.put('/todos', function(req, res) {
 app.post('/file', function(req, res) {
     let appendFileToTask = req.body.selectedTask,
         amountOfComments = req.body.commentNb,
-        fileUploadedToS3Adress;
+        fileUploadedToS3Adress,
+        isAvatar = req.body.isAvatar,
+        userID = req.body.userID;
+
+    console.log(isAvatar + ' ' + userID);
+    console.log(appendFileToTask);
+    console.log(req.file);
+
     if (req.files) {
-        var file = req.files.uploadFile,
-            filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique
+        let file = req.files.uploadFile,
+            filename;
+
+
+        if (userID != null) {
+            filename = 'avatar' + userID;
+        }
+        else {
+            filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique if we are uploading a picture to a task
+        }
+
+        console.log('filename ' + filename);
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -311,21 +324,47 @@ app.post('/file', function(req, res) {
                 else
                     fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + '/' + filename;
                 let fileUploadedToS3AdressToDisplayInD2D = '<img src="' + fileUploadedToS3Adress + '" />';
-                userTasks.update({ _id: appendFileToTask }, {
-                    $push: { comment: fileUploadedToS3AdressToDisplayInD2D },
-                    $inc: { commentNb: 1 }
-                }, function(err, result) {
-                    if (err !== null) {
-                        console.log(err);
-                        res.send('ERROR');
-                    }
-                    else {
-                        console.log(result);
-                        res.redirect('/?task=' + appendFileToTask);
-                    }
-                });
+
+                if (isAvatar === 'true') {
+                    // updating the user's avatar
+                    console.log('success ' + fileUploadedToS3Adress);
+                    User.update({ _id: userID }, {
+                        $set: {
+                            avatar: fileUploadedToS3Adress
+                        }
+                    }, function(err, User) {
+                        if (err !== null) {
+                            console.log(err);
+                            res.send('ERROR');
+                        }
+                        else {
+                            console.log(User);
+                            res.redirect('/');
+                        }
+                    });
+                }
+                else {
+                    // updating the task with the new picture
+                    userTasks.update({ _id: appendFileToTask }, {
+                        $push: { comment: fileUploadedToS3AdressToDisplayInD2D },
+                        $inc: { commentNb: 1 }
+                    }, function(err, result) {
+                        if (err !== null) {
+                            console.log(err);
+                            res.send('ERROR');
+                        }
+                        else {
+                            console.log(result);
+                            res.redirect('/?task=' + appendFileToTask);
+                        }
+                    });
+                }
             });
         });
+    }
+    else {
+        res.send('no File');
+        console.log('no file');
     }
 });
 

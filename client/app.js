@@ -135,7 +135,7 @@ var main = function() {
     //mark task complete from the details screen
     $(".detailsCheckbox").on('click', function() {
         $("#newCommentModal, #main").toggle();
-        var completedTaskID = selectedTask;
+        let completedTaskID = selectedTask;
         completeTask(completedTaskID);
     });
 
@@ -217,6 +217,9 @@ var main = function() {
     $('#settingPasswordReset').on('click', function() {
         resetPasswordRequest();
     });
+
+    $('#settingsAvatarUserID').val(userID);
+    $('#settingsAvatarIsAvatar').val(true);
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
     if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
@@ -537,6 +540,10 @@ function completeTask(completedTaskID) {
         data: { id: completedTaskMongoID },
         success: function(data) {
             console.log(data);
+            iziToast.success({
+                message: 'Task completed',
+                position: 'topRight',
+            });
         }
     });
     userTask[completedTaskID].complete = true;
@@ -877,12 +884,10 @@ function displayUserSettings() {
 
 
     // handling user's pref for bakground
-    if (user.hasOwnProperty('backgroundPicture') === true) {
+    console.log(user);
+    if (user.hasOwnProperty('backgroundPicture') === false) {
         $('#settingsBackgroundPref').text(backgroundTheme);
-    }
-    else {
-        $('#settingsBackgroundPref').text('Nature (Default)');
-    }
+    };
 
     // handle pocket integration and buttons
     if (user.integrations.pocket.connected === !true) {
@@ -905,25 +910,6 @@ function displayUserSettings() {
     }
 }
 
-// if user has not set his own values, use default
-function setDefaultValues() {
-
-    if (user.hasOwnProperty('temperatureUnit') == false) {
-        temperatureUnit = 'celsius';
-    }
-    else {
-        temperatureUnit = user.settings.temperatureUnit;
-    }
-
-    if (user.hasOwnProperty('backgroundPicture') === true) {
-        backgroundTheme = user.settings.backgroundPicture;
-        Cookies.set('backgroundTheme', backgroundTheme);
-    }
-    else {
-        backgroundTheme = 'nature';
-    }
-}
-
 function initializeDay2Day() {
     getUser();
     updateWallpaper();
@@ -933,7 +919,6 @@ function initializeDay2Day() {
 }
 
 function editSettingsView() {
-    setDefaultValues();
     $('#userNameNewValue').val(user.username);
     $('#userEmailNewValue').val(user.email);
     $('#settingsBackgroundPrefNewValue').val(backgroundTheme);
@@ -960,7 +945,7 @@ function saveSettingsChanges() {
         type: 'PUT',
         data: {
             name: newName,
-            background: newBackground,
+            background: newBackground.split(' ').join('+'),
             temperatureUnit: temperatureUnit,
             userID: userID
         },
@@ -976,6 +961,7 @@ function saveSettingsChanges() {
             backgroundTheme = newBackground; 
             Cookies.set('backgroundTheme', backgroundTheme);
             displayUserSettings();
+            updateWallpaper();
         }
     });
 
