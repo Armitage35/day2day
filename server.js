@@ -186,6 +186,42 @@ app.get('/user', function(req, res) {
     });
 });
 
+app.put('/user', function(req, res) {
+    console.log(req.body);
+    let updatedName = req.body.name,
+        backgroundTheme = req.body.background,
+        temperatureUnit = req.body.temperatureUnit,
+        userID = req.body.userID;
+
+    if (validator.isEmpty(updatedName) === true) {
+        res.send('updated name is empty');
+    }
+    else if (validator.isEmpty(backgroundTheme) === true) {
+        res.send('backgroundTheme is empty');
+    }
+    else if (validator.isEmpty(temperatureUnit) === true) {
+        res.send('temp unit is empty');
+    }
+    else {
+        User.update({ _id: userID }, {
+            username: updatedName,
+            settings: {
+                temperatureUnit: temperatureUnit,
+                backgroundPicture: backgroundTheme
+            }
+        }, function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            }
+            else {
+                console.log(result);
+                res.send(result);
+            }
+        });
+    }
+});
+
 //tasks handling
 app.post('/todos', function(req, res) {
     let newTask = new userTasks({
@@ -601,7 +637,8 @@ app.post('/addnewpocketarticle', function(req, res) {
             res.send(body);
             console.log(body);
         });
-    } else {
+    }
+    else {
         res.send('not a link');
     }
 

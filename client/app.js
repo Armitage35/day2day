@@ -13,7 +13,6 @@ var selectedTask,
     openWeatherMapApiKey = "d4dafd356c01ea4b792bb04ead253af1",
     userAvatar,
     userID,
-    selectedTool = "task", //sets the default tool
     selectedNote,
     user,
     userPocketReadingList,
@@ -169,7 +168,6 @@ var main = function() {
     }
     else {
         handleTool(Cookies.get('selectedTool'));
-        console.log('super');
     }
 
     $(".notePreview").on('click', function() {
@@ -215,7 +213,7 @@ var main = function() {
     $('#settingsConfirmChanges').on('click', function() {
         saveSettingsChanges();
     });
-    
+
     $('#settingPasswordReset').on('click', function() {
         resetPasswordRequest();
     });
@@ -271,6 +269,14 @@ var main = function() {
                 }
             }
         });
+    });
+
+    $('#settingsTemperaturePrefNewValueCelsius').on('click', function() {
+        temperatureUnit === "celsius";
+    });
+
+    $('#settingsTemperaturePrefNewValueFarenheit').on('click', function() {
+        temperatureUnit === "farenheit";
     });
 
 };
@@ -607,9 +613,7 @@ function updateWallpaper() {
     if (Cookies.get('backgroundTheme') != undefined) {
         backgroundTheme = Cookies.get('backgroundTheme');
     }
-    else {
-        backgroundTheme = "nature";
-    }
+
     $.ajax({
         url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=" + backgroundTheme,
         type: 'GET',
@@ -873,7 +877,7 @@ function displayUserSettings() {
 
 
     // handling user's pref for bakground
-    if (user.hasOwnProperty('backgroundPicture')) {
+    if (user.hasOwnProperty('backgroundPicture') === true) {
         $('#settingsBackgroundPref').text(backgroundTheme);
     }
     else {
@@ -903,6 +907,7 @@ function displayUserSettings() {
 
 // if user has not set his own values, use default
 function setDefaultValues() {
+
     if (user.hasOwnProperty('temperatureUnit') == false) {
         temperatureUnit = 'celsius';
     }
@@ -910,14 +915,13 @@ function setDefaultValues() {
         temperatureUnit = user.settings.temperatureUnit;
     }
 
-    if (user.hasOwnProperty('backgroundPicture') === false) {
-        backgroundTheme = 'nature';
+    if (user.hasOwnProperty('backgroundPicture') === true) {
+        backgroundTheme = user.settings.backgroundPicture;
+        Cookies.set('backgroundTheme', backgroundTheme);
     }
     else {
-        backgroundTheme = user.settings.backgroundPicture;
-        // if (backgroundTheme)
+        backgroundTheme = 'nature';
     }
-    Cookies.set('backgroundTheme', backgroundTheme);
 }
 
 function initializeDay2Day() {
@@ -943,14 +947,38 @@ function editSettingsView() {
 }
 
 function saveSettingsChanges() {
+    console.log('saving new values for user');
     $('.settingsEdit, .settingsView').toggle();
     $('#confirmationModal').modal('hide');
-    iziToast.success({
-        title: 'Changes saved',
-        message: 'Your changes have been saved',
-        position: 'topRight',
+
+    // let newAvatar = $('#newAvatarPicture').prop('files'),
+    let newName = $('#userNameNewValue').val(),
+        newBackground = $('#settingsBackgroundPrefNewValue').val();
+
+    $.ajax({
+        url: 'user',
+        type: 'PUT',
+        data: {
+            name: newName,
+            background: newBackground,
+            temperatureUnit: temperatureUnit,
+            userID: userID
+        },
+        success: function(data) {
+            iziToast.success({
+                title: 'Changes saved',
+                message: 'Your changes have been saved',
+                position: 'topRight',
+            });
+            console.log(data);
+            user.username = newName;
+            temperatureUnit = temperatureUnit;
+            backgroundTheme = newBackground; 
+            Cookies.set('backgroundTheme', backgroundTheme);
+            displayUserSettings();
+        }
     });
-    displayUserSettings();
+
 }
 
 function resetPasswordRequest() {
