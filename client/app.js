@@ -1,7 +1,8 @@
 /* global $
 global Cookies 
 global iziToast
-global location*/
+global location
+global analytics*/
 
 var selectedTask,
     userTask = [],
@@ -220,8 +221,8 @@ var main = function() {
 
     $('#settingsAvatarUserID').val(userID);
     $('#settingsAvatarIsAvatar').val(true);
-    
-    $('#settingPocketAction').on('click' ,function() {
+
+    $('#settingPocketAction').on('click', function() {
         console.log('huh?');
         $.ajax({
             url: 'user',
@@ -293,7 +294,7 @@ var main = function() {
     $('#settingsTemperaturePrefNewValueFarenheit').on('click', function() {
         temperatureUnit === "farenheit";
     });
-    
+
     $('#logOut').on('click', function() {
         Cookies.remove('userid');
         Cookies.remove('backgroundTheme');
@@ -427,7 +428,17 @@ function getUser() {
             $('.userPicture').attr('src', userAvatar);
             $('.avatar').css('background-image', userAvatarForBackground).children('img');
             $('#settingAvatar').attr('src', userAvatar).css('filter', 'none');
-            // once we have the user, we can set default values here and there
+            console.log(user);
+
+            // segment identify
+            analytics.identify(user._id, {
+                name: user.username,
+                avatar: user.avatar,
+                email: user.email,
+                temperatureUnit: user.settings.temperatureUnit,
+                backgroundTheme: user.settings.backgroundPicture,
+                integration: user.integrations
+            });
         }
     });
 }
@@ -551,21 +562,22 @@ function onboarding() {
 
 function completeTask(completedTaskID) {
     let completedTaskMongoID = userTask[completedTaskID]._id;
-    $(this).fadeOut();
+    analytics.track('completeTask');
     $.ajax({
         url: "todos",
         type: 'PUT',
         data: { id: completedTaskMongoID },
         success: function(data) {
-            console.log(data);
+            console.log('task completed');
+            $(this).fadeOut();
             iziToast.success({
                 message: 'Task completed',
                 position: 'topRight',
             });
+            userTask[completedTaskID].complete = true;
+            displayTask();
         }
     });
-    userTask[completedTaskID].complete = true;
-    displayTask();
 }
 
 //adding tasks function
@@ -603,6 +615,9 @@ function addTask() {
                 title: 'Fantastic',
                 message: 'Your task has been saved',
                 position: 'topRight',
+            });
+            analytics.track('Task added', {
+                title: new_task,
             });
         });
 
@@ -654,7 +669,6 @@ function updateWallpaper() {
             $(".thanks").html('<a href="' + data.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + ' | Unsplash </a>');
         }
     });
-    setInterval(updateWallpaper, 350000); //refresh every 3 minutes
 }
 
 
@@ -745,6 +759,9 @@ function saveNote(selectedNote, noteArchived) {
             if (selectedNote === -1) {
                 userNote.push(data);
                 displayNoteContent(userNote.length - 1);
+                analytics.track('New note created', {
+                    noteTitle: noteTitle
+                });
             }
             else {
                 userNote[selectedNote].noteBody = noteBody;
@@ -929,6 +946,7 @@ function displayUserSettings() {
 function initializeDay2Day() {
     getUser();
     updateWallpaper();
+    setInterval(updateWallpaper, 350000); //refresh every 3 minutes
     handleWeather();
     displayTask();
     displayNoteList();
@@ -973,10 +991,10 @@ function saveSettingsChanges() {
             });
             user.username = newName;
             temperatureUnit = temperatureUnit;
-            backgroundTheme = newBackground; 
+            backgroundTheme = newBackground;
             Cookies.set('backgroundTheme', backgroundTheme);
             displayUserSettings();
-            updateWallpaper();
+            initializeDay2Day();
         }
     });
 
