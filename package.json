@@ -4,6 +4,7 @@
   "description": "Hi there!",
   "main": "server.js",
   "dependencies": {
+    "analytics-node": "^3.2.0",
     "aws-sdk": "^2.188.0",
     "bcrypt": "^1.0.3",
     "bootstrap": "^4.0.0-alpha.6",

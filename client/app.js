@@ -223,7 +223,6 @@ var main = function() {
     $('#settingsAvatarIsAvatar').val(true);
 
     $('#settingPocketAction').on('click', function() {
-        console.log('huh?');
         $.ajax({
             url: 'user',
             type: 'PUT',
@@ -616,7 +615,7 @@ function addTask() {
                 message: 'Your task has been saved',
                 position: 'topRight',
             });
-            analytics.track('Task added', {
+            analytics.track('New task created', {
                 title: new_task,
             });
         });

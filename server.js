@@ -18,6 +18,8 @@ var express = require('express'),
     mailgun = require('mailgun-js')({ apiKey: mailGunApi_key, domain: DOMAIN }),
     pug = require('pug'),
     request = require('request'),
+    Analytics = require('analytics-node'),
+    analytics = new Analytics('I2DPb8fIVfe65pnlBxXNQfkWND4mvtuA'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -156,7 +158,10 @@ app.post('/user', function(req, res) {
                 }
                 else {
                     res.send(result);
-
+                    analytics.track({
+                        anonymousId: 'unknown',
+                        event: 'New account created',
+                    });
                     //send a nice welcome email to our new user
                     let data = {
                         from: 'Day2Day <mail@day2dayapp.net>',
@@ -612,6 +617,10 @@ app.get('/pocketKeyConfirm', function(req, res) {
                 else {
                     console.log(User);
                     res.json(User);
+                    analytics.track({
+                        userId: userID,
+                        event: 'Pocket Account connected',
+                    });
                 }
             });
         }
