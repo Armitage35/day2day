@@ -96,6 +96,13 @@
                                     <p class="settingValue" id="userEmail"></p>
                                     <p class="settingTitle">Password</p>
                                     <button class="bttn-material-flat bttn-xs bttn-primary" id="settingPasswordReset">Reset password</button>
+                                    <p class="settingTitle">Avatar</p>
+                                    <form method="post" enctype="multipart/form-data" action="/file">
+                                        <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" required size="2MB" style="font-size:12px">
+                                        <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
+                                        <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
+                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress">Upload new avatar</button>
+                                    </form>
                                 </div>
                                 <p class="settingsBlockTitle">General settings</p>
                                 <div class="settingsBlock">
@@ -112,15 +119,10 @@
                                     <p class="settingTitle">Google</p>
                                     <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsGoogleStatus">
                                 </div>
-                                <p class="settingsBlockTitle">Avatar</p>
+                                <p class="settingsBlockTitle">Others</p>
                                 <div class="settingsBlock">
-                                    <p class="settingTitle">Avatar</p>
-                                    <form method="post" enctype="multipart/form-data" action="/file">
-                                        <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" size="2MB" style="font-size:12px">
-                                        <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
-                                        <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
-                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress">Upload new avatar</button>
-                                    </form>
+                                    <p class="settingTitle">Log out</p>
+                                    <button class="bttn-material-flat bttn-xs bttn-primary" id="logOut">Log out</button>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +255,7 @@
                 <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
                 <!--submit picture-->
                 <form method="post" enctype="multipart/form-data" action="/file" id="message-file" style="display:none">
-                    <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB">
+                    <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB" required>
                     <input type="text" name="selectedTask" id="selectedTask" />
                     <input type="text" name="commentNb" id="commentNb" />
                     <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress">

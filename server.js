@@ -318,13 +318,14 @@ app.post('/file', function(req, res) {
         let file = req.files.uploadFile,
             filename;
 
-
         if (userID != null) {
-            filename = 'avatar' + userID;
+            filename = 'avatar' + userID + new Date().getTime();
         }
         else {
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique if we are uploading a picture to a task
         }
+
+        console.log(filename);
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -347,13 +348,14 @@ app.post('/file', function(req, res) {
                         $set: {
                             avatar: fileUploadedToS3Adress
                         }
-                    }, function(err, User) {
+                    }, function(err, result) {
                         if (err !== null) {
                             console.log(err);
                             res.send('ERROR');
                         }
                         else {
                             res.redirect('/');
+                            console.log(result);
                         }
                     });
                 }

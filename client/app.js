@@ -293,6 +293,13 @@ var main = function() {
     $('#settingsTemperaturePrefNewValueFarenheit').on('click', function() {
         temperatureUnit === "farenheit";
     });
+    
+    $('#logOut').on('click', function() {
+        Cookies.remove('userid');
+        Cookies.remove('backgroundTheme');
+        Cookies.remove('selectedTool');
+        window.location.replace("/auth.html");
+    });
 
 };
 

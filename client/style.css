@@ -188,6 +188,8 @@ ul {
   .settingsToolView .settingsBlockTitle #settingsEdit {
     padding-left: 10px;
     font-size: 21px; }
+.settingsToolView #settingPasswordReset {
+  margin-bottom: 14px; }
 
 .task {
   -webkit-border-radius: 0px;
