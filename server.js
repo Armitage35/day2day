@@ -195,24 +195,46 @@ app.put('/user', function(req, res) {
     let updatedName = req.body.name,
         backgroundTheme = req.body.background,
         temperatureUnit = req.body.temperatureUnit,
-        userID = req.body.userID;
+        userID = req.body.userID,
+        operationType = req.body.operationType;
 
-    User.update({ _id: userID }, {
-        username: updatedName,
-        settings: {
-            temperatureUnit: temperatureUnit,
-            backgroundPicture: backgroundTheme
-        }
-    }, function(err, result) {
-        if (err !== null) {
-            console.log(err);
-            res.send('ERROR');
-        }
-        else {
-            console.log(result);
-            res.send(result);
-        }
-    });
+    if (operationType == 'settingsEdit') {
+        User.update({ _id: userID }, {
+            username: updatedName,
+            settings: {
+                temperatureUnit: temperatureUnit,
+                backgroundPicture: backgroundTheme
+            }
+        }, function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            }
+            else {
+                console.log(result);
+                res.send(result);
+            }
+        });
+    }
+    else if (operationType == 'removeIntegration') {
+        User.update({ _id: userID }, {
+            integrations: {
+                pocket: {
+                    connected: false,
+                    token: ''
+                }
+            }
+        }, function(err, result) {
+            if (err !== null) {
+                console.log(err);
+                res.send('ERROR');
+            }
+            else {
+                console.log(result);
+                res.send(result);
+            }
+        });
+    }
 });
 
 // new avatar acceptance
@@ -292,10 +314,6 @@ app.post('/file', function(req, res) {
         isAvatar = req.body.isAvatar,
         userID = req.body.userID;
 
-    console.log(isAvatar + ' ' + userID);
-    console.log(appendFileToTask);
-    console.log(req.file);
-
     if (req.files) {
         let file = req.files.uploadFile,
             filename;
@@ -307,8 +325,6 @@ app.post('/file', function(req, res) {
         else {
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique if we are uploading a picture to a task
         }
-
-        console.log('filename ' + filename);
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -327,7 +343,6 @@ app.post('/file', function(req, res) {
 
                 if (isAvatar === 'true') {
                     // updating the user's avatar
-                    console.log('success ' + fileUploadedToS3Adress);
                     User.update({ _id: userID }, {
                         $set: {
                             avatar: fileUploadedToS3Adress
@@ -338,7 +353,6 @@ app.post('/file', function(req, res) {
                             res.send('ERROR');
                         }
                         else {
-                            console.log(User);
                             res.redirect('/');
                         }
                     });
@@ -363,8 +377,7 @@ app.post('/file', function(req, res) {
         });
     }
     else {
-        res.send('no File');
-        console.log('no file');
+        res.send('please add a file to your request');
     }
 });
 

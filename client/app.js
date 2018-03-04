@@ -220,6 +220,18 @@ var main = function() {
 
     $('#settingsAvatarUserID').val(userID);
     $('#settingsAvatarIsAvatar').val(true);
+    
+    $('#settingPocketAction').on('click' ,function() {
+        console.log('huh?');
+        $.ajax({
+            url: 'user',
+            type: 'PUT',
+            data: { operationType: 'removeIntegration', integrations: 'pocket', userID: userID },
+            success: function() {
+                getUser();
+            }
+        });
+    });
 
     // checking when the user comes back from Pocket's auth. If so, handle his token
     if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
@@ -409,7 +421,6 @@ function getUser() {
             $('.avatar').css('background-image', userAvatarForBackground).children('img');
             $('#settingAvatar').attr('src', userAvatar).css('filter', 'none');
             // once we have the user, we can set default values here and there
-            setDefaultValues();
         }
     });
 }
@@ -836,7 +847,6 @@ function displayPocketUnreadElements(userPocketReadingList) {
 }
 
 function markArticleRead(pocketArticleRead) {
-    console.log(pocketArticleRead);
     $.ajax({
         url: 'markArticleRead',
         type: 'POST',
@@ -884,10 +894,9 @@ function displayUserSettings() {
 
 
     // handling user's pref for bakground
-    console.log(user);
     if (user.hasOwnProperty('backgroundPicture') === false) {
         $('#settingsBackgroundPref').text(backgroundTheme);
-    };
+    }
 
     // handle pocket integration and buttons
     if (user.integrations.pocket.connected === !true) {
@@ -932,7 +941,6 @@ function editSettingsView() {
 }
 
 function saveSettingsChanges() {
-    console.log('saving new values for user');
     $('.settingsEdit, .settingsView').toggle();
     $('#confirmationModal').modal('hide');
 
@@ -947,7 +955,8 @@ function saveSettingsChanges() {
             name: newName,
             background: newBackground.split(' ').join('+'),
             temperatureUnit: temperatureUnit,
-            userID: userID
+            userID: userID,
+            operationType: 'settingsEdit'
         },
         success: function(data) {
             iziToast.success({
@@ -955,7 +964,6 @@ function saveSettingsChanges() {
                 message: 'Your changes have been saved',
                 position: 'topRight',
             });
-            console.log(data);
             user.username = newName;
             temperatureUnit = temperatureUnit;
             backgroundTheme = newBackground; 
