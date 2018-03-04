@@ -8,6 +8,7 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    GoogleStrategy = require('passport-google-oauth20').Strategy,
     gravatar = require('gravatar'),
     compressor = require('node-minify'),
     upload = require('express-fileupload'),
@@ -68,6 +69,18 @@ passport.use(new LocalStrategy(
                 return done(null, false, { message: 'Incorrect password.' });
             }
             return done(null, user);
+        });
+    }
+));
+
+passport.use(new GoogleStrategy({
+        clientID: '341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com',
+        clientSecret: 'Ft_HER_oiDkYQ_-KUFGbhmix',
+        callbackURL: "http://www.day2dayapp.net/auth?orig=google&auth=success"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        User.findOrCreate({ googleId: profile.id }, function(err, user) {
+            return cb(err, user);
         });
     }
 ));
