@@ -73,18 +73,6 @@ passport.use(new LocalStrategy(
     }
 ));
 
-passport.use(new GoogleStrategy({
-        clientID: '341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com',
-        clientSecret: 'Ft_HER_oiDkYQ_-KUFGbhmix',
-        callbackURL: "http://www.day2dayapp.net/auth?orig=google&auth=success"
-    },
-    function(accessToken, refreshToken, profile, cb) {
-        User.findOrCreate({ googleId: profile.id }, function(err, user) {
-            return cb(err, user);
-        });
-    }
-));
-
 // sending to landing page
 app.get('/landing', function(req, res) {
     res.redirect('landingPage/landing.html');

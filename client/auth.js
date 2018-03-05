@@ -94,8 +94,19 @@ var main = function() {
 
     $('#updatePassword').on('click', function() {
         let newPassword = $('#password').val();
-        resetPassword(newPassword)
-    })
+        resetPassword(newPassword);
+    });
+
+    $('#signUpGoogle').on('click', function() {
+        $.ajax({
+            url: '/auth/google',
+            type: 'GET',
+            // data: data,
+            success: function(data){
+                
+            },
+        });
+    });
 
 };
 
