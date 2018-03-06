@@ -8,7 +8,6 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    GoogleStrategy = require('passport-google-oauth20').Strategy,
     gravatar = require('gravatar'),
     compressor = require('node-minify'),
     upload = require('express-fileupload'),
@@ -707,6 +706,22 @@ app.post('/googleAuth', function(req, res) {
         }
     });
 
+    const { OAuth2Client } = require('google-auth-library');
+    const client = new OAuth2Client('341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com');
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: req.body.googleToken,
+            audience: '341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com', // Specify the CLIENT_ID of the app that accesses the backend
+            // Or, if multiple clients access the backend:
+            //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+        // If request specified a G Suite domain:
+        //const domain = payload['hd'];
+    }
+    verify().catch(console.error);
+
     User.findOne({ email: newGoogleUser.email }, function(err, user) {
         if (err) {
             console.log(err);
@@ -720,7 +735,7 @@ app.post('/googleAuth', function(req, res) {
     });
 });
 
-
+// general functions
 function createUser(newUser, res) {
     newUser.save(function(err, result) {
         if (err !== null) {
