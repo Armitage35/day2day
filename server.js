@@ -158,24 +158,7 @@ app.post('/user', function(req, res) {
                     res.send("ERROR");
                 }
                 else {
-                    res.send(result);
-                    analytics.track({
-                        anonymousId: 'unknown',
-                        event: 'New account created',
-                    });
-                    //send a nice welcome email to our new user
-                    let data = {
-                        from: 'Day2Day <mail@day2dayapp.net>',
-                        to: newUser.email,
-                        subject: 'Welcome to Day2Day',
-                        html: pug.renderFile('./emailTemplates/welcomeEmail.pug', {
-                            userName: newUser.username
-                        }),
-                    };
-
-                    mailgun.messages().send(data, function(error, body) {
-                        console.log(body);
-                    });
+                    createUser(newUser, res);
                 }
             });
         }
@@ -705,5 +688,64 @@ app.post('/addnewpocketarticle', function(req, res) {
     else {
         res.send('not a link');
     }
-
 });
+
+app.post('/googleAuth', function(req, res) {
+    var newGoogleUser = new User({
+        username: req.body.fullName,
+        email: req.body.email,
+        avatar: req.body.avatar,
+        settings: {
+            temperatureUnit: 'celsius',
+            backgroundPicture: 'nature'
+        },
+        integrations: {
+            google: {
+                connected: true,
+                token: req.body.googleToken
+            }
+        }
+    });
+
+    User.findOne({ email: newGoogleUser.email }, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+        else if (user != null) { // case where the user exists
+            res.send(user);
+        }
+        else {
+            createUser(newGoogleUser, res);
+        }
+    });
+});
+
+
+function createUser(newUser, res) {
+    newUser.save(function(err, result) {
+        if (err !== null) {
+            console.log(err);
+            return res.send("ERROR");
+        }
+        else {
+            analytics.track({
+                anonymousId: 'unknown',
+                event: 'New account created',
+            });
+            //send a nice welcome email to our new user
+            let data = {
+                from: 'Day2Day <mail@day2dayapp.net>',
+                to: newUser.email,
+                subject: 'Welcome to Day2Day',
+                html: pug.renderFile('./emailTemplates/welcomeEmail.pug', {
+                    userName: newUser.username
+                }),
+            };
+
+            mailgun.messages().send(data, function(error, body) {
+                console.log(body);
+            });
+            return res.send(result);
+        }
+    });
+}
