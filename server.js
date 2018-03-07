@@ -706,21 +706,21 @@ app.post('/googleAuth', function(req, res) {
         }
     });
 
-    const { OAuth2Client } = require('google-auth-library');
-    const client = new OAuth2Client('341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com');
-    async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: req.body.googleToken,
-            audience: '341494480508-09uhlpke28h51c5e8kb847ei32qh4ckq.apps.googleusercontent.com', // Specify the CLIENT_ID of the app that accesses the backend
-            // Or, if multiple clients access the backend:
-            //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-        });
-        const payload = ticket.getPayload();
-        const userid = payload['sub'];
-        // If request specified a G Suite domain:
-        //const domain = payload['hd'];
-    }
-    verify().catch(console.error);
+    var options = {
+        method: 'GET',
+        url: 'https://www.googleapis.com/oauth2/v3/tokeninfo',
+        qs: { id_token: req.body.googleToken },
+
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        newGoogleUser.integrations.google.token = body.subject;
+        console.log(body);
+        console.log(body.sub);
+    });
+
 
     User.findOne({ email: newGoogleUser.email }, function(err, user) {
         if (err) {
