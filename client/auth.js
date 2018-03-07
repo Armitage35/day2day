@@ -122,7 +122,7 @@ function onSignIn(googleUser) {
             if (data._id != undefined) {
                 Cookies.remove('userid');
                 Cookies.set('userid', data._id);
-                // window.location = '/index.html';
+                window.location = '/index.html';
             }
         },
     });

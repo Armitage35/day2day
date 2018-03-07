@@ -15,7 +15,7 @@
     <!--Bootstrap CSS lib-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    
+
     <!--segment library-->
     <script>
         ! function() {
@@ -25,16 +25,27 @@
                 else {
                     analytics.invoked = !0;
                     analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"];
-                    analytics.factory = function(t) { return function() { var e = Array.prototype.slice.call(arguments);
+                    analytics.factory = function(t) {
+                        return function() {
+                            var e = Array.prototype.slice.call(arguments);
                             e.unshift(t);
-                            analytics.push(e); return analytics } };
-                    for (var t = 0; t < analytics.methods.length; t++) { var e = analytics.methods[t];
-                        analytics[e] = analytics.factory(e) } analytics.load = function(t, e) { var n = document.createElement("script");
+                            analytics.push(e);
+                            return analytics
+                        }
+                    };
+                    for (var t = 0; t < analytics.methods.length; t++) {
+                        var e = analytics.methods[t];
+                        analytics[e] = analytics.factory(e)
+                    }
+                    analytics.load = function(t, e) {
+                        var n = document.createElement("script");
                         n.type = "text/javascript";
                         n.async = !0;
-                        n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js"; var o = document.getElementsByTagName("script")[0];
+                        n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
+                        var o = document.getElementsByTagName("script")[0];
                         o.parentNode.insertBefore(n, o);
-                        analytics.integrationOptions = e };
+                        analytics.integrationOptions = e
+                    };
                     analytics.SNIPPET_VERSION = "4.0.1";
                     analytics.load("7r4PvyN0SaMPFO3FxwPoBJrzm8Av6Yj7");
                     analytics.page();
@@ -42,7 +53,7 @@
         }();
     </script>
     <!--end segment-->
-    
+
     <!--Bootstrap JS lib-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <!--Font-->
@@ -146,7 +157,10 @@
                                     <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsPocketStatus"></p>
                                     <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingPocketAction"></button>
                                     <p class="settingTitle">Google</p>
-                                    <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsGoogleStatus">
+                                    <meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar">
+                                    <meta name="google-signin-client_id" content="341494480508-fo0ol4r2o0tmaa43ana0r3k71t9ptu4l.apps.googleusercontent.com">
+                                    <script src="https://apis.google.com/js/platform.js" async defer></script>
+                                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                                 </div>
                                 <p class="settingsBlockTitle">Others</p>
                                 <div class="settingsBlock">

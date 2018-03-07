@@ -1030,6 +1030,30 @@ function resetPasswordRequest() {
     });
 }
 
+// handles google sign up
+function onSignIn(googleUser) {
+    // Useful data for your client-side scripts:
+    var profile = googleUser.getBasicProfile();
+
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+
+    $.ajax({
+        url: '/googleAuth',
+        type: 'POST',
+        data: {
+            fullName: profile.getName(),
+            avatar: profile.getImageUrl(),
+            email: profile.getEmail(),
+            googleToken: id_token
+        },
+        success: function(data) {
+            console.log(data);
+            user = data;
+        },
+    });
+}
+
 initializeDay2Day();
 
 //auto sign in if cookie's here

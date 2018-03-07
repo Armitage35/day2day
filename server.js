@@ -704,62 +704,65 @@ app.post('/googleAuth', function(req, res) {
             }
         }
     });
-    
+
     let googleToken;
 
     let options = {
         method: 'GET',
         url: 'https://www.googleapis.com/oauth2/v3/tokeninfo',
         qs: { id_token: req.body.googleToken },
-
     };
 
     request(options, function(error, response, body) {
         if (error) throw new Error(error);
         googleToken = JSON.parse(body).sub;
-        console.log('googleToken ' + googleToken)
         newGoogleUser.integrations.google.token = googleToken;
-    });
-
-
-    User.findOne({ email: newGoogleUser.email }, function(err, user) {
-        if (err) {
-            console.log(err);
-        }
-        else if (user != null) { // case where the user exists
-            console.log('googleToken final ' + googleToken);
-            User.update({ _id: user._id }, {
-                $set: {
-                    integrations: {
-                        google: {
-                            connected: true,
-                            token: newGoogleUser.integrations.google.token
+        // adding the user's token within his profile
+        User.findOne({ email: newGoogleUser.email }, function(err, user) {
+            if (err) {
+                console.log(err);
+            }
+            else if (user != null) { // case where the user exists
+                console.log('googleToken final ' + googleToken);
+                User.update({ _id: user._id }, {
+                    $set: {
+                        integrations: {
+                            google: {
+                                connected: true,
+                                token: newGoogleUser.integrations.google.token
+                            }
                         }
                     }
-                }
-            }, function(err, User) {
-                if (err !== null) {
-                    console.log(err);
-                    res.send('ERROR');
-                }
-                else {
-                    console.log(user)
-                    analytics.track({
-                        anonymousId: 'unknown',
-                        event: 'Google Account connected',
-                    });
-                }
-            });
-            res.send(user);
-        }
-        else {
-            createUser(newGoogleUser, res);
-        }
+                }, function(err, User) {
+                    if (err !== null) {
+                        console.log(err);
+                        res.send('ERROR');
+                    }
+                    else {
+                        console.log(user)
+                        analytics.track({
+                            anonymousId: 'unknown',
+                            event: 'Google Account connected',
+                        });
+                    }
+                });
+                res.send(user);
+            }
+            else {
+                console.log('test 1');
+                console.log(newGoogleUser);
+                createUser(newGoogleUser, res);
+            }
+        });
     });
+
+
 });
 
 // general functions
 function createUser(newUser, res) {
+    console.log('test');
+    console.log(newUser);
     newUser.save(function(err, result) {
         if (err !== null) {
             console.log(err);
