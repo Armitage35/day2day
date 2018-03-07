@@ -690,7 +690,7 @@ app.post('/addnewpocketarticle', function(req, res) {
 });
 
 app.post('/googleAuth', function(req, res) {
-    var newGoogleUser = new User({
+    let newGoogleUser = new User({
         username: req.body.fullName,
         email: req.body.email,
         avatar: req.body.avatar,
@@ -701,12 +701,13 @@ app.post('/googleAuth', function(req, res) {
         integrations: {
             google: {
                 connected: true,
-                token: req.body.googleToken
             }
         }
     });
+    
+    let googleToken;
 
-    var options = {
+    let options = {
         method: 'GET',
         url: 'https://www.googleapis.com/oauth2/v3/tokeninfo',
         qs: { id_token: req.body.googleToken },
@@ -715,10 +716,9 @@ app.post('/googleAuth', function(req, res) {
 
     request(options, function(error, response, body) {
         if (error) throw new Error(error);
-
-        newGoogleUser.integrations.google.token = body.subject;
-        console.log(body);
-        console.log(body.sub);
+        googleToken = JSON.parse(body).sub;
+        console.log('googleToken ' + googleToken)
+        newGoogleUser.integrations.google.token = googleToken;
     });
 
 
@@ -727,6 +727,29 @@ app.post('/googleAuth', function(req, res) {
             console.log(err);
         }
         else if (user != null) { // case where the user exists
+            console.log('googleToken final ' + googleToken);
+            User.update({ _id: user._id }, {
+                $set: {
+                    integrations: {
+                        google: {
+                            connected: true,
+                            token: newGoogleUser.integrations.google.token
+                        }
+                    }
+                }
+            }, function(err, User) {
+                if (err !== null) {
+                    console.log(err);
+                    res.send('ERROR');
+                }
+                else {
+                    console.log(user)
+                    analytics.track({
+                        anonymousId: 'unknown',
+                        event: 'Google Account connected',
+                    });
+                }
+            });
             res.send(user);
         }
         else {
