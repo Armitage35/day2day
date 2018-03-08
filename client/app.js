@@ -18,7 +18,8 @@ var selectedTask,
     user,
     userPocketReadingList,
     temperatureUnit,
-    backgroundTheme;
+    backgroundTheme,
+    successMessage;
 
 var main = function() {
 
@@ -586,6 +587,7 @@ function completeTask(completedTaskID) {
             console.log('task completed');
             $(this).fadeOut();
             iziToast.success({
+                title: assignSucessMessage(),
                 message: 'Task completed',
                 position: 'topRight',
             });
@@ -627,7 +629,7 @@ function addTask() {
             userTask.pop(); //removing the temp object created by client to replace it with the object from mongo
             userTask.push(result);
             iziToast.success({
-                title: 'Fantastic',
+                title: assignSucessMessage(),
                 message: 'Your task has been saved',
                 position: 'topRight',
             });
@@ -784,7 +786,7 @@ function saveNote(selectedNote, noteArchived) {
                 userNote[selectedNote].notePreview = notePreview;
             }
             iziToast.success({
-                title: 'WEEEE!',
+                title: assignSucessMessage(),
                 message: 'Your note has been saved!',
                 timeout: 1000
             });
@@ -799,7 +801,7 @@ function archiveNote(selectedNote) {
     closeNoteModal();
     displayNoteList();
     iziToast.success({
-        title: 'Archived!',
+        title: assignSucessMessage(),
         message: 'Your note has been archived!',
         timeout: 1000
     });
@@ -894,7 +896,7 @@ function markArticleRead(pocketArticleRead) {
             console.log(data);
             if (data === '{"action_results":[true],"status":1}') {
                 iziToast.success({
-                    title: 'Duely noted',
+                    title: assignSucessMessage(),
                     message: 'This item has been archived',
                     position: 'topRight',
                 });
@@ -1000,7 +1002,7 @@ function saveSettingsChanges() {
         },
         success: function(data) {
             iziToast.success({
-                title: 'Changes saved',
+                title: assignSucessMessage(),
                 message: 'Your changes have been saved',
                 position: 'topRight',
             });
@@ -1026,7 +1028,7 @@ function resetPasswordRequest() {
         success: function(data) {
             if (data === 'succes') {
                 iziToast.success({
-                    title: 'Found You!',
+                    title: assignSucessMessage(),
                     message: 'We sent an email to your inbox. Use it to reset your password',
                 });
             }
@@ -1068,6 +1070,12 @@ function onSignIn(googleUser) {
             user = data;
         },
     });
+}
+
+function assignSucessMessage(){
+    successMessage = ['Youpi', 'Success', 'Wonderful', 'Amazing', 'flabbergasted', 'Magnificent', 'Blown away', 'Gootcha', 'BOUYA', 'Astonishing', 'Boum!', 'Savy', 'A walk in the park', 'Awestruck', 'WEEE'];
+    let successMessageNumber = Math.floor(Math.random() * (successMessage.length - 0) + 0);
+    return successMessage[successMessageNumber];
 }
 
 initializeDay2Day();
