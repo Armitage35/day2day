@@ -19,7 +19,7 @@ var selectedTask,
     userPocketReadingList,
     temperatureUnit,
     backgroundTheme;
-    
+
 var main = function() {
 
     updateClock(); // leave here as this should not execute before DOM is ready 
@@ -312,32 +312,47 @@ function closeNoteModal() {
 }
 
 function handleTool(selectedTool) {
+    function decenterTimeWeather() {
+        $('.align-self-center').removeClass('col-11').addClass('col-6');
+        $('.pictureCredits').parent().removeClass('col-0').addClass('col-2');
+        $('.tool').parent().removeClass('col-0').addClass('col-3');
+    }
+
     $('.accessTools').children().children().children().removeClass('active');
     Cookies.set('selectedTool', selectedTool);
+    
     if (selectedTool === 'background') {
         $('.fa-camera-retro').addClass('active');
         $('.tool').hide('slow');
+        // enabling the date & time to be centered
+        $('.align-self-center').removeClass('col-6').addClass('col-11');
+        $('.pictureCredits').parent().removeClass('col-2').addClass('col-0');
+        $('.tool').parent().removeClass('col-3').addClass('col-0');
     }
     else if (selectedTool === 'task') {
         $('.fa-tasks').addClass('active');
         $('.tool, .taskToolView').show('slow');
         $('.noteToolView, .pocketToolView, .settingsToolView').hide();
+        decenterTimeWeather();
     }
     else if (selectedTool === 'note') {
         $('.fa-sticky-note').addClass('active');
         $('.tool, .noteToolView').show('slow');
         $('.taskToolView, .pocketToolView, .settingsToolView').hide();
+        decenterTimeWeather();
     }
     else if (selectedTool === 'pocket') {
         $('.fa-get-pocket').addClass('active');
         $('.tool, .pocketToolView').show('slow');
         $('.taskToolView, .noteToolView, .settingsToolView').hide();
+        decenterTimeWeather();
         getPocketUnreadElements();
     }
     else if (selectedTool === 'settings') {
         $('.fa-cog').addClass('active');
         $('.tool, .settingsToolView').show('slow');
         $('.taskToolView, .noteToolView, .pocketToolView').hide();
+        decenterTimeWeather();
         displayUserSettings();
     }
 }
@@ -464,7 +479,7 @@ function displayTask() {
         j = j.getTime();
         console.log(j);
         if (selectedView == 0) {
-            if (j < endOfDay && j != 0) { //handle displaying today's and late tasks
+            if (j < endOfDay && j != 0) { //handle displaying today's and late tasks but not empty date tasks
                 displayTaskDetails(i);
             }
         }
@@ -1055,7 +1070,7 @@ function onSignIn(googleUser) {
     });
 }
 
-initializeDay2Day(); 
+initializeDay2Day();
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
