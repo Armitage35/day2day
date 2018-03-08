@@ -141,7 +141,7 @@
                                         <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" required size="2MB" style="font-size:12px">
                                         <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
                                         <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
-                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress">Upload new avatar</button>
+                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">Upload new avatar</button>
                                     </form>
                                 </div>
                                 <p class="settingsBlockTitle">General settings</p>
@@ -252,8 +252,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Your file is being uploaded</h5>
-                    <span aria-hidden="true">&times;</span>
+                    <h5 class="modal-title">Your file is being uploaded</h5>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -301,7 +300,7 @@
                     <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB" required>
                     <input type="text" name="selectedTask" id="selectedTask" />
                     <input type="text" name="commentNb" id="commentNb" />
-                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress">
+                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
                 </form>

@@ -861,7 +861,7 @@ function displayPocketUnreadElements(userPocketReadingList) {
             pocketArticleContentType = '<i class="fab fa-youtube"></i>';
         }
         else {
-            pocketArticleContentType = "";
+            pocketArticleContentType = '<i class="fas fa-link"></i>';
         }
 
         let pocketArticleHTML = '<div><a href="' + userPocketReadingList[i].resolved_url + '" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start"> <div class="d-flex w-100 justify-content-between"> <h5 class="mb-1">' + pocketArticleTitle + '</h5> <small>' + pocketArticleContentType + '</small><small></div><p class="mb-1">' + pocketArticleBody + '</p></a><button class="bttn-minimal bttn-xs bttn-primary markRead" id="' + userPocketReadingList[i].item_id + '" onclick="markArticleRead(' + userPocketReadingList[i].item_id + ')"><i class="fas fa-check"></i> Mark as read</button></small></div>';
