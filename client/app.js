@@ -321,7 +321,7 @@ function handleTool(selectedTool) {
 
     $('.accessTools').children().children().children().removeClass('active');
     Cookies.set('selectedTool', selectedTool);
-    
+
     if (selectedTool === 'background') {
         $('.fa-camera-retro').addClass('active');
         $('.tool').hide('slow');
@@ -640,8 +640,8 @@ function addTask() {
 
         $(".task-input input").val("");
         $(".datePicker").hide();
-        displayTask();
     }
+    displayTask();
 }
 
 function addComment(newComment) {
@@ -1072,8 +1072,8 @@ function onSignIn(googleUser) {
     });
 }
 
-function assignSucessMessage(){
-    successMessage = ['Youpi', 'Success', 'Wonderful', 'Amazing', 'flabbergasted', 'Magnificent', 'Blown away', 'Gootcha', 'BOUYA', 'Astonishing', 'Boum!', 'Savy', 'A walk in the park', 'Awestruck', 'WEEE'];
+function assignSucessMessage() {
+    successMessage = ['Youpi', 'Success', 'Wonderful', 'Amazing', 'flabbergasted', 'Magnificent', 'Blown away', 'Gootcha', 'BOUYA', 'Astonishing', 'Boum!', 'Savy', 'A walk in the park', 'Awestruck', 'WEEE', 'Successful', 'Done.', 'Successful as hell', 'BOUYAKA'];
     let successMessageNumber = Math.floor(Math.random() * (successMessage.length - 0) + 0);
     return successMessage[successMessageNumber];
 }
