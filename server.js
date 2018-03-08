@@ -681,7 +681,6 @@ app.post('/addnewpocketarticle', function(req, res) {
         request(options, function(error, response, body) {
             if (error) throw new Error(error);
             res.send(body);
-            console.log(body);
         });
     }
     else {
@@ -726,12 +725,8 @@ app.post('/googleAuth', function(req, res) {
                 console.log('googleToken final ' + googleToken);
                 User.update({ _id: user._id }, {
                     $set: {
-                        integrations: {
-                            google: {
-                                connected: true,
-                                token: newGoogleUser.integrations.google.token
-                            }
-                        }
+                        'integrations.google.connected': true,
+                        'integrations.google.token': newGoogleUser.integrations.google.token
                     }
                 }, function(err, User) {
                     if (err !== null) {
@@ -749,8 +744,6 @@ app.post('/googleAuth', function(req, res) {
                 res.send(user);
             }
             else {
-                console.log('test 1');
-                console.log(newGoogleUser);
                 createUser(newGoogleUser, res);
             }
         });
