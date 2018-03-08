@@ -22,8 +22,7 @@ var selectedTask,
     
 var main = function() {
 
-    updateClock();
-    initializeDay2Day(); // leave here as this should not execute before DOM is ready 
+    updateClock(); // leave here as this should not execute before DOM is ready 
 
     //getting the task's ID and displaying comments in the modal
     $(".taskList").on('click', "button", function() {
@@ -1055,6 +1054,7 @@ function onSignIn(googleUser) {
     });
 }
 
+initializeDay2Day(); 
 
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
