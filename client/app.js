@@ -462,8 +462,9 @@ function displayTask() {
     for (var i = 0; i <= userTask.length; i++) {
         var j = new Date(userTask[i].dueDate);
         j = j.getTime();
+        console.log(j);
         if (selectedView == 0) {
-            if (j < endOfDay) { //handle displaying today's and late tasks
+            if (j < endOfDay && j != 0) { //handle displaying today's and late tasks
                 displayTaskDetails(i);
             }
         }
@@ -489,7 +490,7 @@ function displayTaskDetails(i) {
         let taskClass;
 
         // checking if task is en retard
-        if (new Date(userTask[i].dueDate) < beginingOfDay) {
+        if (new Date(userTask[i].dueDate) < beginingOfDay && userTask[i].dueDate != null) {
             taskClass = 'task list-group-item lateTask';
         }
         else {
