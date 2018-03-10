@@ -748,8 +748,12 @@ app.post('/googleAuth', function(req, res) {
             }
         });
     });
+});
 
-
+// landing registration
+app.post('/authRegistration', function(req, res) {
+    console.log(req.body);
+    res.send('200');
 });
 
 // general functions
