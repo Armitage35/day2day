@@ -96,8 +96,6 @@ var main = function() {
         let newPassword = $('#password').val();
         resetPassword(newPassword);
     });
-    
-    if()
 };
 
 $(document).ready(main);
