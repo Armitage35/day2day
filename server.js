@@ -31,9 +31,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(upload());
 
-// record a generic message and send it to Rollbar
-rollbar.log("Hello world!");
-
 // Using Google Closure Compiler to minify the app.js file
 // compressor.minify({
 //     compressor: 'gcc',
@@ -63,7 +60,7 @@ passport.use(new LocalStrategy(
     function(email, password, done) {
         User.findOne({ email: email }, function(err, user) {
             if (err) {
-                rollbar.log(err);
+                handleError(err);
                 return done(err);
             }
             if (!user) {
@@ -89,7 +86,7 @@ app.get('/landing', function(req, res) {
 app.post('/login', function(req, res) {
     passport.authenticate('local', { session: true }, function(err, user, info) {
         if (err) {
-            rollbar.log(err);
+            handleError(err);
             return err;
         }
         if (!user) { return res.send('not found'); }
@@ -104,7 +101,7 @@ app.post('/login', function(req, res) {
     });
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
-            rollbar.log(err);
+            handleError(err)
             done(err, user);
         });
     });
@@ -135,8 +132,7 @@ app.post('/user', function(req, res) {
     //making the promise
     var emailTakenPromise = User.findOne({ 'email': email }, function(err, User) {
         if (err) {
-            rollbar.log(err);
-            console.log(err);
+            handleError(err);
         }
         else if (User) {
             emailTakenPromise = User.email;
@@ -168,9 +164,7 @@ app.post('/user', function(req, res) {
         else {
             newUser.save(function(err, result) {
                 if (err !== null) {
-                    console.log(err);
-                    res.send("ERROR");
-                    rollbar.log(err);
+                    handleError(err);
                 }
                 else {
                     createUser(newUser, res);
@@ -186,8 +180,7 @@ app.get('/user', function(req, res) {
 
     User.findById(userID).exec(function(err, user) {
         if (err) {
-            console.log("an error has occured");
-            rollbar.log(err);
+            handleError(err);
         }
         else {
             res.json(user);
@@ -212,8 +205,7 @@ app.put('/user', function(req, res) {
             }
         }, function(err, result) {
             if (err !== null) {
-                rollbar.log(err);
-                res.send('ERROR');
+                handleError(err);
             }
             else {
                 console.log(result);
@@ -231,8 +223,7 @@ app.put('/user', function(req, res) {
             }
         }, function(err, result) {
             if (err !== null) {
-                rollbar.log(err);
-                res.send('ERROR');
+                handleError(err);
             }
             else {
                 console.log(result);
@@ -260,8 +251,7 @@ app.post('/todos', function(req, res) {
 
     newTask.save(function(err, result) {
         if (err !== null) {
-            rollbar.log(err);
-            res.send("ERROR");
+            handleError(err);
         }
         res.json(result);
     });
@@ -275,9 +265,7 @@ app.put('/todos/comment', function(req, res) {
         $inc: { commentNb: 1 }
     }, function(err, result) {
         if (err !== null) {
-            console.log(err);
-            rollbar.log(err);
-            res.send('ERROR');
+            handleError(err);
         }
         else {
             console.log(result);
@@ -291,8 +279,7 @@ app.get('/todos', function(req, res) {
 
     userTasks.find({ userid: userID, complete: false }).exec(function(err, userTasks) {
         if (err) {
-            console.log(err);
-            rollbar.log(err);
+            handleError(err);
         }
         else {
             res.json(userTasks);
@@ -343,9 +330,8 @@ app.post('/file', function(req, res) {
             };
 
             s3.putObject(params, function(err, data) {
-                if (err){
-                    console.log(err);
-                    rollbar.log(err);
+                if (err) {
+                    handleError(err);
                 }
                 else
                     fileUploadedToS3Adress = 'https://s3.ca-central-1.amazonaws.com/' + bucketName + '/' + filename;
@@ -359,9 +345,7 @@ app.post('/file', function(req, res) {
                         }
                     }, function(err, result) {
                         if (err !== null) {
-                            console.log(err);
-                            rollbar.log(err);
-                            res.send('ERROR');
+                            handleError(err);
                         }
                         else {
                             res.redirect('/');
@@ -376,9 +360,7 @@ app.post('/file', function(req, res) {
                         $inc: { commentNb: 1 }
                     }, function(err, result) {
                         if (err !== null) {
-                            console.log(err);
-                            rollbar.log(err);
-                            res.send('ERROR');
+                            handleError(err);
                         }
                         else {
                             console.log(result);
@@ -400,8 +382,7 @@ app.get('/notes', function(req, res) {
 
     userNotes.find({ userid: userID, archived: false }).exec(function(err, userNotes) {
         if (err) {
-            rollbar.log(err);
-            console.log(err);
+            handleError(err);
         }
         else {
             res.json(userNotes);
@@ -423,9 +404,7 @@ app.put('/notes', function(req, res) {
     if (req.body.noteMongoID == 0) {
         newNote.save(function(err, result) {
             if (err !== null) {
-                console.log(err);
-                res.send('ERROR');
-                rollbar.log(err);
+                handleError(err);
             }
             res.json(result);
         });
@@ -441,9 +420,7 @@ app.put('/notes', function(req, res) {
             }
         }, function(err, result) {
             if (err !== null) {
-                console.log(err);
-                res.send('ERROR');
-                rollbar.log(err);
+                handleError(err);
             }
             else {
                 res.json(result);
@@ -477,9 +454,7 @@ app.post('/forget', function(req, res) {
                     }
                 }, function(err, result) {
                     if (err !== null) {
-                        console.log(err);
-                        res.send('ERROR');
-                        rollbar.log(err);
+                        handleError(err);
                     }
                     else {
                         res.json('succes');
@@ -531,9 +506,7 @@ app.put('/resetpassword', function(req, res) {
                     $set: { password: newCryptedPassword, resetPasswordExpires: 0 }
                 }, function(err) {
                     if (err !== null) {
-                        console.log(err);
-                        res.send('ERROR');
-                        rollbar.log(err);
+                        handleError(err);
                     }
                     else {
                         res.json('password updated');
@@ -576,9 +549,7 @@ app.get('/pocketKey', function(req, res) {
 
     request(options, function(error, response, body) {
         if (error) {
-            console.log(error);
-            res.send(error);
-            rollbar.log(error);
+            handleError(error);
         }
 
         pocketRequestCode = body.split('=');
@@ -608,8 +579,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
 
     request(options, function(error, response, body) {
         if (error) {
-            console.log(error);
-            rollbar.log(error);
+            handleError(error);
         }
         else {
             // add the token to the user's account 
@@ -624,9 +594,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
                 }
             }, function(err, User) {
                 if (err !== null) {
-                    console.log(err);
-                    res.send('ERROR');
-                    rollbar.log(err);
+                    handleError(err);
                 }
                 else {
                     console.log(User);
@@ -645,9 +613,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
 app.get('/getUsersPocketReadList', function(req, res) {
     User.findById(req.query.userID, function(err, user) {
         if (err) {
-            console.log(err);
-            res.send(err);
-            rollbar.log(err);
+            handleError(err);
         }
         else {
             var options = {
@@ -750,8 +716,7 @@ app.post('/googleAuth', function(req, res) {
         // adding the user's token within his profile
         User.findOne({ email: newGoogleUser.email }, function(err, user) {
             if (err) {
-                console.log(err);
-                rollbar.log(err);
+                handleError(err);
             }
             else if (user != null) { // case where the user exists
                 console.log('googleToken final ' + googleToken);
@@ -762,9 +727,7 @@ app.post('/googleAuth', function(req, res) {
                     }
                 }, function(err, User) {
                     if (err !== null) {
-                        console.log(err);
-                        res.send('ERROR');
-                        rollbar.log(err);
+                        handleError(err);
                     }
                     else {
                         console.log(user)
@@ -799,8 +762,7 @@ function createUser(newUser, res) {
     console.log(newUser);
     newUser.save(function(err, result) {
         if (err !== null) {
-            rollbar.log(err);
-            console.log(err);
+            handleError(err);
             return res.send("ERROR");
         }
         else {
@@ -824,4 +786,10 @@ function createUser(newUser, res) {
             return res.send(result);
         }
     });
+}
+
+function handleError(err) {
+    rollbar.log(err);
+    console.log(err);
+    return res.send("ERROR");
 }
