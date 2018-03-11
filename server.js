@@ -751,9 +751,13 @@ app.post('/googleAuth', function(req, res) {
 });
 
 // landing registration
-app.post('/authRegistration', function(req, res) {
-    console.log(req.body);
-    res.send('200');
+app.get('/authRegistration', function(req, res) {
+    if (validator.isEmail(req.query.email) === true) {
+        res.redirect('/auth.html?email=' + req.query.email);
+    }
+    else {
+        res.redirect('/auth.html');
+    }
 });
 
 // general functions
