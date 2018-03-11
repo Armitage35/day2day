@@ -1,79 +1,79 @@
-.calendarTool .container {
+.calendarToolView .container {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 1em; }
-.calendarTool h4 {
+.calendarToolView h4 {
   margin-bottom: 15px;
   font-weight: lighter; }
-.calendarTool .row:before {
+.calendarToolView .row:before {
   display: table;
   content: " "; }
-.calendarTool .grid-calendar {
+.calendarToolView .grid-calendar {
   min-width: 320px; }
-  .calendarTool .grid-calendar .row {
+  .calendarToolView .grid-calendar .row {
     /*       override these from bootstrap
      * 
      *       margin-right: -15px;
      *       margin-left: -15px; */
     margin: 0; }
-  .calendarTool .grid-calendar .calendar-week-header .grid-cell > div > div {
+  .calendarToolView .grid-calendar .calendar-week-header .grid-cell > div > div {
     padding-bottom: 10px;
     height: auto;
     color: #95a5a6;
     font-weight: bold; }
-  .calendarTool .grid-calendar .grid-cell {
+  .calendarToolView .grid-calendar .grid-cell {
     display: inline-block;
     float: left;
     min-height: 1px;
     padding: 0;
     position: relative;
     width: 14.2857142857%; }
-    .calendarTool .grid-calendar .grid-cell.previous-month {
+    .calendarToolView .grid-calendar .grid-cell.previous-month {
       color: #a6a6a6; }
-    .calendarTool .grid-calendar .grid-cell.next-month {
+    .calendarToolView .grid-calendar .grid-cell.next-month {
       color: #a6a6a6; }
-    .calendarTool .grid-calendar .grid-cell > div {
+    .calendarToolView .grid-calendar .grid-cell > div {
       display: flex;
       justify-content: center;
       width: 100%; }
-      .calendarTool .grid-calendar .grid-cell > div > div {
+      .calendarToolView .grid-calendar .grid-cell > div > div {
         height: 0;
         padding: 43% 0 57%; }
-.calendarTool .bluebackground {
+.calendarToolView .bluebackground {
   background-color: #1ba5e0;
   color: white;
   padding-top: 33px; }
-  .calendarTool .bluebackground h1 {
+  .calendarToolView .bluebackground h1 {
     text-transform: uppercase;
     max-width: 80%;
     margin-bottom: 40px; }
-  .calendarTool .bluebackground .currentDay {
+  .calendarToolView .bluebackground .currentDay {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 30px;
     max-width: 80%; }
-  .calendarTool .bluebackground .calLabelUpcoming {
+  .calendarToolView .bluebackground .calLabelUpcoming {
     text-transform: uppercase;
     font-weight: lighter; }
-  .calendarTool .bluebackground .calEvent {
+  .calendarToolView .bluebackground .calEvent {
     margin-bottom: 15px; }
-    .calendarTool .bluebackground .calEvent p {
+    .calendarToolView .bluebackground .calEvent p {
       display: inline; }
-    .calendarTool .bluebackground .calEvent p:first-child {
+    .calendarToolView .bluebackground .calEvent p:first-child {
       margin-right: 20px; }
-.calendarTool .currentMonthYear {
+.calendarToolView .currentMonthYear {
   color: lightgrey;
   font-size: 33px;
   text-align: right; }
-  .calendarTool .currentMonthYear .currentYear {
+  .calendarToolView .currentMonthYear .currentYear {
     font-weight: bold; }
-.calendarTool .calendarMonthView {
+.calendarToolView .calendarMonthView {
   text-align: right; }
-  .calendarTool .calendarMonthView .dayHasEvent {
+  .calendarToolView .calendarMonthView .dayHasEvent {
     color: #1d89ff;
     font-weight: bold; }
-.calendarTool #activeDay {
+.calendarToolView #activeDay {
   color: white;
   background-color: #1d89ff;
   border-radius: 100%;

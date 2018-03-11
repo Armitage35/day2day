@@ -2,462 +2,721 @@
 <html>
 
 <head>
-    <title>Day2Day</title>
-    <meta charset="utf-8">
-    <meta name="google-site-verification" content="cOTfkzkCCJenMOmJdfgeyIyi_W8BjwDFCLX4sv_FW4M" />
-    <link rel="icon" href="favicon.ico">
-    <!--Bower compo-->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/js-cookie/src/js.cookie.js"></script>
-    <script src="bower_components/izitoast/dist/js/iziToast.min.js"></script>
-    <link rel="stylesheet" href="bower_components/izitoast/dist/css/iziToast.min.css">
-    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
-    <!--Bootstrap CSS lib-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+   <title>Day2Day</title>
+   <meta charset="utf-8">
+   <meta name="google-site-verification" content="cOTfkzkCCJenMOmJdfgeyIyi_W8BjwDFCLX4sv_FW4M" />
+   <link rel="icon" href="favicon.ico">
+   <!--Bower compo-->
+   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+   <script src="bower_components/js-cookie/src/js.cookie.js"></script>
+   <script src="bower_components/izitoast/dist/js/iziToast.min.js"></script>
+   <link rel="stylesheet" href="bower_components/izitoast/dist/css/iziToast.min.css">
+   <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
+   <!--Bootstrap CSS lib-->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
-    <!--segment library-->
-    <script>
-        ! function() {
-            var analytics = window.analytics = window.analytics || [];
-            if (!analytics.initialize)
-                if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice.");
-                else {
-                    analytics.invoked = !0;
-                    analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"];
-                    analytics.factory = function(t) {
-                        return function() {
-                            var e = Array.prototype.slice.call(arguments);
-                            e.unshift(t);
-                            analytics.push(e);
-                            return analytics
-                        }
-                    };
-                    for (var t = 0; t < analytics.methods.length; t++) {
-                        var e = analytics.methods[t];
-                        analytics[e] = analytics.factory(e)
-                    }
-                    analytics.load = function(t, e) {
-                        var n = document.createElement("script");
-                        n.type = "text/javascript";
-                        n.async = !0;
-                        n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
-                        var o = document.getElementsByTagName("script")[0];
-                        o.parentNode.insertBefore(n, o);
-                        analytics.integrationOptions = e
-                    };
-                    analytics.SNIPPET_VERSION = "4.0.1";
-                    analytics.load("7r4PvyN0SaMPFO3FxwPoBJrzm8Av6Yj7");
-                    analytics.page();
-                }
-        }();
-    </script>
-    <!--end segment-->
+   <!--segment library-->
+   <script>
+      ! function() {
+         var analytics = window.analytics = window.analytics || [];
+         if (!analytics.initialize)
+            if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice.");
+            else {
+               analytics.invoked = !0;
+               analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"];
+               analytics.factory = function(t) {
+                  return function() {
+                     var e = Array.prototype.slice.call(arguments);
+                     e.unshift(t);
+                     analytics.push(e);
+                     return analytics
+                  }
+               };
+               for (var t = 0; t < analytics.methods.length; t++) {
+                  var e = analytics.methods[t];
+                  analytics[e] = analytics.factory(e)
+               }
+               analytics.load = function(t, e) {
+                  var n = document.createElement("script");
+                  n.type = "text/javascript";
+                  n.async = !0;
+                  n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
+                  var o = document.getElementsByTagName("script")[0];
+                  o.parentNode.insertBefore(n, o);
+                  analytics.integrationOptions = e
+               };
+               analytics.SNIPPET_VERSION = "4.0.1";
+               analytics.load("7r4PvyN0SaMPFO3FxwPoBJrzm8Av6Yj7");
+               analytics.page();
+            }
+      }();
+   </script>
+   <!--end segment-->
 
-    <!--Bootstrap JS lib-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <!--Font-->
-    <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
-    <script type="text/javascript" src="app.js"></script>
-    <link href="bttn.min.css" type="text/css" rel="stylesheet">
-    <link href="bttn.css" type="text/css" rel="stylesheet">
-    <link href="calendarStyle.css" type="text/css" rel="stylesheet">
-    <link href="style.css" type="text/css" rel="stylesheet">
+   <!--Bootstrap JS lib-->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+   <!--Font-->
+   <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
+   <script type="text/javascript" src="app.js"></script>
+   <link href="bttn.min.css" type="text/css" rel="stylesheet">
+   <link href="style.css" type="text/css" rel="stylesheet">
+   <link href="calendarStyle.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid" id="main">
-        <div class="row">
-            <div class="col-6">
-                <div class="branding">
-                    <img src="assets/armitageLogo.png" alt="Day2Day logo">
-                    <p>Day2Day <br /> by <a href="https://ca.linkedin.com/in/adrien-dubois-ahlqvist-4179b33b/en" target="_blank">Armitage</a></p>
-                </div>
+   <div class="container-fluid" id="main">
+      <div class="row">
+         <div class="col-6">
+            <div class="branding">
+               <img src="assets/armitageLogo.png" alt="Day2Day logo">
+               <p>Day2Day <br /> by <a href="https://ca.linkedin.com/in/adrien-dubois-ahlqvist-4179b33b/en" target="_blank">Armitage</a></p>
             </div>
-            <div class="col-6">
-                <div class="user">
-                    <img src="" class="userPicture">
-                </div>
+         </div>
+         <div class="col-6">
+            <div class="user">
+               <img src="" class="userPicture">
             </div>
-        </div>
-        <div class="row">
-            <!-- display date / time ect -->
-            <div class="col-2">
-                <div class="pictureCredits">
-                    <p class="thanks"></p>
-                </div>
+         </div>
+      </div>
+      <div class="row">
+         <!-- display date / time ect -->
+         <div class="col-2">
+            <div class="pictureCredits">
+               <p class="thanks"></p>
             </div>
-            <div class="col-6 align-self-center">
-                <div class="timeDateWeather text-center">
-                    <h1 class="time"></h1>
-                    <h2 class="date"></h2>
-                    <h2 class="temperature"></h2>
-                </div>
+         </div>
+         <div class="col-6 align-self-center">
+            <div class="timeDateWeather text-center">
+               <h1 class="time"></h1>
+               <h2 class="date"></h2>
+               <h2 class="temperature"></h2>
             </div>
-            <!-- display user's content -->
-            <div class="col-3">
-                <div class="tool">
-                    <div class="taskToolView">
-                        <h3 id="selectedTaskView">Today</h3>
-                        <nav class="nav">
-                            <a class="nav-link active" href="#" id="today">Today</a>
-                            <a class="nav-link" href="#" id="upcoming">Upcoming</a>
-                            <a class="nav-link" href="#" id="backlog">Backlog</a>
-                        </nav>
-                        <ul class="taskList">
-                        </ul>
-                        <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" data-toggle="modal" data-target="#myModal">add task</button>
-                    </div>
-                    <div class="noteToolView">
-                        <h3>My Notes</h3>
-                        <div class="notesList">
-                        </div>
-                        <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
-                    </div>
-                    <div class="pocketToolView">
-                        <h3 class="pocketToolTitle">Reading list</h3>
-                        <div class="readingList list-group">
+         </div>
+         <!-- display user's content -->
+         <div class="col-3">
+            <div class="tool">
+               <div class="taskToolView">
+                  <h3 id="selectedTaskView">Today</h3>
+                  <nav class="nav">
+                     <a class="nav-link active" href="#" id="today">Today</a>
+                     <a class="nav-link" href="#" id="upcoming">Upcoming</a>
+                     <a class="nav-link" href="#" id="backlog">Backlog</a>
+                  </nav>
+                  <ul class="taskList">
+                  </ul>
+                  <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" data-toggle="modal" data-target="#myModal">add task</button>
+               </div>
+               <div class="noteToolView">
+                  <h3>My Notes</h3>
+                  <div class="notesList">
+                  </div>
+                  <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
+               </div>
+               <div class="pocketToolView">
+                  <h3 class="pocketToolTitle">Reading list</h3>
+                  <div class="readingList list-group">
 
+                  </div>
+                  <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newPocketButton" data-toggle="modal" data-target="#pocketNewArticle">new link</button>
+               </div>
+               <div class="settingsToolView">
+                  <div class="avatar">
+                  </div>
+                  <img src="" id="settingAvatar" />
+                  <div class="settingsContent settingsView">
+                     <h3 class="settingsToolTitle">Settings</h3>
+                     <div class="settingsDisplay">
+                        <button class="bttn-material-flat bttn-xs bttn-primary" id="editSettings">Edit settings</button>
+                        <p class="settingsBlockTitle">Personal information</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Name</p>
+                           <p class="settingValue" id="userName"></p>
+                           <p class="settingTitle">Email</p>
+                           <p class="settingValue" id="userEmail"></p>
+                           <p class="settingTitle">Password</p>
+                           <button class="bttn-material-flat bttn-xs bttn-primary" id="settingPasswordReset">Reset password</button>
+                           <p class="settingTitle">Avatar</p>
+                           <form method="post" enctype="multipart/form-data" action="/file">
+                              <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" required size="2MB" style="font-size:12px">
+                              <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
+                              <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
+                              <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">Upload new avatar</button>
+                           </form>
                         </div>
-                        <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newPocketButton" data-toggle="modal" data-target="#pocketNewArticle">new link</button>
-                    </div>
-                    <div class="settingsToolView">
-                        <div class="avatar">
+                        <p class="settingsBlockTitle">General settings</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Background picture</p>
+                           <p class="settingValue" id="settingsBackgroundPref"></p>
+                           <p class="settingTitle">Temperature unit</p>
+                           <p class="settingValue" id="settingsTemperaturePref"></p>
                         </div>
-                        <img src="" id="settingAvatar" />
-                        <div class="settingsContent settingsView">
-                            <h3 class="settingsToolTitle">Settings</h3>
-                            <div class="settingsDisplay">
-                                <button class="bttn-material-flat bttn-xs bttn-primary" id="editSettings">Edit settings</button>
-                                <p class="settingsBlockTitle">Personal information</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Name</p>
-                                    <p class="settingValue" id="userName"></p>
-                                    <p class="settingTitle">Email</p>
-                                    <p class="settingValue" id="userEmail"></p>
-                                    <p class="settingTitle">Password</p>
-                                    <button class="bttn-material-flat bttn-xs bttn-primary" id="settingPasswordReset">Reset password</button>
-                                    <p class="settingTitle">Avatar</p>
-                                    <form method="post" enctype="multipart/form-data" action="/file">
-                                        <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" required size="2MB" style="font-size:12px">
-                                        <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
-                                        <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
-                                        <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">Upload new avatar</button>
-                                    </form>
-                                </div>
-                                <p class="settingsBlockTitle">General settings</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Background picture</p>
-                                    <p class="settingValue" id="settingsBackgroundPref"></p>
-                                    <p class="settingTitle">Temperature unit</p>
-                                    <p class="settingValue" id="settingsTemperaturePref"></p>
-                                </div>
-                                <p class="settingsBlockTitle">Connected apps</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Pocket</p>
-                                    <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsPocketStatus"></p>
-                                    <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingPocketAction"></button>
-                                    <p class="settingTitle">Google</p>
-                                    <meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar">
-                                    <meta name="google-signin-client_id" content="341494480508-fo0ol4r2o0tmaa43ana0r3k71t9ptu4l.apps.googleusercontent.com">
-                                    <script src="https://apis.google.com/js/platform.js" async defer></script>
-                                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-                                </div>
-                                <p class="settingsBlockTitle">Others</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Log out</p>
-                                    <button class="bttn-material-flat bttn-xs bttn-primary" id="logOut">Log out</button>
-                                </div>
-                            </div>
+                        <p class="settingsBlockTitle">Connected apps</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Pocket</p>
+                           <p class="settingValue settingsIntegration" style="margin-bottom:0px" id="settingsPocketStatus"></p>
+                           <button class="bttn-minimal bttn-xs bttn-primary" style="margin-bottom:15px" id="settingPocketAction"></button>
+                           <p class="settingTitle">Google</p>
+                           <meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar">
+                           <meta name="google-signin-client_id" content="341494480508-fo0ol4r2o0tmaa43ana0r3k71t9ptu4l.apps.googleusercontent.com">
+                           <script src="https://apis.google.com/js/platform.js" async defer></script>
+                           <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
                         </div>
-                        <!-- the settings edit view -->
-                        <div class="settingsContent settingsEdit" style='display: none'>
-                            <h3 class="settingsToolTitle">Settings</h3>
-                            <div class="settingsDisplay">
-                                <button class="bttn-material-flat bttn-xs bttn-primary" id="saveSettings">Save settings</button>
-                                <p class="settingsBlockTitle">Personal information</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Name</p>
-                                    <input class="settingValue" id="userNameNewValue">
-                                    <p class="settingTitle">Password</p>
-                                    <button class="bttn-material-flat bttn-xs bttn-primary">Reset password</button>
-                                </div>
-                                <p class="settingsBlockTitle">General settings</p>
-                                <div class="settingsBlock">
-                                    <p class="settingTitle">Background picture</p>
-                                    <input class="settingValue" id="settingsBackgroundPrefNewValue">
-                                    <p class="settingTitle">Temperature unit</p>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose your unit</button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueCelsius">Celsius</a>
-                                            <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueFarenheit">Farenheit</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <p class="settingsBlockTitle">Others</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Log out</p>
+                           <button class="bttn-material-flat bttn-xs bttn-primary" id="logOut">Log out</button>
                         </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <!-- the settings edit view -->
+                  <div class="settingsContent settingsEdit" style='display: none'>
+                     <h3 class="settingsToolTitle">Settings</h3>
+                     <div class="settingsDisplay">
+                        <button class="bttn-material-flat bttn-xs bttn-primary" id="saveSettings">Save settings</button>
+                        <p class="settingsBlockTitle">Personal information</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Name</p>
+                           <input class="settingValue" id="userNameNewValue">
+                           <p class="settingTitle">Password</p>
+                           <button class="bttn-material-flat bttn-xs bttn-primary">Reset password</button>
+                        </div>
+                        <p class="settingsBlockTitle">General settings</p>
+                        <div class="settingsBlock">
+                           <p class="settingTitle">Background picture</p>
+                           <input class="settingValue" id="settingsBackgroundPrefNewValue">
+                           <p class="settingTitle">Temperature unit</p>
+                           <div class="btn-group">
+                              <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose your unit</button>
+                              <div class="dropdown-menu">
+                                 <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueCelsius">Celsius</a>
+                                 <a class="dropdown-item" href="#" id="settingsTemperaturePrefNewValueFarenheit">Farenheit</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <!-- display tool bar -->
-            <div class="col-1 accessTools">
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="backgroundTool">
+         </div>
+         <!-- display tool bar -->
+         <div class="col-1 accessTools">
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="backgroundTool">
                         <i class="fas fa-camera-retro fa-2x"></i>
                     </button>
-                </div>
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="taskTool"><i class="fas fa-tasks fa-2x"></i></button>
-                </div>
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="noteTool"><i class="fas fa-sticky-note fa-2x"></i></button>
-                </div>
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="calendarTool"
-                    data-toggle="modal" data-target="#comingSoon">
+            </div>
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="taskTool"><i class="fas fa-tasks fa-2x"></i></button>
+            </div>
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="noteTool"><i class="fas fa-sticky-note fa-2x"></i></button>
+            </div>
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="calendarTool">
                         <i class="fas fa-calendar-alt fa-2x"></i>
                     </button>
-                </div>
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="pocketTool">
+            </div>
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="pocketTool">
                         <i class="fab fa-get-pocket fa-2x" data-toggle="modal" data-target="#pocketLogin"></i>
                     </button>
-                </div>
-                <div class="shortcut">
-                    <button type="button" class="btn btn-link" id="settingTool">
+            </div>
+            <div class="shortcut">
+               <button type="button" class="btn btn-link" id="settingTool">
                         <i class="fas fa-cog fa-2x"></i>
                     </button>
-                </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 
 
-    <!-- Add a task modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add your tasks</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
-                    <button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                    <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
-                </div>
+   <!-- Add a task modal -->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add your tasks</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-        </div>
-    </div>
-
-    <!-- Upload in progress Modal -->
-    <div class="modal fade" id="uploadInProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Your file is being uploaded</h5>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Upload in progress</p>
-                    <div class="sk-folding-cube">
-                        <div class="sk-cube1 sk-cube"></div>
-                        <div class="sk-cube2 sk-cube"></div>
-                        <div class="sk-cube4 sk-cube"></div>
-                        <div class="sk-cube3 sk-cube"></div>
-                    </div>
-                </div>
+            <div class="modal-body">
+               <input type="text" autofocus placeholder="Type your task" id="newTask" class="field" style="padding-top:0px"><button class="bttn-sm bttn-primary" id="calendarButton" style="border:solid; border-width:1px 0px" data-toggle="popover"><i class="far fa-calendar"></i></button>
+               <button class="bttn-unite bttn-sm bttn-primary" id="plusButton"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+               <form style='margin-top:5px; display:none;' class='datePicker'>Your due date:<input type='date' class="field" id="dueDate" style='border-right-width:1px; margin-left:10px; width:147px' value="" autofocus name='dueDate'></form>
             </div>
-        </div>
-    </div>
+            <div class="modal-footer">
+               <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
 
-    <!-- Coming soon Modal -->
-    <div class="modal fade" id="comingSoon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Coming Soon !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <!-- Upload in progress Modal -->
+   <div class="modal fade" id="uploadInProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Your file is being uploaded</h5>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>Upload in progress</p>
+               <div class="sk-folding-cube">
+                  <div class="sk-cube1 sk-cube"></div>
+                  <div class="sk-cube2 sk-cube"></div>
+                  <div class="sk-cube4 sk-cube"></div>
+                  <div class="sk-cube3 sk-cube"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Coming soon Modal -->
+   <div class="modal fade" id="comingSoon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Coming Soon !</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    <p>This feature is not available yet but should be in the coming weeks. For the time being, you can follow progress on <a href=https://github.com/Armitage35/day2day target="_blank">GitHub</a></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
+               <p>This feature is not available yet but should be in the coming weeks. For the time being, you can follow progress on <a href=https://github.com/Armitage35/day2day target="_blank">GitHub</a></p>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
 
-    <!--new comment modal-->
-    <div class="container-fluid" id="newCommentModal" style="display:none">
-        <!--the new comment input zone -->
-        <div class="newComment">
-            <div class="newCommentInputZone">
-                <input type="text" class="newCommentInput" id="message-text" placeholder="Type your new comment here" />
-                <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
-                <!--submit picture-->
-                <form method="post" enctype="multipart/form-data" action="/file" id="message-file" style="display:none">
-                    <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB" required>
-                    <input type="text" name="selectedTask" id="selectedTask" />
-                    <input type="text" name="commentNb" id="commentNb" />
-                    <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">
+   <!--new comment modal-->
+   <div class="container-fluid" id="newCommentModal" style="display:none">
+      <!--the new comment input zone -->
+      <div class="newComment">
+         <div class="newCommentInputZone">
+            <input type="text" class="newCommentInput" id="message-text" placeholder="Type your new comment here" />
+            <input type="text" class="newCommentInput" id="message-giphy" style="display:none" placeholder="Look for a giphy" />
+            <!--submit picture-->
+            <form method="post" enctype="multipart/form-data" action="/file" id="message-file" style="display:none">
+               <input name="uploadFile" class="newCommentInput" id="fileInput" type="file" name="profile_pic" accept=".jpg, .jpeg, .png" size="2MB" required>
+               <input type="text" name="selectedTask" id="selectedTask" />
+               <input type="text" name="commentNb" id="commentNb" />
+               <button class="bttn-material-circle bttn-sm bttn-primary " id="addFile" style="display:none" type="submit" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </button>
-                </form>
-                <!-- end of submit picture-->
-                <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment">
+            </form>
+            <!-- end of submit picture-->
+            <button class="bttn-material-circle bttn-sm bttn-primary" id="addComment">
                     <i class="fas fa-paper-plane"></i>
                 </button>
-                <button class="bttn-material-circle bttn-sm bttn-primary" id="testGif">
+            <button class="bttn-material-circle bttn-sm bttn-primary" id="testGif">
                     <i class="fas fa-random"></i>
                 </button>
-                <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none"> 
+            <button class="bttn-material-circle bttn-sm bttn-primary " id="addGif" style="display:none"> 
                     <i class="fas fa-paper-plane"></i>
                 </button>
-            </div>
-            <div class="commentButtons">
-                <button type="button" class="btn btn-link" id="textComment"><i class="fas fa-font fa-lg active"></i></button>
-                <button type="button" class="btn btn-link" id="giphyComment"><i class="fas fa-rocket fa-lg" ></i></button>
-                <button type="button" class="btn btn-link" id="pictureComment"><i class="far fa-image fa-lg" ></i></i></button>
-            </div>
-        </div>
-        <div class="row">
-            <button type="button" class="btn btn-link" id="closeNewCommentModal"><i class="fas fa-times fa-lg" ></i></button>
-            <!-- the comment col -->
-            <div class="col-8 commentSection">
-                <div class="row comment" id="c1">
-                    <!-- the picture col -->
-                    <div class="col-1">
-                        <img src="" class="avatarComment" />
-                    </div>
+         </div>
+         <div class="commentButtons">
+            <button type="button" class="btn btn-link" id="textComment"><i class="fas fa-font fa-lg active"></i></button>
+            <button type="button" class="btn btn-link" id="giphyComment"><i class="fas fa-rocket fa-lg" ></i></button>
+            <button type="button" class="btn btn-link" id="pictureComment"><i class="far fa-image fa-lg" ></i></i></button>
+         </div>
+      </div>
+      <div class="row">
+         <button type="button" class="btn btn-link" id="closeNewCommentModal"><i class="fas fa-times fa-lg" ></i></button>
+         <!-- the comment col -->
+         <div class="col-8 commentSection">
+            <div class="row comment" id="c1">
+               <!-- the picture col -->
+               <div class="col-1">
+                  <img src="" class="avatarComment" />
+               </div>
 
-                </div>
             </div>
+         </div>
 
-            <!-- the details col -->
-            <div class="col-4 details">
-                <div class="row">
-                    <div class="col-1">
-                        <input type="checkbox" class="detailsCheckbox" id="">
-                    </div>
-                    <div class="col-11">
-                        <h1 class="commentTaskTitle"></h1>
-                        <div class="createdOn">
-                            <i class="far fa-plus-square"></i>
-                            <p></p>
-                        </div>
-                        <div class="dueFor">
-                            <i class="far fa-calendar"></i>
-                            <p>No due date</p>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <!--<i class="fas fa-trash"></i>-->
-                <!--<i class="fas fa-code"></i>-->
+         <!-- the details col -->
+         <div class="col-4 details">
+            <div class="row">
+               <div class="col-1">
+                  <input type="checkbox" class="detailsCheckbox" id="">
+               </div>
+               <div class="col-11">
+                  <h1 class="commentTaskTitle"></h1>
+                  <div class="createdOn">
+                     <i class="far fa-plus-square"></i>
+                     <p></p>
+                  </div>
+                  <div class="dueFor">
+                     <i class="far fa-calendar"></i>
+                     <p>No due date</p>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+            <hr />
+            <!--<i class="fas fa-trash"></i>-->
+            <!--<i class="fas fa-code"></i>-->
+         </div>
+      </div>
+   </div>
 
-    <!--new note modal-->
-    <div class="container-fluid" id="newNoteModal" style="display:none">
-        <!--the new note input zone -->
-        <div class="row">
-            <button type="button" class="btn btn-link" id="closeNoteModal"><i class="fas fa-times fa-lg" ></i></button>
-            <!-- the comment col -->
-            <div class="col-8 noteSection">
-                <div class="row note">
-                    <textarea name="note" class="noteInputZone">Your note goes here</textarea>
-                </div>
+   <!--new note modal-->
+   <div class="container-fluid" id="newNoteModal" style="display:none">
+      <!--the new note input zone -->
+      <div class="row">
+         <button type="button" class="btn btn-link" id="closeNoteModal"><i class="fas fa-times fa-lg" ></i></button>
+         <!-- the comment col -->
+         <div class="col-8 noteSection">
+            <div class="row note">
+               <textarea name="note" class="noteInputZone">Your note goes here</textarea>
             </div>
+         </div>
 
-            <!-- the details col -->
-            <div class="col-4 details">
-                <div class="row">
-                    <div class="col-12">
-                        <input type="text" class="noteTitleInput" placeholder="nothing... Yet!" />
-                        <div class="createdOn">
-                            <i class="far fa-plus-square"></i>
-                            <p>No creation date</p>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
-                <button type="button" class="btn btn-link" id="archiveNote" style="color:white"><i class="fas fa-archive"></i></button>
-                <!--<i class="fas fa-caret-left"></i>-->
-                <!--<i class="fas fa-caret-right"></i>-->
+         <!-- the details col -->
+         <div class="col-4 details">
+            <div class="row">
+               <div class="col-12">
+                  <input type="text" class="noteTitleInput" placeholder="nothing... Yet!" />
+                  <div class="createdOn">
+                     <i class="far fa-plus-square"></i>
+                     <p>No creation date</p>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+            <hr />
+            <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
+            <button type="button" class="btn btn-link" id="archiveNote" style="color:white"><i class="fas fa-archive"></i></button>
+            <!--<i class="fas fa-caret-left"></i>-->
+            <!--<i class="fas fa-caret-right"></i>-->
+         </div>
+      </div>
+   </div>
 
-    <!-- Log into Pocket modal -->
-    <div class="modal fade" id="pocketLogin" tabindex="-1" role="dialog" aria-labelledby="pocketLogin" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Connect to your Pocket account</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <!-- Log into Pocket modal -->
+   <div class="modal fade" id="pocketLogin" tabindex="-1" role="dialog" aria-labelledby="pocketLogin" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Connect to your Pocket account</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    <img src="../assets/3rdParty/pocketCover.jpg" style="max-width:100%" />
-                    <p>Connect your Pocket account to access every page you want to read but forget to check. Well, no more. Get access to your content directly from your home page!</p>
-                    <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" />
-                </div>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
+               <img src="../assets/3rdParty/pocketCover.jpg" style="max-width:100%" />
+               <p>Connect your Pocket account to access every page you want to read but forget to check. Well, no more. Get access to your content directly from your home page!</p>
+               <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" />
+            </div>
+         </div>
+      </div>
+   </div>
 
-    <!-- Add new link to pocket -->
-    <div class="modal fade" id="pocketNewArticle" tabindex="-1" role="dialog" aria-labelledby="pocketNewArticle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Save an item to Pocket</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <!-- Add new link to pocket -->
+   <div class="modal fade" id="pocketNewArticle" tabindex="-1" role="dialog" aria-labelledby="pocketNewArticle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Save an item to Pocket</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" autofocus placeholder="http://" id="newPocketArticleLink" class="field" style="padding-top:0px"><button class="bttn-unite bttn-sm bttn-primary" id="addNewPocketLink"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
-                </div>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
+               <input type="text" autofocus placeholder="http://" id="newPocketArticleLink" class="field" style="padding-top:0px"><button class="bttn-unite bttn-sm bttn-primary" id="addNewPocketLink"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="bttn-unite bttn-sm bttn-primary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
 
-    <!-- confirmation modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModal">Please confirm</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <!-- confirmation modal -->
+   <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="confirmationModal">Please confirm</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    You have changed your settings, those will be activated as soon as you validate. Do you still want to proceed ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="settingsConfirmationModalCancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="settingsConfirmChanges">Save changes</button>
-                </div>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
+               You have changed your settings, those will be activated as soon as you validate. Do you still want to proceed ?
+            </div>
+            <div class="modal-footer">
+               <button type="button" id="settingsConfirmationModalCancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" id="settingsConfirmChanges">Save changes</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   
+   <!-- the calendar feature-->
+   <div class="container-fluid calendarToolView" style="display:none">
+      <div class="row">
+         <div class="col-4 bluebackground">
+         </div>
+         <div class="col-8 currentMonthYear">
+            <p class="currentYear">2018</p>
+            <p class="currentMonth">March</p>
+         </div>
+      </div>
+      <!-- presentation layer	 -->
+      <div clas="row">
+         <!-- 	actual cal content	 -->
+         <div class="row">
+            <div class="col-4 bluebackground">
+               <p class="currentDay">Thursday 09 March</p>
+               <p class="calLabelUpcoming">Upcoming events</p>
+               <div class="calEvent">
+                  <p>15 March</p>
+                  <p>Whatever event</p>
+               </div>
+               <div class="calEvent">
+                  <p>20 March</p>
+                  <p>Anniversaire Julien</p>
+               </div>
+            </div>
+            <div class="col-8 calendarMonthView">
+               <div class="grid-calendar">
+                  <div class="row calendar-week-header">
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>SUN</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>MON</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>TUE</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>WED</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>THU</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>FRI</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>SAT</span></div>
+                        </div>
+                     </div>
+                  </div>
 
+                  <div class="row calendar-week">
+                     <div class="col-xs-1 grid-cell previous-month">
+                        <div>
+                           <div><span>31</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>1</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>2</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>3</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>4</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>5</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>6</span></div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row calendar-week">
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>7</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>8</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell" id="activeDay">
+                        <div>
+                           <div><span>9</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>10</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>11</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>12</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>13</span></div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row calendar-week">
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>14</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>15</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>16</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>17</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>18</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>19</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>20</span></div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row calendar-week">
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>21</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>22</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>23</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>24</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>25</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>26</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>27</span></div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row calendar-week">
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>28</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>29</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>30</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell next-month">
+                        <div>
+                           <div><span>1</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell next-month">
+                        <div>
+                           <div><span>2</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell next-month">
+                        <div>
+                           <div><span>3</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell next-month">
+                        <div>
+                           <div><span>4</span></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div>
+            </div>
+         </div>
+      </div>
 
 </body>
 

@@ -160,13 +160,18 @@ var main = function() {
     $('#noteTool').on('click', function() {
         handleTool('note');
     });
+
     $('#settingTool').on('click', function() {
         handleTool('settings');
     });
 
+    $('#calendarTool').on('click', function() {
+        handleTool('calendar');
+    });
+
     console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined || Cookies.get('selectedTool') === 'settings') {
-        handleTool("task");
+        handleTool('task');
     }
     else {
         handleTool(Cookies.get('selectedTool'));
@@ -355,6 +360,11 @@ function handleTool(selectedTool) {
         $('.taskToolView, .noteToolView, .pocketToolView').hide();
         decenterTimeWeather();
         displayUserSettings();
+    }
+    else if (selectedTool === 'calendar') {
+        $('.calendar').addClass('active');
+        $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').hide();
+        $('.calendarToolView').show();
     }
 }
 
