@@ -463,8 +463,8 @@
             <button class="bttn-bordered bttn-sm bttn-primary" id="closeCalendar" style="color: white; border-color: white"><i class="fas fa-arrow-circle-left fa-1x"></i> Back</button>
          </div>
          <div class="col-8 currentMonthYear whiteBackground">
-            <p class="currentYear">2018</p>
-            <p class="currentMonth">March</p>
+            <p class="currentYear"></p>
+            <p class="currentMonth"></p>
          </div>
       </div>
       <!-- presentation layer	 -->
@@ -472,25 +472,23 @@
          <!-- 	actual cal content	 -->
          <div class="row">
             <div class="col-4 bluebackground">
-               <p class="currentDay">Thursday 09 March</p>
+               <p class="currentDay"></p>
                <p class="calLabelUpcoming">Upcoming events</p>
-               <div class="calEvent">
-                  <p>15 March</p>
-                  <p>Whatever event</p>
+               <div class="calEvent row">
+                  <p class="col-5">15 March</p>
+                  <p class="col-7">Whatever event</p>
                </div>
-               <div class="calEvent">
-                  <p>20 March</p>
-                  <p>Anniversaire Julien</p>
+               <div class="calEvent row">
+                  <div class="col-5">
+                     <p>20 March</p>
+                     <p class="calEventHour">18:30</p>
+                  </div>
+                  <p class="col-7">Anniversaire Julien</p>
                </div>
             </div>
             <div class="col-8 calendarMonthView whiteBackground">
                <div class="grid-calendar">
                   <div class="row calendar-week-header">
-                     <div class="col-xs-1 grid-cell">
-                        <div>
-                           <div><span>SUN</span></div>
-                        </div>
-                     </div>
                      <div class="col-xs-1 grid-cell">
                         <div>
                            <div><span>MON</span></div>
@@ -519,6 +517,11 @@
                      <div class="col-xs-1 grid-cell">
                         <div>
                            <div><span>SAT</span></div>
+                        </div>
+                     </div>
+                     <div class="col-xs-1 grid-cell">
+                        <div>
+                           <div><span>SUN</span></div>
                         </div>
                      </div>
                   </div>

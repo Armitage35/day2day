@@ -22,6 +22,7 @@ var express = require('express'),
     analytics = new Analytics('I2DPb8fIVfe65pnlBxXNQfkWND4mvtuA'),
     Rollbar = require("rollbar"),
     rollbar = new Rollbar("f13461b3e50b4a559e25df7117bd04fb"),
+    calendar = require('node-calendar'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));
@@ -754,6 +755,13 @@ app.get('/authRegistration', function(req, res) {
     else {
         res.redirect('/auth.html');
     }
+});
+
+app.get('/calendar', function(req, res) {
+    let cal = new calendar.Calendar(calendar.MONDAY),
+        yearCalendar = new calendar.Calendar(3).itermonthdays(new Date().getFullYear(), new Date().getMonth());
+    console.log(yearCalendar);
+    res.send(yearCalendar);
 });
 
 // general functions

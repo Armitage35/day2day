@@ -63,11 +63,9 @@
       text-transform: uppercase;
       font-weight: lighter; }
     .calendarToolView .bluebackground .calEvent {
-      margin-bottom: 15px; }
-      .calendarToolView .bluebackground .calEvent p {
-        display: inline; }
-      .calendarToolView .bluebackground .calEvent p:first-child {
-        margin-right: 20px; }
+      margin-bottom: 0px; }
+      .calendarToolView .bluebackground .calEvent .calEventHour {
+        margin-top: -20px; }
   .calendarToolView .currentMonthYear {
     color: lightgrey;
     font-size: 33px;

@@ -308,6 +308,7 @@ var main = function() {
     });
 
     $('#closeCalendar').on('click', function() {
+        console.log('yoko');
         $('.calendarToolView').hide();
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
         handleTool('task');
@@ -330,11 +331,14 @@ function handleTool(selectedTool) {
     }
 
     $('.accessTools').children().children().children().removeClass('active');
-    Cookies.set('selectedTool', selectedTool);
+    
+    if (selectedTool != 'calendar'){
+        Cookies.set('selectedTool', selectedTool);
+    }
 
     if (selectedTool === 'background') {
         $('.fa-camera-retro').addClass('active');
-        $('.tool').hide('slow');
+        $('.tool').hide();
         // enabling the date & time to be centered
         $('.align-self-center').removeClass('col-6').addClass('col-11');
         $('.pictureCredits').parent().removeClass('col-2').addClass('col-0');
@@ -1096,8 +1100,16 @@ function assignSucessMessage() {
 
 function updateCalendar(){
     $('.currentYear').text(new Date().getFullYear());
-    $('.currentMonth').text(new Date().event.toLocaleDateString('en-CA', { month: 'long' }));
+    $('.currentMonth').text(new Date().toLocaleDateString('en-CA', { month: 'long' }));
     $('.currentDay').text(new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' }));
+    $.ajax({
+        url: 'calendar',
+        type: 'GET',
+        data: { },
+        success: function(data) {
+            console.log(data);
+        }
+    })
 }
 
 initializeDay2Day();
