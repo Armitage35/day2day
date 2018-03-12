@@ -35,6 +35,9 @@
       padding: 0;
       position: relative;
       width: 14.2857142857%; }
+      .calendarToolView .grid-calendar .grid-cell .hasEvent {
+        color: #1ba5e0;
+        font-weight: bold; }
       .calendarToolView .grid-calendar .grid-cell.previous-month {
         color: #a6a6a6; }
       .calendarToolView .grid-calendar .grid-cell.next-month {
