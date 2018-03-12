@@ -759,9 +759,8 @@ app.get('/authRegistration', function(req, res) {
 
 app.get('/calendar', function(req, res) {
     let cal = new calendar.Calendar(calendar.MONDAY),
-        yearCalendar = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth()+1);
-    console.log(yearCalendar);
-    res.send(yearCalendar);
+        currentMonth = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth() + 1);
+    res.send(currentMonth);
 });
 
 // general functions

@@ -1108,15 +1108,31 @@ function updateCalendar() {
         data: {},
         success: function(data) {
             // finding out where today is at
-            let calBox2Change = new Date().getDate() + data.indexOf(1) - 1;
+            let calBox2Change = new Date().getDate() + data.indexOf(1) - 1,
+                highestDayInMonth = Math.max(...data) - data.indexOf(1);
+                
             calBox2Change = '#calDay' + calBox2Change;
             $(calBox2Change).closest('.grid-cell').attr('id', 'activeDay');
-            
+
             // filling the calendar up
             for (let i = 0; i <= data.length; i++) {
                 calBox2Change = '#calDay' + i;
-                $(calBox2Change).empty().html(data[i]);
-                console.log(data[i]);
+                let nextMonthDate = 1;
+
+                if (data[i] === 0) {
+                    $(calBox2Change).html(data[i]).closest('.grid-cell').addClass('previous-month');
+                    if (i > 15) {
+                        $(calBox2Change).html(nextMonthDate);
+                        nextMonthDate++;
+                    }
+                    else if (i < 15) {
+                        $(calBox2Change).html(highestDayInMonth - 1);
+                        highestDayInMonth++;
+                    }
+                }
+                else {
+                    $(calBox2Change).html(data[i]);
+                }
             }
         }
     })
