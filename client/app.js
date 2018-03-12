@@ -160,13 +160,18 @@ var main = function() {
     $('#noteTool').on('click', function() {
         handleTool('note');
     });
+
     $('#settingTool').on('click', function() {
         handleTool('settings');
     });
 
+    $('#calendarTool').on('click', function() {
+        handleTool('calendar');
+    });
+
     console.log("selected tool: " + Cookies.get('selectedTool'));
     if (Cookies.get('selectedTool') === undefined || Cookies.get('selectedTool') === 'settings') {
-        handleTool("task");
+        handleTool('task');
     }
     else {
         handleTool(Cookies.get('selectedTool'));
@@ -302,6 +307,12 @@ var main = function() {
         window.location.replace("/auth.html");
     });
 
+    $('#closeCalendar').on('click', function() {
+        console.log('yoko');
+        $('.calendarToolView').hide();
+        $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
+        handleTool('task');
+    });
 };
 
 $(document).ready(main);
@@ -320,11 +331,14 @@ function handleTool(selectedTool) {
     }
 
     $('.accessTools').children().children().children().removeClass('active');
-    Cookies.set('selectedTool', selectedTool);
+
+    if (selectedTool != 'calendar') {
+        Cookies.set('selectedTool', selectedTool);
+    }
 
     if (selectedTool === 'background') {
         $('.fa-camera-retro').addClass('active');
-        $('.tool').hide('slow');
+        $('.tool').hide();
         // enabling the date & time to be centered
         $('.align-self-center').removeClass('col-6').addClass('col-11');
         $('.pictureCredits').parent().removeClass('col-2').addClass('col-0');
@@ -355,6 +369,12 @@ function handleTool(selectedTool) {
         $('.taskToolView, .noteToolView, .pocketToolView').hide();
         decenterTimeWeather();
         displayUserSettings();
+    }
+    else if (selectedTool === 'calendar') {
+        $('.calendar').addClass('active');
+        $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').hide();
+        $('.calendarToolView').show('slow');
+        updateCalendar();
     }
 }
 
@@ -1076,6 +1096,46 @@ function assignSucessMessage() {
     successMessage = ['Youpi', 'Success', 'Wonderful', 'Amazing', 'flabbergasted', 'Magnificent', 'Blown away', 'Gootcha', 'BOUYA', 'Astonishing', 'Boum!', 'Savy', 'A walk in the park', 'Awestruck', 'WEEE', 'Successful', 'Done.', 'Successful as hell', 'BOUYAKA'];
     let successMessageNumber = Math.floor(Math.random() * (successMessage.length - 0) + 0);
     return successMessage[successMessageNumber];
+}
+
+function updateCalendar() {
+    $('.currentYear').text(new Date().getFullYear());
+    $('.currentMonth').text(new Date().toLocaleDateString('en-CA', { month: 'long' }));
+    $('.currentDay').text(new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' }));
+    $.ajax({
+        url: 'calendar',
+        type: 'GET',
+        data: {},
+        success: function(data) {
+            // finding out where today is at
+            let calBox2Change = new Date().getDate() + data.indexOf(1) - 1,
+                highestDayInMonth = Math.max(...data) - data.indexOf(1);
+                
+            calBox2Change = '#calDay' + calBox2Change;
+            $(calBox2Change).closest('.grid-cell').attr('id', 'activeDay');
+
+            // filling the calendar up
+            for (let i = 0; i <= data.length; i++) {
+                calBox2Change = '#calDay' + i;
+                let nextMonthDate = 1;
+
+                if (data[i] === 0) {
+                    $(calBox2Change).html(data[i]).closest('.grid-cell').addClass('previous-month');
+                    if (i > 15) {
+                        $(calBox2Change).html(nextMonthDate);
+                        nextMonthDate++;
+                    }
+                    else if (i < 15) {
+                        $(calBox2Change).html(highestDayInMonth - 1);
+                        highestDayInMonth++;
+                    }
+                }
+                else {
+                    $(calBox2Change).html(data[i]);
+                }
+            }
+        }
+    })
 }
 
 initializeDay2Day();

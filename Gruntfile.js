@@ -3,11 +3,13 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         sass: {
             option: {
-                sourceMap: true
+                sourceMap: true,
+                outputStyle: 'compressed',
             },
             dist: {
                 files: {
-                    'client/style.css': 'client/style.sass'
+                    'client/style.css': 'client/sources/style.sass',
+                    'client/calendarStyle.css': 'client/sources/calendarStyle.sass'
                 }
             }
         },
@@ -28,7 +30,7 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-                files: 'client/*.sass',
+                files: 'client/sources/*.sass',
                 tasks: ['sass']
             },
             pug: {
