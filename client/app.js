@@ -331,8 +331,8 @@ function handleTool(selectedTool) {
     }
 
     $('.accessTools').children().children().children().removeClass('active');
-    
-    if (selectedTool != 'calendar'){
+
+    if (selectedTool != 'calendar') {
         Cookies.set('selectedTool', selectedTool);
     }
 
@@ -1098,16 +1098,26 @@ function assignSucessMessage() {
     return successMessage[successMessageNumber];
 }
 
-function updateCalendar(){
+function updateCalendar() {
     $('.currentYear').text(new Date().getFullYear());
     $('.currentMonth').text(new Date().toLocaleDateString('en-CA', { month: 'long' }));
     $('.currentDay').text(new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' }));
     $.ajax({
         url: 'calendar',
         type: 'GET',
-        data: { },
+        data: {},
         success: function(data) {
-            console.log(data);
+            // finding out where today is at
+            let calBox2Change = new Date().getDate() + data.indexOf(1) - 1;
+            calBox2Change = '#calDay' + calBox2Change;
+            $(calBox2Change).closest('.grid-cell').attr('id', 'activeDay');
+            
+            // filling the calendar up
+            for (let i = 0; i <= data.length; i++) {
+                calBox2Change = '#calDay' + i;
+                $(calBox2Change).empty().html(data[i]);
+                console.log(data[i]);
+            }
         }
     })
 }
