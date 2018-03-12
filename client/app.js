@@ -307,6 +307,11 @@ var main = function() {
         window.location.replace("/auth.html");
     });
 
+    $('#closeCalendar').on('click', function() {
+        $('.calendarToolView').hide();
+        $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
+        handleTool('task');
+    });
 };
 
 $(document).ready(main);
@@ -364,7 +369,8 @@ function handleTool(selectedTool) {
     else if (selectedTool === 'calendar') {
         $('.calendar').addClass('active');
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').hide();
-        $('.calendarToolView').show();
+        $('.calendarToolView').show('slow');
+        updateCalendar();
     }
 }
 
@@ -1086,6 +1092,12 @@ function assignSucessMessage() {
     successMessage = ['Youpi', 'Success', 'Wonderful', 'Amazing', 'flabbergasted', 'Magnificent', 'Blown away', 'Gootcha', 'BOUYA', 'Astonishing', 'Boum!', 'Savy', 'A walk in the park', 'Awestruck', 'WEEE', 'Successful', 'Done.', 'Successful as hell', 'BOUYAKA'];
     let successMessageNumber = Math.floor(Math.random() * (successMessage.length - 0) + 0);
     return successMessage[successMessageNumber];
+}
+
+function updateCalendar(){
+    $('.currentYear').text(new Date().getFullYear());
+    $('.currentMonth').text(new Date().event.toLocaleDateString('en-CA', { month: 'long' }));
+    $('.currentDay').text(new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric' }));
 }
 
 initializeDay2Day();

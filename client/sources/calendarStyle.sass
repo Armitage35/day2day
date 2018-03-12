@@ -2,7 +2,12 @@ $min-width: 320px
 $number-of-days: 7
 $column-width: percentage(1 / $number-of-days)
 
+.whiteBackground
+  background-color: white
+
 .calendarToolView
+  height: 100vh
+  width: 100vw
   .container
     max-width: 1000px
     margin-left: auto
@@ -28,7 +33,7 @@ $column-width: percentage(1 / $number-of-days)
        *       margin-left: -15px;
       margin: 0
 
-    .calendar-week .grid-cell
+    // .calendar-week .grid-cell
 
     .calendar-week-header .grid-cell > div > div
       padding-bottom: 10px
@@ -92,6 +97,10 @@ $column-width: percentage(1 / $number-of-days)
     color: lightgrey
     font-size: 33px
     text-align: right
+    padding-top: 40px
+    padding-bottom: 20px
+    p
+      margin-bottom: 0px
 
     .currentYear
       font-weight: bold
