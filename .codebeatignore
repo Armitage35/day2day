@@ -1,0 +1,5 @@
+client/bower_components
+client/*.css
+node_modules
+data
+emailTemplates/htmlRender
