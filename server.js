@@ -12,6 +12,7 @@ var express = require('express'),
     compressor = require('node-minify'),
     upload = require('express-fileupload'),
     AWS = require('aws-sdk'),
+    google = require('googleapis'),
     DOMAIN = 'mail.day2dayapp.net',
     mailGunApi_key = require('./keys/mailgunCred.js'),
     pocketConsumerKey = require('./keys/pocketConsumerKey.js'),
@@ -759,7 +760,17 @@ app.get('/authRegistration', function(req, res) {
 
 app.get('/calendar', function(req, res) {
     let cal = new calendar.Calendar(calendar.MONDAY),
+        pastMonth = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth()),
         currentMonth = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth() + 1);
+
+    // now that the two calendars have been generated, we need to mix past and present 
+    let missingDaysInCurrentMonth = currentMonth.indexOf(1),
+        daysToChange = Math.max(...pastMonth) - missingDaysInCurrentMonth + 1; //find the highest value of the last month
+    for (let i = 0; i <= currentMonth.length; i++) {
+        if (currentMonth[i] === 0) {
+            currentMonth[i] = daysToChange++;
+        }
+    }
     res.send(currentMonth);
 });
 
@@ -799,4 +810,33 @@ function handleError(err) {
     rollbar.log(err);
     console.log(err);
     return res.send("ERROR");
+}
+
+function listEvents(auth) {
+    var calendar = google.calendar('v3');
+    calendar.events.list({
+        auth: auth,
+        calendarId: 'primary',
+        timeMin: (new Date()).toISOString(),
+        maxResults: 10,
+        singleEvents: true,
+        orderBy: 'startTime'
+    }, function(err, response) {
+        if (err) {
+            console.log('The API returned an error: ' + err);
+            return;
+        }
+        var events = response.items;
+        if (events.length == 0) {
+            console.log('No upcoming events found.');
+        }
+        else {
+            console.log('Upcoming 10 events:');
+            for (var i = 0; i < events.length; i++) {
+                var event = events[i];
+                var start = event.start.dateTime || event.start.date;
+                console.log('%s - %s', start, event.summary);
+            }
+        }
+    });
 }
