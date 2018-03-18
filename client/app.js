@@ -19,7 +19,8 @@ var selectedTask,
     userPocketReadingList,
     temperatureUnit,
     backgroundTheme,
-    successMessage;
+    successMessage,
+    events;
 
 var main = function() {
 
@@ -348,12 +349,14 @@ function handleTool(selectedTool) {
         $('.tool, .taskToolView').show('slow');
         $('.noteToolView, .pocketToolView, .settingsToolView').hide();
         decenterTimeWeather();
+        displayTask();
     }
     else if (selectedTool === 'note') {
         $('.fa-sticky-note').addClass('active');
         $('.tool, .noteToolView').show('slow');
         $('.taskToolView, .pocketToolView, .settingsToolView').hide();
         decenterTimeWeather();
+        displayNoteList();
     }
     else if (selectedTool === 'pocket') {
         $('.fa-get-pocket').addClass('active');
@@ -374,6 +377,7 @@ function handleTool(selectedTool) {
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').hide();
         $('.calendarToolView').show('slow');
         updateCalendar();
+        listUpcomingEvents();
     }
 }
 
@@ -983,8 +987,6 @@ function initializeDay2Day() {
     setInterval(updateWallpaper, 350000); //refresh every 3 minutes
     setInterval(updateClock, 36000);
     handleWeather();
-    displayTask();
-    displayNoteList();
 }
 
 function editSettingsView() {
@@ -1138,15 +1140,10 @@ if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.
     window.location = "index.html";
 }
 
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         authorizeButton.style.display = 'none';
         signoutButton.style.display = 'none';
-        listUpcomingEvents();
     }
     else {
         authorizeButton.style.display = 'none';
@@ -1154,37 +1151,15 @@ function updateSigninStatus(isSignedIn) {
     }
 }
 
-/**
- *  Sign in the user upon button click.
- */
 function handleAuthClick(event) {
     gapi.auth2.getAuthInstance().signIn();
 }
 
-/**
- *  Sign out the user upon button click.
- */
+
 function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
 }
 
-/**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
-function appendPre(message) {
-    var pre = document.getElementById('content');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
-}
-
-/**
- * Print the summary and start datetime/date of the next ten events in
- * the authorized user's calendar. If no events are found an
- * appropriate message is printed.
- */
 function listUpcomingEvents() {
     gapi.client.calendar.events.list({
         'calendarId': 'primary',
@@ -1195,24 +1170,11 @@ function listUpcomingEvents() {
         'orderBy': 'startTime'
     }).then(function(response) {
         var events = response.result.items;
-        console.log(events);
+        displayEvents(events)
 
-        if (events.length > 0) {
-            for (let i = 0; i < events.length; i++) {
-                let event = '<div class="col-5"><p>'+ new Date(events[i].start.dateTime).getDate() + ' ' + new Date(events[i].start.dateTime).toLocaleString('en-us', { month: "long" }) +'</p><p class="calEventHour"></p></div><p class="col-7">' + events[i].summary +'</p></div>';
-                $('.calEvent').append(event);
-            }
-        }
-        else {
-            appendPre('No upcoming events found.');
-        }
     });
 }
 
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
 function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
@@ -1232,4 +1194,23 @@ function initClient() {
 
 function handleClientLoad() {
     gapi.load('client:auth2', initClient);
+}
+
+function displayEvents(events) {
+    if (events.length > 0) {
+        for (let i = 0; i < events.length; i++) {
+            let min = new Date(events[i].start.dateTime).getMinutes();
+
+            if (min === 0) {
+                min = '00';
+            }
+
+            let event = '<div class="col-5"><p>' + new Date(events[i].start.dateTime).getDate() + ' ' + new Date(events[i].start.dateTime).toLocaleString('en-CA', { month: "long" }) + '</p><p class="calEventHour">' + new Date(events[i].start.dateTime).getHours() + ':' + min + '</p></div><p class="col-7">' + events[i].summary + '</p></div>';
+            $('.calEvent').append(event);
+        }
+    }
+    else {
+        $('.calEvent').append('No upcoming events found.');
+    }
+
 }
