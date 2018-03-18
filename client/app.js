@@ -24,11 +24,6 @@ var selectedTask,
     events,
     emptyDaysInMonth;
 
-//auto sign in if cookie's here
-if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
-    window.location = "index.html";
-}
-
 var main = function() {
 
     updateClock(); // leave here as this should not execute before DOM is ready 
@@ -1222,4 +1217,9 @@ function displayEvents(events) {
     else {
         $('.calEvent').append('No upcoming events found.');
     }
+}
+
+//auto sign in if cookie's here
+if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
+    window.location = "index.html";
 }
