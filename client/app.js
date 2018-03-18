@@ -1181,10 +1181,10 @@ function listUpcomingEvents() {
 
 function initClient() {
     gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
-        discoveryDocs: DISCOVERY_DOCS,
-        scope: SCOPES
+        apiKey: 'AIzaSyAP73x2kFNGK6I6joLC-QDVdV9Orx-QyhI',
+        clientId: '341494480508-p7e3ctne7n20r38f7rqqi37hv11furan.apps.googleusercontent.com',
+        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+        scope: "https://www.googleapis.com/auth/calendar.readonly"
     }).then(function() {
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
