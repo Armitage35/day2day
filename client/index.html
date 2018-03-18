@@ -65,6 +65,61 @@
 </head>
 
 <body>
+   <!--Add buttons to initiate auth sequence and sign out-->
+   <button id="authorize-button" style="display: none;">Authorize</button>
+   <button id="signout-button" style="display: none;">Sign Out</button>
+
+   <pre id="content"></pre>
+
+   <script type="text/javascript">
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '341494480508-p7e3ctne7n20r38f7rqqi37hv11furan.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyAP73x2kFNGK6I6joLC-QDVdV9Orx-QyhI';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+
+      var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+         gapi.load('client:auth2', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+         gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: DISCOVERY_DOCS,
+            scope: SCOPES
+         }).then(function() {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            authorizeButton.onclick = handleAuthClick;
+            signoutButton.onclick = handleSignoutClick;
+         });
+      }
+
+      
+   </script>
+
+   <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+   </script>
+   
    <div class="container-fluid" id="main">
       <div class="row">
          <div class="col-6">
@@ -455,7 +510,7 @@
          </div>
       </div>
    </div>
-   
+
    <!-- the calendar feature-->
    <div class="container-fluid calendarToolView" style="display:none">
       <div class="row" style="height:20vh">
@@ -721,7 +776,7 @@
             </div>
          </div>
       </div>
-      
+
 </body>
 
 </html>
