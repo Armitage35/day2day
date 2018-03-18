@@ -14,7 +14,6 @@
    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
    <!--Bootstrap CSS lib-->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
    <!--segment library-->
    <script>
@@ -65,6 +64,18 @@
 </head>
 
 <body>
+   <!--Add buttons to initiate auth sequence and sign out-->
+   <button id="authorize-button" style="display: none;">Authorize</button>
+   <button id="signout-button" style="display: none;">Sign Out</button>
+
+   <script type="text/javascript">
+      let authorizeButton = document.getElementById('authorize-button'),
+         signoutButton = document.getElementById('signout-button');
+   </script>
+
+   <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+   </script>
+
    <div class="container-fluid" id="main">
       <div class="row">
          <div class="col-6">
@@ -455,7 +466,7 @@
          </div>
       </div>
    </div>
-   
+
    <!-- the calendar feature-->
    <div class="container-fluid calendarToolView" style="display:none">
       <div class="row" style="height:20vh">
@@ -479,11 +490,7 @@
                <!--   <p class="col-7">Whatever event</p>-->
                <!--</div>-->
                <div class="calEvent row">
-                  <div class="col-5">
-                     <p>30 March</p>
-                     <p class="calEventHour"></p>
-                  </div>
-                  <p class="col-7">Your very own event will be displayed here</p>
+
                </div>
             </div>
             <div class="col-8 calendarMonthView whiteBackground" style="height:80vh">
@@ -701,7 +708,7 @@
                      </div>
                      <div class="col-xs-1 grid-cell">
                         <div>
-                           <div><span id="calDay32" class="hasEvent"></span></div>
+                           <div><span id="calDay32"></span></div>
                         </div>
                      </div>
                      <div class="col-xs-1 grid-cell">
@@ -721,7 +728,7 @@
             </div>
          </div>
       </div>
-      
+
 </body>
 
 </html>

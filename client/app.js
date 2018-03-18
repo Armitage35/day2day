@@ -2,7 +2,8 @@
 global Cookies 
 global iziToast
 global location
-global analytics*/
+global analytics
+global gapi*/
 
 var selectedTask,
     userTask = [],
@@ -19,7 +20,14 @@ var selectedTask,
     userPocketReadingList,
     temperatureUnit,
     backgroundTheme,
-    successMessage;
+    successMessage,
+    events,
+    emptyDaysInMonth;
+
+//auto sign in if cookie's here
+if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
+    window.location = "index.html";
+}
 
 var main = function() {
 
@@ -308,7 +316,7 @@ var main = function() {
     });
 
     $('#closeCalendar').on('click', function() {
-        console.log('yoko');
+        console.log('yolo');
         $('.calendarToolView').hide();
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
         handleTool('task');
@@ -349,12 +357,14 @@ function handleTool(selectedTool) {
         $('.tool, .taskToolView').show('slow');
         $('.noteToolView, .pocketToolView, .settingsToolView').hide();
         decenterTimeWeather();
+        displayTask();
     }
     else if (selectedTool === 'note') {
         $('.fa-sticky-note').addClass('active');
         $('.tool, .noteToolView').show('slow');
         $('.taskToolView, .pocketToolView, .settingsToolView').hide();
         decenterTimeWeather();
+        displayNoteList();
     }
     else if (selectedTool === 'pocket') {
         $('.fa-get-pocket').addClass('active');
@@ -984,8 +994,6 @@ function initializeDay2Day() {
     setInterval(updateWallpaper, 350000); //refresh every 3 minutes
     setInterval(updateClock, 36000);
     handleWeather();
-    displayTask();
-    displayNoteList();
 }
 
 function editSettingsView() {
@@ -1106,6 +1114,8 @@ function updateCalendar() {
         type: 'GET',
         data: {},
         success: function(data) {
+            emptyDaysInMonth = data.indexOf(1) - 1;
+
             // finding out where today is at
             let calBox2Change = new Date().getDate() + data.indexOf(1) - 1,
                 comingMonthDates = 1;
@@ -1129,12 +1139,85 @@ function updateCalendar() {
                 }
             }
         }
-    })
+    }).then(listUpcomingEvents());
 }
 
 initializeDay2Day();
 
-//auto sign in if cookie's here
-if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
-    window.location = "index.html";
+function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+        authorizeButton.style.display = 'none';
+        signoutButton.style.display = 'none';
+    }
+    else {
+        authorizeButton.style.display = 'none';
+        signoutButton.style.display = 'none';
+    }
+}
+
+function handleAuthClick(event) {
+    gapi.auth2.getAuthInstance().signIn();
+}
+
+
+function handleSignoutClick(event) {
+    gapi.auth2.getAuthInstance().signOut();
+}
+
+function listUpcomingEvents() {
+    gapi.client.calendar.events.list({
+        'calendarId': 'primary',
+        'timeMin': (new Date()).toISOString(),
+        'timeMax': new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toISOString(), // first day of next Month
+        'showDeleted': false,
+        'singleEvents': true,
+        'maxResults': 250,
+        'orderBy': 'startTime'
+    }).then(function(response) {
+        var events = response.result.items;
+        displayEvents(events);
+    });
+}
+
+function initClient() {
+    gapi.client.init({
+        apiKey: 'AIzaSyAP73x2kFNGK6I6joLC-QDVdV9Orx-QyhI',
+        clientId: '341494480508-p7e3ctne7n20r38f7rqqi37hv11furan.apps.googleusercontent.com',
+        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+        scope: "https://www.googleapis.com/auth/calendar.readonly"
+    }).then(function() {
+        // Listen for sign-in state changes.
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+        // Handle the initial sign-in state.
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        authorizeButton.onclick = handleAuthClick;
+        signoutButton.onclick = handleSignoutClick;
+    });
+}
+
+function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
+}
+
+function displayEvents(events) {
+    if (events.length > 0) {
+        for (let i = 0; i < events.length; i++) {
+            let min = new Date(events[i].start.dateTime).getMinutes(),
+                dayToActivate = new Date(events[i].start.dateTime).getDate() + emptyDaysInMonth;
+            dayToActivate = '#calDay' + dayToActivate;
+
+            if (min === 0) {
+                min = '00';
+            }
+
+            let event = '<div class="col-5"><p>' + new Date(events[i].start.dateTime).getDate() + ' ' + new Date(events[i].start.dateTime).toLocaleString('en-CA', { month: "long" }) + '</p><p class="calEventHour">' + new Date(events[i].start.dateTime).getHours() + ':' + min + '</p></div><p class="col-7">' + events[i].summary + '</p></div>';
+
+            $('.calEvent').append(event);
+            $(dayToActivate).closest('.grid-cell').addClass('dayHasEvent');
+        }
+    }
+    else {
+        $('.calEvent').append('No upcoming events found.');
+    }
 }
