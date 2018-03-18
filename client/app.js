@@ -446,8 +446,6 @@ function updateClock() {
 
     $(".time").html(hh + ":" + minutes);
     $(".date").html(now.getDate() + " " + month[now.getMonth()] + " ");
-
-    setInterval(updateClock, 36000);
 }
 
 //getting user avatar
@@ -984,6 +982,7 @@ function initializeDay2Day() {
     getUser();
     updateWallpaper();
     setInterval(updateWallpaper, 350000); //refresh every 3 minutes
+    setInterval(updateClock, 36000);
     handleWeather();
     displayTask();
     displayNoteList();
@@ -1117,7 +1116,7 @@ function updateCalendar() {
             // filling the calendar up
             for (let i = 0; i <= data.length; i++) {
                 calBox2Change = '#calDay' + i;
-                
+
                 if (i < data.indexOf(1)) {
                     $(calBox2Change).html(data[i]).closest('.grid-cell').addClass('previous-month');
                 }
