@@ -14,7 +14,6 @@
    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
    <!--Bootstrap CSS lib-->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
    <!--segment library-->
    <script>
@@ -70,13 +69,13 @@
    <button id="signout-button" style="display: none;">Sign Out</button>
 
    <script type="text/javascript">
-      var authorizeButton = document.getElementById('authorize-button');
-      var signoutButton = document.getElementById('signout-button');
+      let authorizeButton = document.getElementById('authorize-button'),
+         signoutButton = document.getElementById('signout-button');
    </script>
 
    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
    </script>
-   
+
    <div class="container-fluid" id="main">
       <div class="row">
          <div class="col-6">
@@ -491,7 +490,7 @@
                <!--   <p class="col-7">Whatever event</p>-->
                <!--</div>-->
                <div class="calEvent row">
-                  
+
                </div>
             </div>
             <div class="col-8 calendarMonthView whiteBackground" style="height:80vh">

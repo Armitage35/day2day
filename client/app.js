@@ -316,10 +316,10 @@ var main = function() {
     });
 
     $('#closeCalendar').on('click', function() {
+        console.log('yolo');
         $('.calendarToolView').hide();
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
         handleTool('task');
-        console.log('yolo');
     });
 };
 
