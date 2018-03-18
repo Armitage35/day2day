@@ -19,6 +19,6 @@
     "Font-Awesome": "^5.0.6",
     "izitoast": "^1.2.0",
     "js-cookie": "^2.2.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
   }
 }

@@ -2,7 +2,8 @@
 global Cookies 
 global iziToast
 global location
-global analytics*/
+global analytics
+global gapi*/
 
 var selectedTask,
     userTask = [],
@@ -20,7 +21,13 @@ var selectedTask,
     temperatureUnit,
     backgroundTheme,
     successMessage,
-    events;
+    events,
+    emptyDaysInMonth;
+
+//auto sign in if cookie's here
+if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
+    window.location = "index.html";
+}
 
 var main = function() {
 
@@ -378,7 +385,6 @@ function handleTool(selectedTool) {
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').hide();
         $('.calendarToolView').show('slow');
         updateCalendar();
-        listUpcomingEvents();
     }
 }
 
@@ -1108,6 +1114,8 @@ function updateCalendar() {
         type: 'GET',
         data: {},
         success: function(data) {
+            emptyDaysInMonth = data.indexOf(1) - 1;
+
             // finding out where today is at
             let calBox2Change = new Date().getDate() + data.indexOf(1) - 1,
                 comingMonthDates = 1;
@@ -1131,15 +1139,10 @@ function updateCalendar() {
                 }
             }
         }
-    })
+    }).then(listUpcomingEvents());
 }
 
 initializeDay2Day();
-
-//auto sign in if cookie's here
-if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
-    window.location = "index.html";
-}
 
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
@@ -1165,14 +1168,14 @@ function listUpcomingEvents() {
     gapi.client.calendar.events.list({
         'calendarId': 'primary',
         'timeMin': (new Date()).toISOString(),
+        'timeMax': new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toISOString(), // first day of next Month
         'showDeleted': false,
         'singleEvents': true,
-        'maxResults': 10,
+        'maxResults': 250,
         'orderBy': 'startTime'
     }).then(function(response) {
         var events = response.result.items;
-        displayEvents(events)
-
+        displayEvents(events);
     });
 }
 
@@ -1200,7 +1203,9 @@ function handleClientLoad() {
 function displayEvents(events) {
     if (events.length > 0) {
         for (let i = 0; i < events.length; i++) {
-            let min = new Date(events[i].start.dateTime).getMinutes();
+            let min = new Date(events[i].start.dateTime).getMinutes(),
+                dayToActivate = new Date(events[i].start.dateTime).getDate() + emptyDaysInMonth;
+            dayToActivate = '#calDay' + dayToActivate;
 
             if (min === 0) {
                 min = '00';
@@ -1209,6 +1214,7 @@ function displayEvents(events) {
             let event = '<div class="col-5"><p>' + new Date(events[i].start.dateTime).getDate() + ' ' + new Date(events[i].start.dateTime).toLocaleString('en-CA', { month: "long" }) + '</p><p class="calEventHour">' + new Date(events[i].start.dateTime).getHours() + ':' + min + '</p></div><p class="col-7">' + events[i].summary + '</p></div>';
 
             $('.calEvent').append(event);
+            $(dayToActivate).closest('.grid-cell').addClass('dayHasEvent');
         }
     }
     else {
