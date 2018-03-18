@@ -312,6 +312,7 @@ var main = function() {
         $('.calendarToolView').hide();
         $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
         handleTool('task');
+        console.log('yolo');
     });
 };
 
@@ -1206,11 +1207,11 @@ function displayEvents(events) {
             }
 
             let event = '<div class="col-5"><p>' + new Date(events[i].start.dateTime).getDate() + ' ' + new Date(events[i].start.dateTime).toLocaleString('en-CA', { month: "long" }) + '</p><p class="calEventHour">' + new Date(events[i].start.dateTime).getHours() + ':' + min + '</p></div><p class="col-7">' + events[i].summary + '</p></div>';
+
             $('.calEvent').append(event);
         }
     }
     else {
         $('.calEvent').append('No upcoming events found.');
     }
-
 }
