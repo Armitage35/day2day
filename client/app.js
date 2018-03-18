@@ -211,9 +211,7 @@ var main = function() {
     });
 
     $('#editSettings').on('click', function() {
-        $('.settingsEdit, .settingsView').toggle();
         editSettingsView();
-
     });
 
     $('#saveSettings').on('click', function() {
@@ -316,14 +314,17 @@ var main = function() {
     });
 
     $('#closeCalendar').on('click', function() {
-        console.log('yolo');
-        $('.calendarToolView').hide();
-        $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
-        handleTool('task');
+        closeCalendar();
     });
 };
 
 $(document).ready(main);
+
+function closeCalendar() {
+    $('.calendarToolView').hide();
+    $('.taskToolView, .noteToolView, .pocketToolView, .settingsToolView, .tool, #main').show();
+    handleTool('task');
+}
 
 function closeNoteModal() {
     $('#newNoteModal, #main').toggle();
@@ -997,6 +998,7 @@ function initializeDay2Day() {
 }
 
 function editSettingsView() {
+    $('.settingsEdit, .settingsView').toggle();
     $('#userNameNewValue').val(user.username);
     $('#userEmailNewValue').val(user.email);
     $('#settingsBackgroundPrefNewValue').val(backgroundTheme);
