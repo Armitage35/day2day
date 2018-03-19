@@ -188,14 +188,6 @@ var main = function() {
 
     $('.createdOn').children('p').html(new Date().toDateString());
 
-    $("#saveNote").on('click', function() {
-        saveNote(selectedNote);
-    });
-
-    $('#editSettings').on('click', function() {
-        editSettingsView();
-    });
-
     $('#saveSettings').on('click', function() {
         // $('.settingsEdit, .settingsView').toggle();
         $('#confirmationModal').modal('toggle');
@@ -205,44 +197,13 @@ var main = function() {
         $('.settingsEdit, .settingsView').toggle();
     });
 
-    $('#settingsConfirmChanges').on('click', function() {
-        saveSettingsChanges();
-    });
-
     $('#settingPocketAction').on('click', function() {
-        $.ajax({
-            url: 'user',
-            type: 'PUT',
-            data: { operationType: 'removeIntegration', integrations: 'pocket', userID: userID },
-            success: function() {
-                getUser();
-            }
-        });
+        disconnectPocket();
     });
-
-    // checking when the user comes back from Pocket's auth. If so, handle his token
-    if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
-        let pocketRequestCode = Cookies.get('pocketRequestCode');
-        Cookies.remove('pocketRequestCode');
-
-        $.ajax({
-            url: 'pocketKeyConfirm',
-            type: 'GET',
-            data: { pocketRequestCode: pocketRequestCode, userID: userID },
-            success: function() {
-                getUser();
-            }
-        });
-    }
 
     // handling user's access to Pocket
     $('#pocketTool').on('click', function() {
-        if (user.integrations.pocket.token != undefined) {
-            $('#pocketLogin').empty();
-            $('#pocketTool').children('svg').removeAttr('data-toggle');
-            getPocketUnreadElements();
-            handleTool('pocket');
-        }
+        pocketTool();
     });
 
     $('.markRead').on('click', function() {
@@ -279,10 +240,6 @@ var main = function() {
 
     $('#settingsTemperaturePrefNewValueFarenheit').on('click', function() {
         temperatureUnit === "farenheit";
-    });
-
-    $('#logOut').on('click', function() {
-        logOut();
     });
 
     $('#closeCalendar').on('click', function() {
@@ -947,7 +904,7 @@ function displayUserSettings() {
     }
     else {
         $('#settingsPocketStatus').html(integrationConnected);
-        $('#settingPocketAction').text('Disconnect');
+        $('#settingPocketAction').text('Disconnect').attr('onclick', 'disconnectPocket()');
     }
 
     // handle google integration and buttons
@@ -1010,7 +967,7 @@ function saveSettingsChanges() {
             temperatureUnit = temperatureUnit;
             backgroundTheme = newBackground;
             Cookies.set('backgroundTheme', backgroundTheme);
-            displayUserSettings();
+            getUser().then(displayUserSettings());
             initializeDay2Day();
         }
     });
@@ -1212,7 +1169,48 @@ function uploadAvatar() {
     $('#settingsAvatarIsAvatar').val(true);
 }
 
+function pocketTool() {
+    if (user.integrations.pocket.token != undefined) {
+        $('#pocketLogin').empty();
+        $('#pocketTool').children('svg').removeAttr('data-toggle');
+        getPocketUnreadElements();
+        handleTool('pocket');
+    }
+}
+
 //auto sign in if cookie's here
 if (Cookies.get('userid') !== undefined && window.location.pathname === "./auth.html") {
     window.location = "index.html";
+}
+
+// checking when the user comes back from Pocket's auth. If so, handle his token
+if (location.search === '?ref=pocketOAuth' && Cookies.get('pocketRequestCode') != undefined) { // make sure that the second condition works or it will erase user's token on reload with arg in url
+    let pocketRequestCode = Cookies.get('pocketRequestCode');
+    Cookies.remove('pocketRequestCode');
+    Cookies.set('selectedTool', 'pocket');
+
+    $.ajax({
+        url: 'pocketKeyConfirm',
+        type: 'GET',
+        data: { pocketRequestCode: pocketRequestCode, userID: userID },
+        success: function() {
+            getUser();
+        }
+    });
+}
+
+function disconnectPocket() {
+    $.ajax({
+        url: 'user',
+        type: 'PUT',
+        data: { operationType: 'removeIntegration', integrations: 'pocket', userID: userID },
+        success: function() {
+            getUser();
+            iziToast.success({
+                title: assignSucessMessage(),
+                message: 'Pocket has been disconnected',
+                position: 'topRight',
+            });
+        }
+    }).then(displayUserSettings);
 }
