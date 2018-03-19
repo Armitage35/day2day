@@ -192,14 +192,6 @@ var main = function() {
         saveNote(selectedNote);
     });
 
-    $('#newNoteButton').on('click', function() {
-        createNewNote()
-    });
-
-    $('#archiveNote').on('click', function() {
-        archiveNote(selectedNote);
-    });
-
     $('#editSettings').on('click', function() {
         editSettingsView();
     });
@@ -216,13 +208,6 @@ var main = function() {
     $('#settingsConfirmChanges').on('click', function() {
         saveSettingsChanges();
     });
-
-    $('#settingPasswordReset').on('click', function() {
-        resetPasswordRequest();
-    });
-
-    $('#settingsAvatarUserID').val(userID);
-    $('#settingsAvatarIsAvatar').val(true);
 
     $('#settingPocketAction').on('click', function() {
         $.ajax({
@@ -459,7 +444,6 @@ function getUser() {
             $('.userPicture').attr('src', userAvatar);
             $('.avatar').css('background-image', userAvatarForBackground).children('img');
             $('#settingAvatar').attr('src', userAvatar).css('filter', 'none');
-            console.log(user);
 
             // segment identify
             analytics.identify(user._id, {
@@ -1003,7 +987,6 @@ function saveSettingsChanges() {
     $('.settingsEdit, .settingsView').toggle();
     $('#confirmationModal').modal('hide');
 
-    // let newAvatar = $('#newAvatarPicture').prop('files'),
     let newName = $('#userNameNewValue').val(),
         newBackground = $('#settingsBackgroundPrefNewValue').val();
 
@@ -1222,6 +1205,11 @@ function logOut() {
     Cookies.remove('backgroundTheme');
     Cookies.remove('selectedTool');
     window.location.replace("/auth.html");
+}
+
+function uploadAvatar() {
+    $('#settingsAvatarUserID').val(userID);
+    $('#settingsAvatarIsAvatar').val(true);
 }
 
 //auto sign in if cookie's here

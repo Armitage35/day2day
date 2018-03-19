@@ -311,6 +311,8 @@ app.post('/file', function(req, res) {
         isAvatar = req.body.isAvatar,
         userID = req.body.userID;
 
+    console.log('userID ' + userID);
+
     if (req.files) {
         let file = req.files.uploadFile,
             filename;
@@ -322,7 +324,7 @@ app.post('/file', function(req, res) {
             filename = '' + appendFileToTask + amountOfComments + '.jpg'; //rename the file to be the task ID + the amount of comment so that the url stays unique if we are uploading a picture to a task
         }
 
-        console.log(filename);
+        console.log('filename: ' + filename);
 
         s3.createBucket({ Bucket: bucketName }, function() {
             var params = {
@@ -722,7 +724,6 @@ app.post('/googleAuth', function(req, res) {
                 handleError(err);
             }
             else if (user != null) { // case where the user exists
-                console.log('googleToken final ' + googleToken);
                 User.update({ _id: user._id }, {
                     $set: {
                         'integrations.google.connected': true,

@@ -107,13 +107,13 @@
                            <p class="settingTitle">Email</p>
                            <p class="settingValue" id="userEmail"></p>
                            <p class="settingTitle">Password</p>
-                           <button class="bttn-material-flat bttn-xs bttn-primary" id="settingPasswordReset">Reset password</button>
+                           <button class="bttn-material-flat bttn-xs bttn-primary" id="settingPasswordReset" onclick="resetPasswordRequest()">Reset password</button>
                            <p class="settingTitle">Avatar</p>
                            <form method="post" enctype="multipart/form-data" action="/file">
                               <input name="uploadFile" class="" id="fileInput" type="file" accept=".jpg, .jpeg, .png" required size="2MB" style="font-size:12px">
                               <input type="text" name="userID" id="settingsAvatarUserID" style="display:none" />
                               <input type="text" name="isAvatar" id="settingsAvatarIsAvatar" style="display:none" />
-                              <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" data-target="#uploadInProgress" data-backdrop="static">Upload new avatar</button>
+                              <button class="bttn-material-flat bttn-xs bttn-primary" type="submit" id="newAvatarUpload" data-toggle="modal" onclick="uploadAvatar()" data-target="#uploadInProgress" data-backdrop="static">Upload new avatar</button>
                            </form>
                         </div>
                         <p class="settingsBlockTitle">General settings</p>
