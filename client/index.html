@@ -14,50 +14,10 @@
    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
    <!--Bootstrap CSS lib-->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-   <!--segment library-->
-   <script>
-      ! function() {
-         var analytics = window.analytics = window.analytics || [];
-         if (!analytics.initialize)
-            if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice.");
-            else {
-               analytics.invoked = !0;
-               analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"];
-               analytics.factory = function(t) {
-                  return function() {
-                     var e = Array.prototype.slice.call(arguments);
-                     e.unshift(t);
-                     analytics.push(e);
-                     return analytics
-                  }
-               };
-               for (var t = 0; t < analytics.methods.length; t++) {
-                  var e = analytics.methods[t];
-                  analytics[e] = analytics.factory(e)
-               }
-               analytics.load = function(t, e) {
-                  var n = document.createElement("script");
-                  n.type = "text/javascript";
-                  n.async = !0;
-                  n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
-                  var o = document.getElementsByTagName("script")[0];
-                  o.parentNode.insertBefore(n, o);
-                  analytics.integrationOptions = e
-               };
-               analytics.SNIPPET_VERSION = "4.0.1";
-               analytics.load("7r4PvyN0SaMPFO3FxwPoBJrzm8Av6Yj7");
-               analytics.page();
-            }
-      }();
-   </script>
-   <!--end segment-->
-
    <!--Bootstrap JS lib-->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
    <!--Font-->
    <link href="https://fonts.googleapis.com/css?family=Raleway|Spectral" rel="stylesheet">
-   <script type="text/javascript" src="app.js"></script>
    <link href="bttn.min.css" type="text/css" rel="stylesheet">
    <link href="style.css" type="text/css" rel="stylesheet">
    <link href="calendarStyle.css" type="text/css" rel="stylesheet">
@@ -75,6 +35,7 @@
 
    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
    </script>
+   <script type="text/javascript" src="app.js"></script>
 
    <div class="container-fluid" id="main">
       <div class="row">
@@ -122,7 +83,7 @@
                   <h3>My Notes</h3>
                   <div class="notesList">
                   </div>
-                  <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton">add a note</button>
+                  <button type="button" class="bttn-unite bttn-sm bttn-primary fixedBottom" id="newNoteButton" onclick="createNewNote()">add a note</button>
                </div>
                <div class="pocketToolView">
                   <h3 class="pocketToolTitle">Reading list</h3>
@@ -176,7 +137,7 @@
                         <p class="settingsBlockTitle">Others</p>
                         <div class="settingsBlock">
                            <p class="settingTitle">Log out</p>
-                           <button class="bttn-material-flat bttn-xs bttn-primary" id="logOut">Log out</button>
+                           <button class="bttn-material-flat bttn-xs bttn-primary" id="logOut" onclick="logOut()">Log out</button>
                         </div>
                      </div>
                   </div>
@@ -399,8 +360,8 @@
                </div>
             </div>
             <hr />
-            <button type="button" class="btn btn-link" id="saveNote" style="color:white"><i class="far fa-save"></i></button>
-            <button type="button" class="btn btn-link" id="archiveNote" style="color:white"><i class="fas fa-archive"></i></button>
+            <button type="button" class="btn btn-link" id="saveNote" style="color:white" onclick="saveNote(selectedNote)"><i class="far fa-save"></i></button>
+            <button type="button" class="btn btn-link" id="archiveNote" style="color:white" onclick="archiveNote(selectedNote)"><i class="fas fa-archive"></i></button>
             <!--<i class="fas fa-caret-left"></i>-->
             <!--<i class="fas fa-caret-right"></i>-->
          </div>
@@ -420,7 +381,7 @@
             <div class="modal-body">
                <img src="../assets/3rdParty/pocketCover.jpg" style="max-width:100%" />
                <p>Connect your Pocket account to access every page you want to read but forget to check. Well, no more. Get access to your content directly from your home page!</p>
-               <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" />
+               <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" onclick="connectToPocket()"/>
             </div>
          </div>
       </div>
@@ -491,7 +452,12 @@
                <!--</div>-->
                <div class="calEvent row">
                </div>
-               <div class="googleConnect"><meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar"><meta name="google-signin-client_id" content="341494480508-fo0ol4r2o0tmaa43ana0r3k71t9ptu4l.apps.googleusercontent.com"><script src="https://apis.google.com/js/platform.js" async defer></script><div class="g-signin2" data-onsuccess="onSignIn" style="margin-left:15px" data-theme="dark"></div></div>
+               <div class="googleConnect">
+                  <meta name="google-signin-scope" content="profile email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/calendar">
+                  <meta name="google-signin-client_id" content="341494480508-fo0ol4r2o0tmaa43ana0r3k71t9ptu4l.apps.googleusercontent.com">
+                  <script src="https://apis.google.com/js/platform.js" async defer></script>
+                  <div class="g-signin2" data-onsuccess="onSignIn" style="margin-left:15px" data-theme="dark"></div>
+               </div>
             </div>
             <div class="col-8 calendarMonthView whiteBackground" style="height:80vh">
                <div class="grid-calendar">
@@ -729,6 +695,43 @@
          </div>
       </div>
 
+      <!--segment library-->
+      <script>
+         ! function() {
+            var analytics = window.analytics = window.analytics || [];
+            if (!analytics.initialize)
+               if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice.");
+               else {
+                  analytics.invoked = !0;
+                  analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"];
+                  analytics.factory = function(t) {
+                     return function() {
+                        var e = Array.prototype.slice.call(arguments);
+                        e.unshift(t);
+                        analytics.push(e);
+                        return analytics
+                     }
+                  };
+                  for (var t = 0; t < analytics.methods.length; t++) {
+                     var e = analytics.methods[t];
+                     analytics[e] = analytics.factory(e)
+                  }
+                  analytics.load = function(t, e) {
+                     var n = document.createElement("script");
+                     n.type = "text/javascript";
+                     n.async = !0;
+                     n.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";
+                     var o = document.getElementsByTagName("script")[0];
+                     o.parentNode.insertBefore(n, o);
+                     analytics.integrationOptions = e
+                  };
+                  analytics.SNIPPET_VERSION = "4.0.1";
+                  analytics.load("7r4PvyN0SaMPFO3FxwPoBJrzm8Av6Yj7");
+                  analytics.page();
+               }
+         }();
+      </script>
+      <!--end segment-->
 </body>
 
 </html>

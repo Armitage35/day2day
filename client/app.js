@@ -193,16 +193,11 @@ var main = function() {
     });
 
     $('#newNoteButton').on('click', function() {
-        displayNoteContent(-1);
-        $('.noteInputZone .noteTitleInput').val('');
+        createNewNote()
     });
 
     $('#archiveNote').on('click', function() {
         archiveNote(selectedNote);
-    });
-
-    $('#connectPocket').on('click', function() {
-        connectToPocket();
     });
 
     $('#editSettings').on('click', function() {
@@ -302,10 +297,7 @@ var main = function() {
     });
 
     $('#logOut').on('click', function() {
-        Cookies.remove('userid');
-        Cookies.remove('backgroundTheme');
-        Cookies.remove('selectedTool');
-        window.location.replace("/auth.html");
+        logOut();
     });
 
     $('#closeCalendar').on('click', function() {
@@ -867,6 +859,7 @@ function getPocketUnreadElements() {
         type: 'GET',
         data: { userID },
         success: function(data) {
+            console.log(data)
             if (data === '401 Unauthorized') {
                 $('.pocketToolView').html('<h4 style="color:black; padding-left:10px; padding-right:10px">Your Pocket account has been deserialized</h4><p style="color:black; padding-left:10px; padding-right:10px">Click here to reconnect your account</p><input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket"style="margin-left:10px" onclick="connectToPocket()"/>');
             }
@@ -1217,6 +1210,18 @@ function displayEvents(events) {
     else {
         $('.calEvent').append('No upcoming events found.');
     }
+}
+
+function createNewNote() {
+    displayNoteContent(-1);
+    $('.noteInputZone .noteTitleInput').val('');
+}
+
+function logOut() {
+    Cookies.remove('userid');
+    Cookies.remove('backgroundTheme');
+    Cookies.remove('selectedTool');
+    window.location.replace("/auth.html");
 }
 
 //auto sign in if cookie's here
