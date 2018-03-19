@@ -37,7 +37,7 @@ var main = function() {
     //add the gif to userTasks
     $("#addGif").on("click", function() {
         $("#waitingGif").empty();
-        var newComment = gif;
+        let newComment = gif;
         addComment(newComment);
         displayTask();
         displayComments();
@@ -464,13 +464,12 @@ function displayTaskDetails(i) {
 
         // checking if task is en retard
         if (new Date(userTask[i].dueDate) < beginingOfDay && userTask[i].dueDate != null) {
-            taskClass = 'task list-group-item lateTask';
-        }
-        else {
-            taskClass = 'task list-group-item';
+            taskClass = 'lateTask';
+        } else {
+            taskClass = '';
         }
 
-        $(".taskList").append("<li class='" + taskClass + "' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+        $(".taskList").append("<div class='col-2 " + taskClass + " ' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' class='taskChecker' name='task-marker'></div><div class='col-9'><p class='noMarginBot'>" + userTask[i].title + "<br />" + dueDateReadable + "</p><button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</div>");
     }
 }
 
@@ -1072,8 +1071,6 @@ function updateCalendar() {
     }).then(listUpcomingEvents());
 }
 
-initializeDay2Day();
-
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         authorizeButton.style.display = 'none';
@@ -1214,3 +1211,5 @@ function disconnectPocket() {
         }
     }).then(displayUserSettings);
 }
+
+initializeDay2Day();
