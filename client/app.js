@@ -141,14 +141,14 @@ var main = function() {
     $(".detailsCheckbox").on('click', function() {
         $("#newCommentModal, #main").toggle();
         let completedTaskID = selectedTask;
-        completeTask(completedTaskID);
+        completeTask(completedTaskID).then(displayTask());
     });
 
     //mark task completed from the main screen
     $(".taskList").on('click', "input", function() {
-        $(this).parent().fadeOut();
+        $(this).closest('.row').fadeOut();
         var completedTaskID = $(this).parent().attr('id');
-        completeTask(completedTaskID);
+        completeTask(completedTaskID).then(displayTask());
     });
 
     //enabling user to only see the background picture
@@ -347,15 +347,7 @@ else {
     userID = Cookies.get('userid'); //when user alerady has a cookie
 
     //get user tasks
-    $.ajax({
-        url: 'todos',
-        type: 'GET',
-        data: { userID },
-        success: function(data) {
-            userTask = data;
-            displayTask();
-        }
-    });
+    getUserTasks();
 
     //get user notes
     $.ajax({
@@ -465,11 +457,12 @@ function displayTaskDetails(i) {
         // checking if task is en retard
         if (new Date(userTask[i].dueDate) < beginingOfDay && userTask[i].dueDate != null) {
             taskClass = 'lateTask';
-        } else {
+        }
+        else {
             taskClass = '';
         }
 
-        $(".taskList").append("<div class='col-2 " + taskClass + " ' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' class='taskChecker' name='task-marker'></div><div class='col-9'><p class='noMarginBot'>" + userTask[i].title + "<br />" + dueDateReadable + "</p><button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</div>");
+        $(".taskList").append("<div class='row'><div class='col-2 " + taskClass + " ' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' class='taskChecker' name='task-marker'></div><div class='col-9 taskName'><p class='noMarginBot'>" + userTask[i].title + "<br />" + dueDateReadable + "</p><button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</div><div>");
     }
 }
 
@@ -541,16 +534,16 @@ function completeTask(completedTaskID) {
         data: { id: completedTaskMongoID },
         success: function(data) {
             console.log('task completed');
-            $(this).fadeOut();
+            userTask[completedTaskID].complete = true;
             iziToast.success({
                 title: assignSucessMessage(),
                 message: 'Task completed',
                 position: 'topRight',
             });
-            userTask[completedTaskID].complete = true;
-            displayTask();
+            getUserTasks();
         }
     });
+    $('.taskList').empty().then(displayTask());
 }
 
 //adding tasks function
@@ -1210,6 +1203,18 @@ function disconnectPocket() {
             });
         }
     }).then(displayUserSettings);
+}
+
+function getUserTasks() {
+    $.ajax({
+        url: 'todos',
+        type: 'GET',
+        data: { userID },
+        success: function(data) {
+            userTask = data;
+            displayTask();
+        }
+    });
 }
 
 initializeDay2Day();
