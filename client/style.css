@@ -608,10 +608,15 @@ label {
   .networks li:first-of-type {
     margin-right: 20px; }
 
+.pg-loading-logo-header {
+  margin-bottom: 0px; }
+
 .pg-loading-logo {
   max-width: 80px; }
 
 .pg-loading-screen .pg-loading-html.pg-loaded {
   margin-top: 45px; }
+  .pg-loading-screen .pg-loading-html.pg-loaded .quote {
+    margin: 45px 80px; }
 
 /*# sourceMappingURL=style.css.map */

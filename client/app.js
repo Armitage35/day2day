@@ -21,10 +21,10 @@ var selectedTask,
     temperatureUnit,
     backgroundTheme,
     successMessage,
-    events,
     emptyDaysInMonth;
 
 var main = function() {
+    getQuote();
 
     updateClock(); // leave here as this should not execute before DOM is ready 
 
@@ -1219,6 +1219,18 @@ function completeTaskFromDetailedView() {
     $("#newCommentModal, #main").toggle();
     let completedTaskID = selectedTask;
     completeTask(completedTaskID).then(displayTask());
+}
+
+function getQuote() {
+    console.log('getting quote');
+    $.ajax({
+        url: 'quote',
+        type: 'GET',
+        success: function(data) {
+            console.log(JSON.parse(data));
+            $('.quote').html(JSON.parse(data)[0].content).append('<p>' + JSON.parse(data)[0].title) + '</p>';
+        }
+    });
 }
 
 initializeDay2Day();

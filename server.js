@@ -602,7 +602,6 @@ app.get('/pocketKeyConfirm', function(req, res) {
                     handleError(err);
                 }
                 else {
-                    console.log(User);
                     res.json(User);
                     analytics.track({
                         userId: userID,
@@ -734,7 +733,6 @@ app.post('/googleAuth', function(req, res) {
                         handleError(err);
                     }
                     else {
-                        console.log(user)
                         analytics.track({
                             anonymousId: 'unknown',
                             event: 'Google Account connected',
@@ -747,6 +745,22 @@ app.post('/googleAuth', function(req, res) {
                 createUser(newGoogleUser, res);
             }
         });
+    });
+});
+
+app.get('/quote', function(req, res) {
+    console.log(req.query);
+    var options = {
+        method: 'GET',
+        url: 'https://quotesondesign.com/wp-json/posts',
+        qs: { 'filter[orderby]': 'rand', 'filter[posts_per_page]': '1' },
+    };
+
+    request(options, function(error, response, body) {
+        if (error) handleError(error);
+
+        console.log(body);
+        res.send(body);
     });
 });
 
@@ -778,7 +792,6 @@ app.get('/calendar', function(req, res) {
 
 // general functions
 function createUser(newUser, res) {
-    console.log('test');
     console.log(newUser);
     newUser.save(function(err, result) {
         if (err !== null) {
