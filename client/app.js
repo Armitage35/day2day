@@ -462,7 +462,8 @@ function displayTaskDetails(i) {
             taskClass = '';
         }
 
-        $(".taskList").append("<div class='row'><div class='col-2 " + taskClass + " ' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' class='taskChecker' name='task-marker'></div><div class='col-9 taskName'><p class='noMarginBot'>" + userTask[i].title + "<br />" + dueDateReadable + "</p><button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</div><div>");
+        $(".taskList").append("<li class='" + taskClass + "' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
+
     }
 }
 
