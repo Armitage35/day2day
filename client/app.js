@@ -456,14 +456,13 @@ function displayTaskDetails(i) {
 
         // checking if task is en retard
         if (new Date(userTask[i].dueDate) < beginingOfDay && userTask[i].dueDate != null) {
-            taskClass = 'lateTask';
+            taskClass = 'task list-group-item lateTask';
         }
         else {
-            taskClass = '';
+            taskClass = 'task list-group-item';
         }
 
         $(".taskList").append("<li class='" + taskClass + "' data-mongo='" + userTask[i]._id + "' id='" + i + "'><input type='checkbox' name='task-marker'>" + userTask[i].title + "<br />" + dueDateReadable + "<button type='button' onclick='displayComments()' class='btn btn-link showComments' id='" + userTask[i].id + "'><i class='fa fa-comment' aria-hidden='true'></i> " + userTask[i].commentNb + " </button>" + "</li>");
-
     }
 }
 
