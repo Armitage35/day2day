@@ -756,7 +756,11 @@ app.get('/authRegistration', function(req, res) {
         res.redirect('http://day2dayapp.net/auth.html?email=' + req.query.email);
     }
     else {
+<<<<<<< HEAD
         res.redirect('http://day2dayapp.net/auth.html/auth.html');
+=======
+        res.redirect('http://day2dayapp.net/auth.html');
+>>>>>>> ee5f198
     }
 });
 
