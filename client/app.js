@@ -139,9 +139,7 @@ var main = function() {
 
     //mark task complete from the details screen
     $(".detailsCheckbox").on('click', function() {
-        $("#newCommentModal, #main").toggle();
-        let completedTaskID = selectedTask;
-        completeTask(completedTaskID).then(displayTask());
+        completeTaskFromDetailedView();
     });
 
     //mark task completed from the main screen
@@ -1215,6 +1213,12 @@ function getUserTasks() {
             displayTask();
         }
     });
+}
+
+function completeTaskFromDetailedView() {
+    $("#newCommentModal, #main").toggle();
+    let completedTaskID = selectedTask;
+    completeTask(completedTaskID).then(displayTask());
 }
 
 initializeDay2Day();
