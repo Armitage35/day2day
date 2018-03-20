@@ -12,6 +12,7 @@
    <script src="bower_components/izitoast/dist/js/iziToast.min.js"></script>
    <link rel="stylesheet" href="bower_components/izitoast/dist/css/iziToast.min.css">
    <script src="bower_components/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
+   <link rel="stylesheet" href="bower_components/please-wait/build/please-wait.css">
    <!--Bootstrap CSS lib-->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
    <!--Bootstrap JS lib-->
@@ -24,6 +25,14 @@
 </head>
 
 <body>
+   <script type="text/javascript" src="bower_components/please-wait/build/please-wait.min.js"></script>
+   <script type="text/javascript">
+      window.loading_screen = window.pleaseWait({
+         logo: "assets/armitageLogoWait.png",
+         backgroundColor: 'white',
+         loadingHtml: '<p>Loading</p><div class="sk-folding-cube"><div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div>'
+      });
+   </script>
    <!--Add buttons to initiate auth sequence and sign out-->
    <button id="authorize-button" style="display: none;">Authorize</button>
    <button id="signout-button" style="display: none;">Sign Out</button>
@@ -381,7 +390,7 @@
             <div class="modal-body">
                <img src="../assets/3rdParty/pocketCover.jpg" style="max-width:100%" />
                <p>Connect your Pocket account to access every page you want to read but forget to check. Well, no more. Get access to your content directly from your home page!</p>
-               <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" onclick="connectToPocket()"/>
+               <input class="bttn-unite bttn-sm bttn-primary" type="button" id="connectPocket" value="Connect to Pocket" onclick="connectToPocket()" />
             </div>
          </div>
       </div>
@@ -446,10 +455,6 @@
             <div class="col-4 bluebackground" style="height:80vh">
                <p class="currentDay"></p>
                <p class="calLabelUpcoming">Upcoming events</p>
-               <!--<div class="calEvent row">-->
-               <!--   <p class="col-5">15 March</p>-->
-               <!--   <p class="col-7">Whatever event</p>-->
-               <!--</div>-->
                <div class="calEvent row">
                </div>
                <div class="googleConnect">
