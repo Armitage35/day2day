@@ -753,10 +753,10 @@ app.post('/googleAuth', function(req, res) {
 // landing registration
 app.get('/authRegistration', function(req, res) {
     if (validator.isEmail(req.query.email) === true) {
-        res.redirect('/auth.html?email=' + req.query.email);
+        res.redirect('http://day2dayapp.net/auth.html?email=' + req.query.email);
     }
     else {
-        res.redirect('/auth.html');
+        res.redirect('http://day2dayapp.net/auth.html/auth.html');
     }
 });
 
