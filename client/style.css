@@ -458,7 +458,7 @@ input[type="checkbox"]:checked {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  background: url(https://images.unsplash.com/photo-1491555103944-7c647fd857e6);
+  background: url("assets/authBackground.jpeg");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover; }
