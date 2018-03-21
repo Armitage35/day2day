@@ -639,7 +639,7 @@ function updateWallpaper() {
 function displayWallpaper(unsplashResponse, background) {
     $('body').css('background-image', background);
     $(".thanks").html('<a href="' + unsplashResponse.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + unsplashResponse.user.name + ' | Unsplash </a>');
-    // $('.pg-loading-screen').hide();
+    $('.pg-loading-screen').hide();
 }
 
 
