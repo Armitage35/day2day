@@ -748,22 +748,6 @@ app.post('/googleAuth', function(req, res) {
     });
 });
 
-app.get('/quote', function(req, res) {
-    console.log(req.query);
-    var options = {
-        method: 'GET',
-        url: 'https://quotesondesign.com/wp-json/posts',
-        qs: { 'filter[orderby]': 'rand', 'filter[posts_per_page]': '1' },
-    };
-
-    request(options, function(error, response, body) {
-        if (error) handleError(error);
-
-        console.log(body);
-        res.send(body);
-    });
-});
-
 // landing registration
 app.get('/authRegistration', function(req, res) {
     if (validator.isEmail(req.query.email) === true) {
@@ -788,6 +772,20 @@ app.get('/calendar', function(req, res) {
         }
     }
     res.send(currentMonth);
+});
+
+app.get('/quote', function(req, res) {
+    console.log(req.query);
+    var options = {
+        method: 'GET',
+        url: 'https://quotesondesign.com/wp-json/posts',
+        qs: { 'filter[orderby]': 'rand', 'filter[posts_per_page]': '1' },
+    };
+
+    request(options, function(error, response, body) {
+        if (error) handleError(error);
+        res.send(body);
+    });
 });
 
 // general functions

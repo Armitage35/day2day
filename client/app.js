@@ -21,7 +21,9 @@ var selectedTask,
     temperatureUnit,
     backgroundTheme,
     successMessage,
-    emptyDaysInMonth;
+    emptyDaysInMonth,
+    unsplashResponse,
+    background;
 
 var main = function() {
     getQuote();
@@ -622,17 +624,22 @@ function updateWallpaper() {
         url: "https://api.unsplash.com/photos/random/?client_id=" + unsplashApiKey + "&orientation=landscape&query=" + backgroundTheme,
         type: 'GET',
         success: function(data) {
-            let background;
+            unsplashResponse = data;
             if (window.screen.width >= 2000) {
                 background = 'url("' + data.urls.full + '")';
             }
             else if (window.screen.width < 2000) {
                 background = 'url("' + data.urls.regular + '")';
             }
-            $('body').css('background-image', background);
-            $(".thanks").html('<a href="' + data.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + data.user.name + ' | Unsplash </a>');
+            $('body').append('<div><img class="backgroundLoading" onload="displayWallpaper(unsplashResponse, background)" style="display:none" src="' + data.urls.regular + '"</div>');
         }
     });
+}
+
+function displayWallpaper(unsplashResponse, background) {
+    $('body').css('background-image', background);
+    $(".thanks").html('<a href="' + unsplashResponse.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + unsplashResponse.user.name + ' | Unsplash </a>');
+    $('.pg-loading-screen').hide();
 }
 
 
@@ -1227,8 +1234,7 @@ function getQuote() {
         url: 'quote',
         type: 'GET',
         success: function(data) {
-            console.log(JSON.parse(data));
-            $('.quote').html(JSON.parse(data)[0].content).append('<p>' + JSON.parse(data)[0].title) + '</p>';
+            $('.quote').html(JSON.parse(data)[0].content).append('<p class="quote">' + JSON.parse(data)[0].title) + '</p>';
         }
     });
 }
