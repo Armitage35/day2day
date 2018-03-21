@@ -618,5 +618,8 @@ label {
   margin-top: 45px; }
   .pg-loading-screen .pg-loading-html.pg-loaded .quote {
     margin: 45px 80px; }
+    .pg-loading-screen .pg-loading-html.pg-loaded .quote .author {
+      color: grey;
+      font-size: smaller; }
 
 /*# sourceMappingURL=style.css.map */

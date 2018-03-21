@@ -639,7 +639,7 @@ function updateWallpaper() {
 function displayWallpaper(unsplashResponse, background) {
     $('body').css('background-image', background);
     $(".thanks").html('<a href="' + unsplashResponse.user.links.html + '?utm_source=day2day&utm_medium=referral" target="_blank" >A picture by ' + unsplashResponse.user.name + ' | Unsplash </a>');
-    $('.pg-loading-screen').hide();
+    // $('.pg-loading-screen').hide();
 }
 
 
@@ -1229,12 +1229,11 @@ function completeTaskFromDetailedView() {
 }
 
 function getQuote() {
-    console.log('getting quote');
     $.ajax({
         url: 'quote',
         type: 'GET',
         success: function(data) {
-            $('.quote').html(JSON.parse(data)[0].content).append('<p class="quote">' + JSON.parse(data)[0].title) + '</p>';
+            $('.quote').html(JSON.parse(data)[0].content).append('<p class="author">— ' + JSON.parse(data)[0].title) + '</p>';
         }
     });
 }
