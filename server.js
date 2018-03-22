@@ -23,8 +23,6 @@ var express = require('express'),
     Rollbar = require("rollbar"),
     rollbar = new Rollbar("f13461b3e50b4a559e25df7117bd04fb"),
     calendar = require('node-calendar'),
-    googleAuth = require('google-auth-library'),
-    google = require('googleapis'),
     app = express();
 
 app.use(express.static(__dirname + "/client"));

@@ -146,7 +146,7 @@ var main = function() {
 
     //mark task completed from the main screen
     $(".taskList").on('click', "input", function() {
-        $(this).closest('.row').fadeOut();
+        $(this).fadeOut();
         var completedTaskID = $(this).parent().attr('id');
         completeTask(completedTaskID).then(displayTask());
     });
@@ -533,7 +533,6 @@ function completeTask(completedTaskID) {
         type: 'PUT',
         data: { id: completedTaskMongoID },
         success: function(data) {
-            console.log('task completed');
             userTask[completedTaskID].complete = true;
             iziToast.success({
                 title: assignSucessMessage(),
