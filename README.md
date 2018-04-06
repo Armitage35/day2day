@@ -6,5 +6,4 @@ Help and feedback is greatly apreciated so don't hold back and get in touch at m
 
 ---
 Link to Day2Day app: [here](https://day2dayapp.net)
-
-Link to the GitHub project: [here](https://github.com/Armitage35/day2day)
+Link to the ProductHunt page: [here](https://www.producthunt.com/posts/day2day)
