@@ -118,7 +118,8 @@ ul {
   height: 34px;
   border: 1px solid #1d89ff;
   border-right-width: 0px;
-  width: 75%; }
+  width: 75%;
+  padding-left: 5px; }
 
 .taskToolView h3 {
   padding: 20px 15px 0px; }

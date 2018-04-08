@@ -44,7 +44,7 @@ var main = function() {
                 }
                 if (data.includes('E4') === true) {
                     console.log('email taken');
-                    $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Email alerady used</div>');
+                    $("#email").parent().addClass("has-danger").append('<div class="form-control-feedback">Email already used</div>');
                 }
                 else {
                     window.location = "/index.html";
