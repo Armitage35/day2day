@@ -1,19 +1,23 @@
+# mongo files
+server/data/local.0
+server/data/local.ns
+server/data/mongod.loc
+server/data/mongod.lock
+server/data/my_database.0
+server/data/my_database.ns
+server/data/tasks.0
+server/data/tasks.ns
+server/data/mongod.lock
+server/data/
+server/mongod
+
+# security reasons
 notes.md
-data/local.0
-data/local.ns
-data/mongod.loc
-data/mongod.lock
-data/my_database.0
-data/my_database.ns
-data/tasks.0
-data/tasks.ns
-data/mongod.lock
-data/
-keys/
-mongod
-upload/
-awsCredentials.json
-client/bower_components
+server/keys/
+
+# package
 node_modules
 package-lock.json
-emailTemplates/htmlRender
+
+# misc
+yarn-error.log
