@@ -43,7 +43,7 @@ app.use(upload());
 //connect mongoose to DB
 mongoose.connect('mongodb://localhost/day2day');
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8080;
 http.createServer(app).listen(port);
 console.log("app working on port " + port);
 
@@ -585,7 +585,7 @@ app.get('/pocketKeyConfirm', function(req, res) {
             handleError(error);
         }
         else {
-            // add the token to the user's account 
+            // add the token to the user's account
             User.update({ _id: userID }, {
                 $set: {
                     integrations: {
@@ -761,7 +761,7 @@ app.get('/calendar', function(req, res) {
         pastMonth = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth()),
         currentMonth = new calendar.Calendar(0).itermonthdays(new Date().getFullYear(), new Date().getMonth() + 1);
 
-    // now that the two calendars have been generated, we need to mix past and present 
+    // now that the two calendars have been generated, we need to mix past and present
     let missingDaysInCurrentMonth = currentMonth.indexOf(1),
         daysToChange = Math.max(...pastMonth) - missingDaysInCurrentMonth + 1; //find the highest value of the last month
     for (let i = 0; i <= currentMonth.length; i++) {

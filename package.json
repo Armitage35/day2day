@@ -20,6 +20,7 @@
     "node-calendar": "^0.1.4",
     "node-minify": "^2.4.1",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg-calendar": "^1.4.27",
@@ -35,12 +36,7 @@
     "module-name": "./bin"
   },
   "scripts": {
-    "prestart": "./mongod & start mongod --dbpath ./mongo-db & npm install",
-    "start": "node server.js",
-    "poststart": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\"",
-    "pretest": "start mongod --dbpath data",
-    "test": "mocha test",
-    "posttest": "start mongo admin --eval \"db.getSiblingDB('admin').shutdownServer()\""
+    "start": "./mongod && node server.js"
   },
   "repository": {
     "type": "git",
