@@ -3,11 +3,14 @@ import SignUp from './SignUp/SignUp.jsx';
 import './Authentication.css';
 
 const Authentication = (props) => {
+
+
+
 	return (
 		<div className='authScreen'>
 			<div className='loginBranding'>
 				<p>Day2Day</p>
-				<div>
+				<div className='nameAndTagline'>
 					<p>Welcome to Day2Day</p>
 					<p>Your new home page</p>
 				</div>

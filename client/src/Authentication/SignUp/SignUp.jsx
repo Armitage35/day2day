@@ -1,22 +1,58 @@
 import React from 'react';
 
-const SignUp = (props) => {
-	return (
-		<form method='post'>
-			<label for='username'>Name</label>
-			<input type='text' name='name' id='username' placeholder='Bilbo Baggins' required='' />
-			<label for='email'>Email</label>
-			<input type='text' name='email' id='email' placeholder='bbaggins@shire.com' required='' />
-			<label for='password'>Password</label>
-			<input type='password' name='password' id='password' placeholder='********' required='' />
-			<label for='passwordRepeat'>Repeat Password</label>
-			<input type='password' name='passwordRepeat' id='passwordRepeat' placeholder='********' required='' />
-			{/* eslint-disable-next-line
-			<input type='button' value='Create an account' type='submit' />
-			*/}
-			<a href=''>I alerady have an account</a>
-		</form>
-	)
+class SignUp extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {};
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(event){
+		this.setState({value: event.target.value});
+	}
+
+	render(){
+		const inputs = [
+			{
+				name: 'name',
+				placeholder: 'Bilbo Baggins',
+				type : 'text'
+			},
+			{
+				name: 'email',
+				placeholder: 'bbaggins@shire.com',
+				type : 'text'
+			},
+			{
+				name: 'password',
+				placeholder: '*****',
+				type : 'password'
+			},
+			{
+				name: 'repeat password',
+				placeholder: '*****',
+				type : 'password'
+			}
+		]
+
+		let inputToDisplay = inputs.map((input, index) => {
+			return (
+				<React.Fragment>
+					<label for={input.name} index={index}>{input.name}</label>
+					<input type={input.type} name={input.name} placeholder={input.placeholder} required='' className='authInput' index={index}/>
+				</React.Fragment>
+			)
+		})
+		return (
+			<React.Fragment>
+				<form onSubmit={this.handleSubmit}>
+					{inputToDisplay}
+					<input type='submit' value='Create an account' />
+				</form>
+				<button class="bttn-minimal bttn-md bttn-primary">I alerady have an account</button>
+			</React.Fragment>
+		)}
 }
 
 export default SignUp;
