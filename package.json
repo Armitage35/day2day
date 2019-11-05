@@ -16,7 +16,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "load-grunt-tasks": "^3.5.2",
     "mailgun-js": "^0.15.0",
-    "mongoose": "^4.13.9",
+    "mongoose": "^5.7.5",
     "node-calendar": "^0.1.4",
     "node-minify": "^2.4.1",
     "node-sass": "^4.7.2",
