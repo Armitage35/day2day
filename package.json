@@ -19,7 +19,7 @@
     "mongoose": "^5.7.5",
     "node-calendar": "^0.1.4",
     "node-minify": "^2.4.1",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.13.1",
     "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
