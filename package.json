@@ -24,7 +24,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg-calendar": "^1.4.27",
-    "pug": "^2.0.1",
+    "pug": "^3.0.1",
     "rollbar": "^2.3.9",
     "validator": "^9.4.1"
   },
