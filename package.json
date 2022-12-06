@@ -7,7 +7,7 @@
     "analytics-node": "^3.2.0",
     "aws-sdk": "^2.207.0",
     "bcrypt": "^1.0.3",
-    "express": "^3.21.2",
+    "express": "^4.17.3",
     "express-fileupload": "^0.4.0",
     "express-validator": "^4.3.0",
     "gravatar": "^1.6.0",
